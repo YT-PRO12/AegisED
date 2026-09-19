@@ -1,0 +1,69 @@
+name: Verify CareFlow
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: careflow_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d careflow_test"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://postgres@127.0.0.1:5432/careflow_test
+      APP_ORIGIN: http://127.0.0.1:5000
+      ML_SERVICE_URL: http://127.0.0.1:8000
+      DEMO_SEED: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate ephemeral test secrets
+        run: |
+          python - <<'PY'
+          import os,secrets
+          with open(os.environ['GITHUB_ENV'],'a') as file:
+              for key in ['DEMO_PASSWORD','ML_SERVICE_TOKEN']:
+                  file.write(f'{key}={secrets.token_urlsafe(32)}\n')
+          PY
+      - run: npm ci && npm run install:apps
+      - run: pip install -r ml-service/requirements.txt
+      - run: npm run lint && npm run build
+        env:
+          NODE_ENV: production
+      - run: npm run migrate --prefix backend && npm run seed --prefix backend
+      - name: Train and verify Python service
+        working-directory: ml-service
+        run: python train.py && python evaluate_retrieval.py && python -m pytest -q
+      - name: Start AI service
+        working-directory: ml-service
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/careflow-ml.log 2>&1 &
+          python ../scripts/wait_for.py http://127.0.0.1:8000/health
+      - name: Native PostgreSQL integration and concurrency tests
+        run: npm run test:api
+      - run: npx playwright install --with-deps chromium
+      - name: Browser verification
+        run: |
+          npm start --prefix backend > /tmp/careflow-api.log 2>&1 &
+          python scripts/wait_for.py http://127.0.0.1:5000/api/ready
+          npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification-artifacts
+          path: |
+            docs/screenshots
+            docs/browser-results.json
+            ml-service/reports

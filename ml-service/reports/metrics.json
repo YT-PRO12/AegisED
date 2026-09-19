@@ -1,0 +1,277 @@
+{
+  "modelVersion": "synthetic-v1",
+  "selectedModel": "logistic_regression",
+  "datasetSha256": "d62714c71113c73d7cefe6cb3e8ce82b55eb553f9f68aa0f327cbe56453a9e69",
+  "samples": 6000,
+  "split": {
+    "train": 4200,
+    "validation": 900,
+    "test": 900
+  },
+  "randomSeed": 42,
+  "selection": "Highest validation macro F1; held-out test used once after selection",
+  "classDistribution": {
+    "Stable": 3177,
+    "Urgent": 1941,
+    "Critical": 882
+  },
+  "missingValues": {
+    "age": 0,
+    "heartRate": 200,
+    "systolicBP": 201,
+    "respiratoryRate": 228,
+    "temperature": 204,
+    "oxygenSaturation": 197
+  },
+  "comparison": {
+    "majority_baseline": {
+      "validation_macro_f1": 0.23093681917211328,
+      "validation_report": {
+        "Critical": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 132.0
+        },
+        "Stable": {
+          "precision": 0.53,
+          "recall": 1.0,
+          "f1-score": 0.6928104575163399,
+          "support": 477.0
+        },
+        "Urgent": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 291.0
+        },
+        "accuracy": 0.53,
+        "macro avg": {
+          "precision": 0.17666666666666667,
+          "recall": 0.3333333333333333,
+          "f1-score": 0.23093681917211328,
+          "support": 900.0
+        },
+        "weighted avg": {
+          "precision": 0.2809,
+          "recall": 0.53,
+          "f1-score": 0.3671895424836601,
+          "support": 900.0
+        }
+      }
+    },
+    "logistic_regression": {
+      "validation_macro_f1": 0.828047081640802,
+      "validation_report": {
+        "Critical": {
+          "precision": 0.8142857142857143,
+          "recall": 0.8636363636363636,
+          "f1-score": 0.8382352941176471,
+          "support": 132.0
+        },
+        "Stable": {
+          "precision": 0.9100877192982456,
+          "recall": 0.870020964360587,
+          "f1-score": 0.8896034297963559,
+          "support": 477.0
+        },
+        "Urgent": {
+          "precision": 0.7401315789473685,
+          "recall": 0.7731958762886598,
+          "f1-score": 0.7563025210084033,
+          "support": 291.0
+        },
+        "accuracy": 0.8377777777777777,
+        "macro avg": {
+          "precision": 0.8215016708437761,
+          "recall": 0.8356177347618701,
+          "f1-score": 0.828047081640802,
+          "support": 900.0
+        },
+        "weighted avg": {
+          "precision": 0.8410842731829575,
+          "recall": 0.8377777777777777,
+          "f1-score": 0.8389688093887073,
+          "support": 900.0
+        }
+      }
+    },
+    "decision_tree": {
+      "validation_macro_f1": 0.7495053215922948,
+      "validation_report": {
+        "Critical": {
+          "precision": 0.6962025316455697,
+          "recall": 0.8333333333333334,
+          "f1-score": 0.7586206896551724,
+          "support": 132.0
+        },
+        "Stable": {
+          "precision": 0.8761261261261262,
+          "recall": 0.8155136268343816,
+          "f1-score": 0.8447339847991314,
+          "support": 477.0
+        },
+        "Urgent": {
+          "precision": 0.6375838926174496,
+          "recall": 0.6529209621993127,
+          "f1-score": 0.6451612903225806,
+          "support": 291.0
+        },
+        "accuracy": 0.7655555555555555,
+        "macro avg": {
+          "precision": 0.7366375167963818,
+          "recall": 0.7672559741223425,
+          "f1-score": 0.7495053215922948,
+          "support": 900.0
+        },
+        "weighted avg": {
+          "precision": 0.7726086767678392,
+          "recall": 0.7655555555555555,
+          "f1-score": 0.767575530297266,
+          "support": 900.0
+        }
+      }
+    },
+    "random_forest": {
+      "validation_macro_f1": 0.8237766973029702,
+      "validation_report": {
+        "Critical": {
+          "precision": 0.8396946564885496,
+          "recall": 0.8333333333333334,
+          "f1-score": 0.8365019011406845,
+          "support": 132.0
+        },
+        "Stable": {
+          "precision": 0.9035087719298246,
+          "recall": 0.8637316561844863,
+          "f1-score": 0.8831725616291533,
+          "support": 477.0
+        },
+        "Urgent": {
+          "precision": 0.7252396166134185,
+          "recall": 0.7800687285223368,
+          "f1-score": 0.7516556291390728,
+          "support": 291.0
+        },
+        "accuracy": 0.8322222222222222,
+        "macro avg": {
+          "precision": 0.8228143483439309,
+          "recall": 0.8257112393467189,
+          "f1-score": 0.8237766973029702,
+          "support": 900.0
+        },
+        "weighted avg": {
+          "precision": 0.8365090081127996,
+          "recall": 0.8322222222222222,
+          "f1-score": 0.8338037232523852,
+          "support": 900.0
+        }
+      }
+    }
+  },
+  "test": {
+    "accuracy": 0.8166666666666667,
+    "macro_f1": 0.7893276592454023,
+    "weighted_f1": 0.8182505088332176,
+    "roc_auc_ovr_macro": 0.9388615920777981,
+    "log_loss": 0.4208974968805075,
+    "classification_report": {
+      "Critical": {
+        "precision": 0.7222222222222222,
+        "recall": 0.7819548872180451,
+        "f1-score": 0.7509025270758123,
+        "support": 133.0
+      },
+      "Stable": {
+        "precision": 0.9148471615720524,
+        "recall": 0.8802521008403361,
+        "f1-score": 0.8972162740899358,
+        "support": 476.0
+      },
+      "Urgent": {
+        "precision": 0.7114093959731543,
+        "recall": 0.7285223367697594,
+        "f1-score": 0.7198641765704584,
+        "support": 291.0
+      },
+      "accuracy": 0.8166666666666667,
+      "macro avg": {
+        "precision": 0.7828262599224763,
+        "recall": 0.7969097749427135,
+        "f1-score": 0.7893276592454023,
+        "support": 900.0
+      },
+      "weighted avg": {
+        "precision": 0.8206032652133782,
+        "recall": 0.8166666666666667,
+        "f1-score": 0.8182505088332176,
+        "support": 900.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        104,
+        0,
+        29
+      ],
+      [
+        0,
+        419,
+        57
+      ],
+      [
+        40,
+        39,
+        212
+      ]
+    ],
+    "class_order": [
+      "Critical",
+      "Stable",
+      "Urgent"
+    ]
+  },
+  "validationPermutationImportance": [
+    {
+      "feature": "age",
+      "mean": 0.0004622951565882216,
+      "std": 0.001927857322696354
+    },
+    {
+      "feature": "heartRate",
+      "mean": 0.1421524700598154,
+      "std": 0.015404145324617343
+    },
+    {
+      "feature": "systolicBP",
+      "mean": 0.024783483624770185,
+      "std": 0.00701909504219678
+    },
+    {
+      "feature": "respiratoryRate",
+      "mean": 0.1116722600415115,
+      "std": 0.0056011487384494945
+    },
+    {
+      "feature": "temperature",
+      "mean": 0.026482577948962537,
+      "std": 0.004464006357214023
+    },
+    {
+      "feature": "oxygenSaturation",
+      "mean": 0.20656561008313384,
+      "std": 0.016713249361751358
+    }
+  ],
+  "versions": {
+    "python": "3.12.14",
+    "sklearn": "1.8.0",
+    "numpy": "2.3.5"
+  },
+  "limitations": [
+    "Labels and features come from the same invented simulator. Test metrics measure simulator recovery, not real patient outcomes.",
+    "Adults only; no pediatric validation. No clinical validation or fairness assessment.",
+    "Probabilities are uncalibrated model scores. No confidence or clinical risk percentage is claimed.",
+    "Missing values are imputed using training medians; live endpoint requires complete vitals."
+  ]
+}

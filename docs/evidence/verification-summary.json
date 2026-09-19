@@ -1,0 +1,83 @@
+{
+  "reportFinalized": "2026-09-19",
+  "api": {
+    "passed": 16,
+    "failed": 0,
+    "database": "PGlite (serialized test adapter)"
+  },
+  "python": {
+    "passed": 9,
+    "failed": 0,
+    "deprecationWarnings": 2
+  },
+  "frontend": {
+    "lint": "passed",
+    "productionBuild": "passed",
+    "transformedModules": 2489
+  },
+  "browser": {
+    "status": "passed",
+    "completedAt": "2026-09-18T13:37:09.971Z",
+    "browser": {
+      "name": "chromium",
+      "version": "153.0.8010.0"
+    },
+    "databaseEngine": "PGlite (serialized test adapter)",
+    "checks": [
+      "login",
+      "/patients",
+      "patient registration/search/details",
+      "/emergency",
+      "complete emergency workflow",
+      "/emergency",
+      "/doctors",
+      "/beds",
+      "/analytics",
+      "/decision-support",
+      "ML prediction and human override",
+      "/knowledge",
+      "retrieval and citations",
+      "/audit",
+      "/settings",
+      "/dashboard",
+      "/emergency",
+      "/patients",
+      "/beds",
+      "/analytics",
+      "/decision-support",
+      "/knowledge",
+      "/settings",
+      "/dashboard",
+      "/emergency",
+      "/patients",
+      "/beds",
+      "/analytics",
+      "/decision-support",
+      "/knowledge",
+      "/settings",
+      "mobile navigation",
+      "role-protected UI"
+    ],
+    "viewports": [
+      1440,
+      768,
+      390
+    ],
+    "consoleErrors": [],
+    "failedApiRequests": []
+  },
+  "preservedArtifacts": {
+    "model": "ml-service/model/triage.joblib",
+    "dataset": "ml-service/data/synthetic-triage.csv",
+    "metrics": "ml-service/reports/metrics.json",
+    "retrieval": "ml-service/reports/retrieval.json"
+  },
+  "notExecuted": [
+    "Native PostgreSQL integration/locking",
+    "Docker image build and runtime",
+    "Hosted HTTPS validation",
+    "Real Ollama generation",
+    "Load and penetration testing",
+    "Backup and restore drill"
+  ]
+}

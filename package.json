@@ -1,0 +1,21 @@
+{
+  "name": "careflow-ai",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Educational emergency operations and synthetic decision support",
+  "scripts": {
+    "install:apps": "npm ci --prefix backend && npm ci --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "lint": "npm run lint --prefix frontend",
+    "test:api": "npm test --prefix backend",
+    "test:browser": "node scripts/browser-test.cjs",
+    "format": "prettier --write frontend/src backend/src backend/scripts backend/tests scripts/*.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2",
+    "prettier": "3.8.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

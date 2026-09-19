@@ -1,0 +1,111 @@
+{
+  "corpusSha256": "e0334cecabf95940025f30c8102a4c1299d3323f0ebc2adb0ad6ed36101aa3f8",
+  "queries": 10,
+  "hit_at_3": 1.0,
+  "mrr_at_3": 0.8833333333333334,
+  "method": "Small author-written operational query set; not an independent clinical benchmark",
+  "results": [
+    {
+      "question": "Who is allowed to create new staff accounts?",
+      "expected": "access-1",
+      "retrieved": [
+        "access-2",
+        "workflow-1",
+        "access-1"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 0.3333333333333333
+    },
+    {
+      "question": "How do I assign a bed to a case?",
+      "expected": "workflow-3",
+      "retrieved": [
+        "workflow-3",
+        "workflow-2",
+        "workflow-4"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "Does completing treatment release the bed?",
+      "expected": "workflow-4",
+      "retrieved": [
+        "workflow-4",
+        "workflow-3",
+        "analytics-2"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "How are average waiting time and treatment duration measured?",
+      "expected": "analytics-2",
+      "retrieved": [
+        "analytics-2",
+        "workflow-4"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "Are model probabilities clinical confidence?",
+      "expected": "decision-support-3",
+      "retrieved": [
+        "decision-support-3"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "What happens if the Python AI service is offline?",
+      "expected": "deployment-2",
+      "retrieved": [
+        "deployment-2",
+        "deployment-3"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "Why do I need a reason to override priority?",
+      "expected": "decision-support-2",
+      "retrieved": [
+        "decision-support-2",
+        "workflow-1"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "How is bed utilization calculated?",
+      "expected": "analytics-3",
+      "retrieved": [
+        "analytics-3",
+        "workflow-3",
+        "workflow-4"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    },
+    {
+      "question": "What do audit logs contain?",
+      "expected": "access-3",
+      "retrieved": [
+        "access-1",
+        "access-3"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 0.5
+    },
+    {
+      "question": "How do I log out and revoke a session?",
+      "expected": "access-2",
+      "retrieved": [
+        "access-2"
+      ],
+      "hit_at_3": true,
+      "reciprocal_rank": 1.0
+    }
+  ]
+}

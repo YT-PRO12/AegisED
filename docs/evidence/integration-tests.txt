@@ -1,0 +1,73 @@
+Retained output from the successful migration, seed, Python and API checks.
+Database engine: PGlite through the serialized test adapter.
+
+RUN ['npm', 'run', 'migrate']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@2.0.0 migrate
+> node scripts/migrate.js
+
+Applied 001_core.sql
+RUN ['npm', 'run', 'migrate']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@2.0.0 migrate
+> node scripts/migrate.js
+
+RUN ['npm', 'run', 'seed']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@2.0.0 seed
+> node scripts/seed.js
+
+Created 254 synthetic patients, 12 doctors, 20 beds, 4 accounts. Credentials: backend/.demo-credentials
+RUN ['npm', 'run', 'seed']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@2.0.0 seed
+> node scripts/seed.js
+
+Synthetic seed already applied; no records changed
+RUN ['python', '-m', 'pytest', '-q']
+.........                                                                [100%]
+=============================== warnings summary ===============================
+../../../../../..<installed-packages>/fastapi/testclient.py:1
+  <installed-packages>/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+../../../../../..<installed-packages>/starlette/testclient.py:53
+  <installed-packages>/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 2 warnings in 1.45s
+RUN ['npm', 'test']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@2.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+✔ health, database readiness, consistent unauthenticated error (901.725001ms)
+✔ authentication rejects wrong password without revealing account existence (207.092691ms)
+✔ CSRF and origin checks block writes (13.597331ms)
+✔ RBAC protects audit, users, doctor management and treatment (28.865871ms)
+✔ CRUD accepts age zero, validates IDs and payloads, supports PUT and PATCH (80.730801ms)
+✔ search, pagination, filtering and sorting are parameterized (42.157588ms)
+✔ complete emergency workflow synchronizes resources, timestamps and patient state (189.998579ms)
+✔ simultaneous doctor assignments have exactly one winner (52.861023ms)
+✔ one active case per patient is enforced by PostgreSQL (23.991417ms)
+✔ bed patient assignment can explicitly be cleared when no active case owns it (14.25458ms)
+✔ doctor read access and actions are scoped to assigned cases (27.235664ms)
+✔ analytics and dashboard reconcile with stored records (36.350678ms)
+✔ real ML gateway persists suggestions; explicit override records rationale (84.140472ms)
+✔ knowledge gateway cites real sources and abstains on unsupported input (17.395962ms)
+✔ audit visibility, no stack traces and API 404s (19.070359ms)
+✔ logout revokes the session in PostgreSQL (7.271276ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2027.005194

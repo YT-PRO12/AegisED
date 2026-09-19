@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "completedAt": "2026-09-18T13:37:09.971Z",
+  "browser": {
+    "name": "chromium",
+    "version": "153.0.8010.0"
+  },
+  "databaseEngine": "PGlite (serialized test adapter)",
+  "checks": [
+    "login",
+    "/patients",
+    "patient registration/search/details",
+    "/emergency",
+    "complete emergency workflow",
+    "/emergency",
+    "/doctors",
+    "/beds",
+    "/analytics",
+    "/decision-support",
+    "ML prediction and human override",
+    "/knowledge",
+    "retrieval and citations",
+    "/audit",
+    "/settings",
+    "/dashboard",
+    "/emergency",
+    "/patients",
+    "/beds",
+    "/analytics",
+    "/decision-support",
+    "/knowledge",
+    "/settings",
+    "/dashboard",
+    "/emergency",
+    "/patients",
+    "/beds",
+    "/analytics",
+    "/decision-support",
+    "/knowledge",
+    "/settings",
+    "mobile navigation",
+    "role-protected UI"
+  ],
+  "viewports": [
+    1440,
+    768,
+    390
+  ],
+  "consoleErrors": [],
+  "failedApiRequests": []
+}

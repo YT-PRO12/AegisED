@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: careflow
+      POSTGRES_USER: careflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_env.py first}
+      TZ: UTC
+    volumes:
+      - careflow_db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U careflow -d careflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+  ml:
+    build: ./ml-service
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      ML_SERVICE_TOKEN: ${ML_SERVICE_TOKEN:?Set a private service token}
+      OLLAMA_URL: ${OLLAMA_URL:-}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-}
+    restart: unless-stopped
+  api:
+    build: .
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 5000
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:5000}
+      DATABASE_URL: postgresql://careflow:${POSTGRES_PASSWORD}@db:5432/careflow
+      ML_SERVICE_URL: http://ml:8000
+      ML_SERVICE_TOKEN: ${ML_SERVICE_TOKEN}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-}
+      TRUST_PROXY_HOPS: ${TRUST_PROXY_HOPS:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-5000}:5000"
+    restart: unless-stopped
+volumes:
+  careflow_db:

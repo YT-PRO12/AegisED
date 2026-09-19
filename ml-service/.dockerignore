@@ -1,0 +1,13 @@
+**/node_modules
+**/dist
+**/.env
+**/.env.*
+**/.demo-credentials
+**/__pycache__
+**/.pytest_cache
+**/*.log
+.git
+verification
+data/*.csv
+model/*.joblib
+knowledge/index

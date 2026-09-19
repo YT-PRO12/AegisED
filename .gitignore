@@ -17,3 +17,6 @@ test-results/
 ml-service/model/*.joblib
 ml-service/data/*.csv
 ml-service/knowledge/index/
+
+# Local generated credentials - NEVER COMMIT
+backend/.demo-credentials

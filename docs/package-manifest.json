@@ -1,7 +1,7 @@
 {
   "project": "CareFlow AI",
   "version": "1.0.0",
-  "createdAt": "2026-09-20T07:00:18.672272+00:00",
+  "createdAt": "2026-09-20T07:02:34.178594+00:00",
   "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.",
   "files": [
     {

@@ -78,7 +78,7 @@ async function seed() {
             "INSERT INTO users(name,email,password_hash,role,doctor_id) VALUES($1,$2,$3,$4,$5) RETURNING id,role",
             [
               name,
-              role.toLowerCase() + "@AegisED.demo",
+              role.toLowerCase() + "@aegised.demo",
               hash,
               role,
               role === "DOCTOR" ? doctors[0] : null,
@@ -202,7 +202,7 @@ async function seed() {
     const file = path.resolve(__dirname, "../.demo-credentials");
     fs.writeFileSync(
       file,
-      `Synthetic demo only. All four accounts share this generated password.\nEmails: admin@AegisED.demo, doctor@AegisED.demo, nurse@AegisED.demo, reception@AegisED.demo\nPassword: ${secret}\n`,
+      `Synthetic demo only. All four accounts share this generated password.\nEmails: admin@aegised.demo, doctor@aegised.demo, nurse@aegised.demo, reception@aegised.demo\nPassword: ${secret}\n`,
       { mode: 0o600 },
     );
     console.log(

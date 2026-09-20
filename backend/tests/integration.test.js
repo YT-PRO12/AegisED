@@ -31,7 +31,7 @@ async function login(role) {
     who: null,
     method: "POST",
     body: {
-      email: role + "@careflow.demo",
+      email: role + "@aegised.demo",
       password: process.env.DEMO_PASSWORD,
     },
   });
@@ -98,7 +98,7 @@ test("authentication rejects wrong password without revealing account existence"
   const b = await api("/auth/login", {
     method: "POST",
     who: null,
-    body: { email: "admin@careflow.demo", password: "wrong" },
+    body: { email: "admin@aegised.demo", password: "wrong" },
   });
   assert.equal(a.status, 401);
   assert.equal(a.body.message, b.body.message);

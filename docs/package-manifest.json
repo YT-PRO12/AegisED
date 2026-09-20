@@ -1,7 +1,7 @@
 {
   "project": "AegisED",
   "version": "1.0.0",
-  "createdAt": "2026-09-20T10:38:15.307454+00:00",
+  "createdAt": "2026-09-20T11:11:58.348773+00:00",
   "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.",
   "files": [
     {
@@ -62,7 +62,7 @@
     {
       "path": "backend/scripts/seed.js",
       "bytes": 7349,
-      "sha256": "1682c38ab0d7cabadf6966cec51d3693d7466a66e67e6465c1bc73ab4c3ec643"
+      "sha256": "28c14ce323754d4df35f784336d195791e088036a52bcd536a239abf794fc6aa"
     },
     {
       "path": "backend/src/app.js",
@@ -196,8 +196,8 @@
     },
     {
       "path": "backend/tests/integration.test.js",
-      "bytes": 14617,
-      "sha256": "a5f664886297d561519d4de6149d05da46e44ccf051e02d5d95434d8f636f6fb"
+      "bytes": 14619,
+      "sha256": "0b5e28ec4aafc9582708ed350af5b32a7b522cb89fdd51fbf2d9e59134884b3a"
     },
     {
       "path": "backend/tests/pglite-pool.js",
@@ -848,6 +848,11 @@
       "path": "scripts/wait_for.py",
       "bytes": 292,
       "sha256": "94913697aa32d2b0e36d7c1a8cfbca76aacf728c44086507f067728839b6e6c9"
+    },
+    {
+      "path": "tatus --short",
+      "bytes": 4974,
+      "sha256": "e92f903e7d3179b5297e815b196bbe2ae5c83a232c465e1db67e4dacb9c1e58f"
     }
   ]
 }

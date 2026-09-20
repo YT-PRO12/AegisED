@@ -1,7 +1,7 @@
 {
   "project": "AegisED",
   "version": "1.0.0",
-  "createdAt": "2026-09-20T11:39:35.002420+00:00",
+  "createdAt": "2026-09-20T13:17:07.654143+00:00",
   "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.",
   "files": [
     {
@@ -816,8 +816,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17327,
-      "sha256": "fe19914c9d102018c076e08a643b2024b0c621cdec0b1e5528e203a9cdc779c8"
+      "bytes": 15478,
+      "sha256": "cac6ce367a82e2dc360bd8a0e1e3748bbe9c8ab2c35aa95c7f796a2d2acc48ea"
     },
     {
       "path": "scripts/browser-test.cjs",

@@ -69,7 +69,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await page.getByRole("button", { name: "Save record" }).click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-      .getByRole("textbox", { name: "Search patients…", exact: true })
+      .getByRole("textbox", { name: /Search patients/i })
       .fill(patientName);
     await page.getByRole("link", { name: patientName, exact: true }).waitFor();
     await page.getByRole("link", { name: patientName, exact: true }).click();
@@ -80,7 +80,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await route("/emergency", "Emergency operations");
     await page.getByRole("button", { name: "New case", exact: true }).click();
     await page
-      .getByRole("textbox", { name: "Find registered patient…", exact: true })
+      .getByRole("textbox", { name: /Find registered patient/i })
       .fill(patientName);
     await settle();
     const selector = page.getByLabel("Patient", { exact: true });
@@ -96,7 +96,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
       .click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-      .getByRole("textbox", { name: "Search cases or patients…", exact: true })
+      .getByRole("textbox", { name: /Search cases or patients/i })
       .fill(patientName);
     await settle();
     let card = page.locator(".case-card").filter({ hasText: patientName });

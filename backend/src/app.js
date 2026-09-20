@@ -81,7 +81,7 @@ const limit = (max, windowMs = 60000) =>
   });
 app.use("/api", limit(process.env.NODE_ENV === "test" ? 10000 : 600));
 app.get("/api/health", (req, res) =>
-  res.json({ success: true, data: { service: "careflow-api", status: "ok" } }),
+  res.json({ success: true, data: { service: "AegisED-api", status: "ok" } }),
 );
 app.get("/api/ready", async (req, res) => {
   try {
@@ -252,3 +252,4 @@ app.use((err, req, res, next) => {
   res.status(status).json({ success: false, message, requestId: req.id });
 });
 module.exports = app;
+

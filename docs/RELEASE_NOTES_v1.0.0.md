@@ -1,10 +1,10 @@
-# CareFlow AI v1.0.0
+# AegisED v1.0.0
 
 Release notes prepared for the first public tagged release. No tag or GitHub release has been created by this review.
 
-**Live portfolio demo:** https://careflow-app.onrender.com
+**Live portfolio demo:** https://AegisED-app.onrender.com
 
-CareFlow AI is an educational emergency-operations and decision-support application using synthetic data. It is not for clinical use, real-patient diagnosis or autonomous medical decisions.
+AegisED is an educational emergency-operations and decision-support application using synthetic data. It is not for clinical use, real-patient diagnosis or autonomous medical decisions.
 
 ## Major features
 
@@ -38,3 +38,4 @@ These observations precede the final release commit. Its CI result must pass bef
 ## Known limitations
 
 Authenticated production regression was not repeated because production credentials were not supplied. The cloud browser's fixed viewport did not establish new mobile-production results; prior responsive browser evidence is retained as historical. No Docker daemon was used locally, no provider configuration or production data was changed, and no real Ollama model was exercised. Cold starts can delay initial loading. The model is synthetic and adult-only; the knowledge corpus is operational. Load testing, operational backup/restore, staff recovery/deactivation and broader security review remain future work.
+

@@ -1,7 +1,7 @@
 {
-  "name": "careflow-api",
+  "name": "AegisED-api",
   "version": "1.0.0",
-  "description": "CareFlow emergency operations API",
+  "description": "AegisED emergency operations API",
   "main": "index.js",
   "scripts": {
     "test": "node --test --test-concurrency=1 tests/*.test.js",
@@ -33,3 +33,4 @@
     "node": ">=22"
   }
 }
+

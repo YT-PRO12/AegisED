@@ -50,7 +50,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
   }
   try {
     await page.goto(base + "/login");
-    await page.getByLabel("Email address").fill("admin@careflow.demo");
+    await page.getByLabel("Email address").fill("admin@AegisED.demo");
     await page
       .getByLabel("Password", { exact: true })
       .fill(process.env.DEMO_PASSWORD);
@@ -69,7 +69,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await page.getByRole("button", { name: "Save record" }).click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-      .getByRole("textbox", { name: "Search patients…", exact: true })
+      .getByRole("textbox", { name: "Search patientsâ€¦", exact: true })
       .fill(patientName);
     await page.getByRole("link", { name: patientName, exact: true }).waitFor();
     await page.getByRole("link", { name: patientName, exact: true }).click();
@@ -80,12 +80,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await route("/emergency", "Emergency operations");
     await page.getByRole("button", { name: "New case", exact: true }).click();
     await page
-      .getByRole("textbox", { name: "Find registered patient…", exact: true })
+      .getByRole("textbox", { name: "Find registered patientâ€¦", exact: true })
       .fill(patientName);
     await settle();
     const selector = page.getByLabel("Patient", { exact: true });
     await selector.selectOption({
-      label: patientName + " · 35 years",
+      label: patientName + " Â· 35 years",
     });
     await page
       .getByLabel("Reported symptoms")
@@ -96,7 +96,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
       .click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-      .getByRole("textbox", { name: "Search cases or patients…", exact: true })
+      .getByRole("textbox", { name: "Search cases or patientsâ€¦", exact: true })
       .fill(patientName);
     await settle();
     let card = page.locator(".case-card").filter({ hasText: patientName });
@@ -160,11 +160,11 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
       .getAttribute("value");
     await select.selectOption(caseOption);
     for (const [label, value] of [
-      ["Heart rate · bpm", "110"],
-      ["Systolic blood pressure · mmHg", "105"],
-      ["Respiratory rate · breaths/min", "24"],
-      ["Temperature · °C", "37.5"],
-      ["Oxygen saturation · %", "94"],
+      ["Heart rate Â· bpm", "110"],
+      ["Systolic blood pressure Â· mmHg", "105"],
+      ["Respiratory rate Â· breaths/min", "24"],
+      ["Temperature Â· Â°C", "37.5"],
+      ["Oxygen saturation Â· %", "94"],
     ])
       await page.getByLabel(label, { exact: true }).fill(value);
     await page.getByRole("button", { name: "Generate estimate" }).click();
@@ -228,7 +228,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await page.getByRole("button", { name: "Sign out" }).click();
     await page.getByRole("heading", { name: "Welcome back." }).waitFor();
     track = false;
-    await page.getByLabel("Email address").fill("reception@careflow.demo");
+    await page.getByLabel("Email address").fill("reception@AegisED.demo");
     await page
       .getByLabel("Password", { exact: true })
       .fill(process.env.DEMO_PASSWORD);
@@ -290,3 +290,4 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
   console.error(e);
   process.exitCode = 1;
 });
+

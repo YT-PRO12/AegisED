@@ -1,6 +1,6 @@
 # Publish the first v1.0.0 release
 
-The review prepared source changes and these notes; it did not push a commit, create a tag, publish a release or redeploy production. GitHub returned no releases and no `v1.0.0` tag at the inspected baseline. The package contains `CareFlow-v1.0.0.patch` beside the `CareFlow-AI` folder. The patch is based on commit `ea3eae30b3a6e5cb0480cef559c6396ddbf022a9` and preserves application/runtime configuration.
+The review prepared source changes and these notes; it did not push a commit, create a tag, publish a release or redeploy production. GitHub returned no releases and no `v1.0.0` tag at the inspected baseline. The package contains `AegisED-v1.0.0.patch` beside the `AegisED-AI` folder. The patch is based on commit `ea3eae30b3a6e5cb0480cef559c6396ddbf022a9` and preserves application/runtime configuration.
 
 ## Apply the reviewed changes in Windows PowerShell
 
@@ -9,9 +9,9 @@ Run from your existing Git clone with a clean working tree. Keep local environme
 ```powershell
 git status --short
 git fetch origin
-git switch -c release/careflow-v1.0.0 origin/main
+git switch -c release/AegisED-v1.0.0 origin/main
 # Use the real path where you extracted the supplied patch:
-$patchPath = Read-Host "Full path to CareFlow-v1.0.0.patch"
+$patchPath = Read-Host "Full path to AegisED-v1.0.0.patch"
 git apply --check $patchPath
 if ($LASTEXITCODE -ne 0) { throw "Patch does not match this checkout. Stop and review the differences." }
 git apply $patchPath
@@ -34,8 +34,8 @@ python scripts/check_repository.py
 if ($LASTEXITCODE -ne 0) { throw "Staged repository verification failed" }
 git diff --cached --name-only
 git diff --cached --check
-git commit -m "chore: prepare CareFlow AI v1.0.0 release"
-git push -u origin release/careflow-v1.0.0
+git commit -m "chore: prepare AegisED v1.0.0 release"
+git push -u origin release/AegisED-v1.0.0
 ```
 
 Review the staged list before committing: it must contain no `.env` or `.demo-credentials` files. Open a pull request to `main`, let the updated CI pass, and review/merge it using your normal workflow. Render may deploy merged source according to your existing integration settings; those settings were not changed here.
@@ -58,15 +58,16 @@ $runId = gh run list --workflow ci.yml --commit $releaseCommit --limit 1 --json 
 if (-not $runId -or $runId -eq "null") { throw "No CI run found for the release commit" }
 gh run watch $runId --exit-status
 if ($LASTEXITCODE -ne 0) { throw "CI did not pass; do not publish" }
-$conclusion = gh api "repos/YT-PRO12/CareFlow-AI/actions/runs/$runId" --jq '.conclusion'
+$conclusion = gh api "repos/YT-PRO12/AegisED-AI/actions/runs/$runId" --jq '.conclusion'
 if ($conclusion -ne "success") { throw "The release commit is not verified" }
-git tag -a v1.0.0 $releaseCommit -m "CareFlow AI v1.0.0"
+git tag -a v1.0.0 $releaseCommit -m "AegisED v1.0.0"
 if ($LASTEXITCODE -ne 0) { throw "Tag creation failed; do not overwrite an existing tag" }
 git push origin v1.0.0
 if ($LASTEXITCODE -ne 0) { throw "Tag push failed" }
-gh release create v1.0.0 --verify-tag --title "CareFlow AI v1.0.0" --notes-file docs/RELEASE_NOTES_v1.0.0.md
+gh release create v1.0.0 --verify-tag --title "AegisED v1.0.0" --notes-file docs/RELEASE_NOTES_v1.0.0.md
 ```
 
-**Recommended commit message:** `chore: prepare CareFlow AI v1.0.0 release`.
+**Recommended commit message:** `chore: prepare AegisED v1.0.0 release`.
 
 No secret rotation is required by a finding from this review: no real secret match was identified in the inspected source/history. This does not establish the status of any credentials shared outside Git. The inactive historical provider deployment can remain as history; confirm the obsolete integration is disconnected if it still creates new records.
+

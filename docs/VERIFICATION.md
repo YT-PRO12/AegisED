@@ -1,4 +1,4 @@
-# CareFlow AI — historical implementation verification
+# AegisED â€” historical implementation verification
 
 **Historical scope:** finalized during the initial packaging on 2026-09-19. The application was subsequently deployed. See [the 2026-09-20 release review](RELEASE_READINESS.md) for current Render/GitHub evidence and checks.
 
@@ -61,3 +61,4 @@ That initial report described a tested educational prototype with deployment pre
 [TESTING.md](TESTING.md) contains the exact native database, Python and browser commands. [LOCAL_SETUP.md](LOCAL_SETUP.md) covers Docker and Windows PowerShell. The CI workflow runs native PostgreSQL checks when placed in a GitHub repository.
 
 The final archive includes source, lockfiles, environment examples, migrations, synthetic data, trained artifacts, documentation, tests and screenshots. It excludes installed dependencies, private environment files, generated passwords, temporary databases and browser binaries. `docs/package-manifest.json` records each delivered file's size and SHA-256 (excluding the manifest itself); `scripts/verify_package.py` checks those hashes after extraction.
+

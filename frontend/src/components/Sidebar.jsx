@@ -62,7 +62,7 @@ export default function Sidebar({ open, onClose }) {
             <HeartPulse size={23} />
           </span>
           <span>
-            CareFlow<span className="brand-ai"> AI</span>
+            AegisED<span className="brand-ai"> AI</span>
             <small>EMERGENCY OPERATIONS</small>
           </span>
         </NavLink>
@@ -109,3 +109,4 @@ export default function Sidebar({ open, onClose }) {
     </>
   );
 }
+

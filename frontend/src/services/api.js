@@ -27,7 +27,7 @@ export async function request(path, { method = "GET", body, signal } = {}) {
       path !== "/auth/login" &&
       path !== "/auth/me"
     )
-      window.dispatchEvent(new Event("careflow:expired"));
+      window.dispatchEvent(new Event("AegisED:expired"));
     throw e;
   }
   return result;
@@ -66,3 +66,4 @@ export const completeTreatment = async (id) =>
   ).data;
 export const dischargePatient = async (id) =>
   (await request(`/emergency-cases/${id}/discharge`, { method: "POST" })).data;
+

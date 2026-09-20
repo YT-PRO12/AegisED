@@ -10,7 +10,7 @@ async def lifespan(app):
     global knowledge
     bundle();knowledge=Knowledge()
     yield
-app=FastAPI(title='CareFlow synthetic decision support',version='1.0.0',lifespan=lifespan)
+app=FastAPI(title='AegisED synthetic decision support',version='1.0.0',lifespan=lifespan)
 def authorize(x_service_token:str=Header(default='')):
     expected=os.getenv('ML_SERVICE_TOKEN','')
     if os.getenv('NODE_ENV')=='production' and not expected:raise HTTPException(503,'Service token missing')
@@ -23,3 +23,4 @@ def prediction(features:Features):return predict(features.model_dump())
 def model():return bundle()['metrics']
 @app.post('/knowledge',dependencies=[Depends(authorize)])
 def ask(question:Question):return knowledge.answer(question.question)
+

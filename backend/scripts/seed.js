@@ -78,7 +78,7 @@ async function seed() {
             "INSERT INTO users(name,email,password_hash,role,doctor_id) VALUES($1,$2,$3,$4,$5) RETURNING id,role",
             [
               name,
-              role.toLowerCase() + "@careflow.demo",
+              role.toLowerCase() + "@AegisED.demo",
               hash,
               role,
               role === "DOCTOR" ? doctors[0] : null,
@@ -202,7 +202,7 @@ async function seed() {
     const file = path.resolve(__dirname, "../.demo-credentials");
     fs.writeFileSync(
       file,
-      `Synthetic demo only. All four accounts share this generated password.\nEmails: admin@careflow.demo, doctor@careflow.demo, nurse@careflow.demo, reception@careflow.demo\nPassword: ${secret}\n`,
+      `Synthetic demo only. All four accounts share this generated password.\nEmails: admin@AegisED.demo, doctor@AegisED.demo, nurse@AegisED.demo, reception@AegisED.demo\nPassword: ${secret}\n`,
       { mode: 0o600 },
     );
     console.log(
@@ -218,3 +218,4 @@ if (require.main === module)
     })
     .finally(() => pool.end());
 module.exports = seed;
+

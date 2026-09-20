@@ -16,11 +16,11 @@ CI runs source verification before training or browser screenshots can change ge
 
 ## Native PostgreSQL integration tests
 
-Use a disposable database named `careflow_test`, not the original project database. Tests create records. Start the Python service before running API tests. From a POSIX terminal at the project root:
+Use a disposable database named `AegisED_test`, not the original project database. Tests create records. Start the Python service before running API tests. From a POSIX terminal at the project root:
 
 ```bash
 export NODE_ENV=test
-export DATABASE_URL='postgresql://YOUR_TEST_USER:YOUR_TEST_PASSWORD@127.0.0.1:5432/careflow_test'
+export DATABASE_URL='postgresql://YOUR_TEST_USER:YOUR_TEST_PASSWORD@127.0.0.1:5432/AegisED_test'
 export APP_ORIGIN='http://127.0.0.1:5000'
 export ML_SERVICE_URL='http://127.0.0.1:8000'
 export DEMO_SEED=true
@@ -67,3 +67,4 @@ The original implementation workspace could not launch native PostgreSQL under a
 ## Dependency review
 
 `npm audit --omit=dev` was run on both application packages. See VERIFICATION.md for the captured result. This checks known advisory data only, not all application security. Re-run audits when installing or upgrading dependencies.
+

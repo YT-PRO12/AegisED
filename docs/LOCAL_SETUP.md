@@ -1,4 +1,4 @@
-# Start CareFlow locally
+# Start AegisED locally
 
 Use a fresh extracted folder for this version, so your original folder remains available. Keep any private `.env` and your original PostgreSQL database backup outside the archive. The upgrade preserves your React/Express/PostgreSQL stack and endpoint paths.
 
@@ -13,13 +13,13 @@ docker compose exec -e DEMO_SEED=true api npm run seed
 docker compose exec api cat .demo-credentials
 ```
 
-Visit **http://localhost:5000**. Sign in with `admin@careflow.demo` and the generated password printed by the last command. The other generated accounts share this synthetic-demo password. Do not publish the credentials or `.env`. Change passwords before sharing a deployment.
+Visit **http://localhost:5000**. Sign in with `admin@AegisED.demo` and the generated password printed by the last command. The other generated accounts share this synthetic-demo password. Do not publish the credentials or `.env`. Change passwords before sharing a deployment.
 
 Check status with `docker compose ps` and `docker compose logs --tail=80 api ml`. Stop with `docker compose down`; the database volume remains. Starting again does not duplicate seed data. The model is trained during the Python image build, so the first build needs more time than later startups. Compose execution was not available in the release-review workspace. The existing Render production deployment is documented separately in DEPLOYMENT.md.
 
 ## Without Docker: your existing Windows tools
 
-You need Node.js 22+ (your Node 24 is suitable), Python 3.12, and PostgreSQL. Run commands from the extracted `CareFlow-AI` folder.
+You need Node.js 22+ (your Node 24 is suitable), Python 3.12, and PostgreSQL. Run commands from the extracted `AegisED-AI` folder.
 
 ### 1. Install dependencies
 
@@ -31,13 +31,13 @@ python -m venv .venv
 Copy-Item backend/.env.example backend/.env
 ```
 
-Open `backend/.env`. Set `DATABASE_URL` to your local PostgreSQL connection. Use a **new database** for the synthetic demonstration, for example `careflow_portfolio`; do not seed into your original populated database. Create it once through pgAdmin's Query Tool (connected to the `postgres` maintenance database):
+Open `backend/.env`. Set `DATABASE_URL` to your local PostgreSQL connection. Use a **new database** for the synthetic demonstration, for example `AegisED_portfolio`; do not seed into your original populated database. Create it once through pgAdmin's Query Tool (connected to the `postgres` maintenance database):
 
 ```sql
-CREATE DATABASE careflow_portfolio;
+CREATE DATABASE AegisED_portfolio;
 ```
 
-The URL format is `postgresql://postgres:YOUR_LOCAL_PASSWORD@localhost:5432/careflow_portfolio`. URL-encode special characters in a password, or remove `DATABASE_URL` and use the original separate `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_NAME`, `DB_PORT` environment variables. Do not commit this file.
+The URL format is `postgresql://postgres:YOUR_LOCAL_PASSWORD@localhost:5432/AegisED_portfolio`. URL-encode special characters in a password, or remove `DATABASE_URL` and use the original separate `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_NAME`, `DB_PORT` environment variables. Do not commit this file.
 
 Keep `APP_ORIGIN=http://localhost:5173` for Vite development and `NODE_ENV=development`. The default AI address is `http://127.0.0.1:8000`. Empty service tokens work only for a local development setup; use the same nonempty token in Express and Python for a shared or production environment.
 
@@ -101,3 +101,4 @@ Set backend `APP_ORIGIN=http://localhost:5000`, keep `NODE_ENV=development` for 
 ## Upgrading the original populated database
 
 Back it up first with pgAdmin or `pg_dump`. Run the migration against a restored copy before the original. Migration 001 creates missing tables and adds fields/constraints; it retains IDs and only backfills arrival time from existing creation time. Historical stage times remain unknown if they were not recorded. Conflicting legacy assignments or unsupported status values cause a transaction rollback. Resolve those records deliberately before retrying. Never replace your database with the synthetic seed.
+

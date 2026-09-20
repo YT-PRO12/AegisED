@@ -2,14 +2,14 @@ services:
   db:
     image: postgres:18-alpine
     environment:
-      POSTGRES_DB: careflow
-      POSTGRES_USER: careflow
+      POSTGRES_DB: AegisED
+      POSTGRES_USER: AegisED
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/setup_env.py first}
       TZ: UTC
     volumes:
-      - careflow_db:/var/lib/postgresql
+      - AegisED_db:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U careflow -d careflow"]
+      test: ["CMD-SHELL", "pg_isready -U AegisED -d AegisED"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -28,7 +28,7 @@ services:
       NODE_ENV: ${NODE_ENV:-development}
       PORT: 5000
       APP_ORIGIN: ${APP_ORIGIN:-http://localhost:5000}
-      DATABASE_URL: postgresql://careflow:${POSTGRES_PASSWORD}@db:5432/careflow
+      DATABASE_URL: postgresql://AegisED:${POSTGRES_PASSWORD}@db:5432/AegisED
       ML_SERVICE_URL: http://ml:8000
       ML_SERVICE_TOKEN: ${ML_SERVICE_TOKEN}
       DEMO_PASSWORD: ${DEMO_PASSWORD:-}
@@ -40,4 +40,5 @@ services:
       - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-5000}:5000"
     restart: unless-stopped
 volumes:
-  careflow_db:
+  AegisED_db:
+

@@ -18,5 +18,6 @@ module.exports = {
   port: Number(process.env.PORT || 5000),
   mlUrl: process.env.ML_SERVICE_URL || "http://127.0.0.1:8000",
   mlToken: process.env.ML_SERVICE_TOKEN || "",
-  cookieName: production ? "__Host-careflow" : "careflow_session",
+  cookieName: production ? "__Host-AegisED" : "AegisED_session",
 };
+

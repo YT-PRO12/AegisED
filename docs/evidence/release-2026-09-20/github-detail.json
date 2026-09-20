@@ -150,10 +150,11 @@
     {
       "state": "success",
       "environment": "production",
-      "environment_url": "https://careflow-app.onrender.com",
+      "environment_url": "https://AegisED-app.onrender.com",
       "target_url": "",
       "created_at": "2026-09-19T18:07:22Z",
-      "description": "CareFlow AI is live on Render"
+      "description": "AegisED is live on Render"
     }
   ]
 }
+

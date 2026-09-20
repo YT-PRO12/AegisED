@@ -26,14 +26,14 @@ export default function Knowledge() {
   return (
     <>
       <PageHeader
-        eyebrow="CAREFLOW INTELLIGENCE"
+        eyebrow="AegisED INTELLIGENCE"
         title="Knowledge assistant"
         description="Operational answers, with the evidence alongside."
       />
       <div className="knowledge-layout">
         <div>
           <Panel
-            title="Ask about CareFlow"
+            title="Ask about AegisED"
             description="Search workflow, roles, analytics definitions, and model limitations."
           >
             <div className="knowledge-intro">
@@ -68,7 +68,7 @@ export default function Knowledge() {
             >
               <textarea
                 aria-label="Your question"
-                placeholder="Ask an operational question…"
+                placeholder="Ask an operational questionâ€¦"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 required
@@ -81,7 +81,7 @@ export default function Knowledge() {
                 aria-label="Ask question"
                 disabled={busy}
               >
-                {busy ? "Searching…" : <ArrowUp size={20} />}
+                {busy ? "Searchingâ€¦" : <ArrowUp size={20} />}
               </button>
             </form>
             {error && (
@@ -140,7 +140,7 @@ export default function Knowledge() {
                       </summary>
                       <p>{s.text}</p>
                       <small>
-                        {s.path} · {s.id}
+                        {s.path} Â· {s.id}
                       </small>
                     </details>
                   ))
@@ -149,7 +149,7 @@ export default function Knowledge() {
                     "Access and accountability",
                     "Decision support and limitations",
                     "Analytics definitions",
-                    "Running CareFlow",
+                    "Running AegisED",
                   ].map((s) => (
                     <div className="source-placeholder" key={s}>
                       <FileText size={18} />
@@ -168,3 +168,4 @@ export default function Knowledge() {
     </>
   );
 }
+

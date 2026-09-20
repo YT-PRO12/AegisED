@@ -6,10 +6,10 @@ const app = require("../src/app");
 let server, url, admin, nurse, reception, doctor;
 if (
   process.env.NODE_ENV !== "test" ||
-  !process.env.DATABASE_URL?.includes("careflow_test")
+  !process.env.DATABASE_URL?.includes("AegisED_test")
 )
   throw new Error(
-    "Tests require NODE_ENV=test and a dedicated careflow_test database",
+    "Tests require NODE_ENV=test and a dedicated AegisED_test database",
   );
 async function api(
   path,
@@ -31,7 +31,7 @@ async function login(role) {
     who: null,
     method: "POST",
     body: {
-      email: role + "@careflow.demo",
+      email: role + "@AegisED.demo",
       password: process.env.DEMO_PASSWORD,
     },
   });
@@ -98,7 +98,7 @@ test("authentication rejects wrong password without revealing account existence"
   const b = await api("/auth/login", {
     method: "POST",
     who: null,
-    body: { email: "admin@careflow.demo", password: "wrong" },
+    body: { email: "admin@AegisED.demo", password: "wrong" },
   });
   assert.equal(a.status, 401);
   assert.equal(a.body.message, b.body.message);
@@ -476,3 +476,4 @@ test("logout revokes the session in PostgreSQL", async () => {
   );
   assert.equal((await api("/auth/me", { who: reception })).status, 401);
 });
+

@@ -1,4 +1,4 @@
-﻿"""Check the delivered archive's file hashes using Python's standard library."""
+"""Check the delivered archive's file hashes using Python's standard library."""
 from hashlib import sha256
 import argparse
 import json

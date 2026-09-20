@@ -1,6 +1,6 @@
-# CareFlow AI — final completion status
+# AegisED â€” final completion status
 
-Updated 2026-09-20. The existing application is deployed at [CareFlow AI on Render](https://careflow-app.onrender.com), with Neon PostgreSQL and a separate Render FastAPI service reported by the operator. Implementation and prior evidence are preserved. Current checks, remaining release actions and the proposed first public v1.0.0 release are recorded in [RELEASE_READINESS.md](RELEASE_READINESS.md).
+Updated 2026-09-20. The existing application is deployed at [AegisED on Render](https://AegisED-app.onrender.com), with Neon PostgreSQL and a separate Render FastAPI service reported by the operator. Implementation and prior evidence are preserved. Current checks, remaining release actions and the proposed first public v1.0.0 release are recorded in [RELEASE_READINESS.md](RELEASE_READINESS.md).
 
 ## Implemented feature map
 
@@ -74,7 +74,7 @@ The [historical verification report](VERIFICATION.md) retains the original scope
 
 ## Exact local execution commands
 
-With Docker/Compose installed, extract the archive, open a terminal in `CareFlow-AI`, and run:
+With Docker/Compose installed, extract the archive, open a terminal in `AegisED-AI`, and run:
 
 ```bash
 python scripts/verify_package.py
@@ -86,7 +86,7 @@ docker compose exec api cat .demo-credentials
 
 Open **http://localhost:5000**. The verification script needs only Python's standard library. The environment generator refuses to overwrite an existing `.env`. Container execution is prepared but was not available in this workspace.
 
-The intentionally synthetic account emails are `admin@careflow.demo`, `doctor@careflow.demo`, `nurse@careflow.demo` and `reception@careflow.demo`. Passwords are generated during setup/seeding; the last command displays your local credentials. No reusable password is distributed. For existing local PostgreSQL and Windows PowerShell, use the complete [LOCAL_SETUP.md](LOCAL_SETUP.md) instructions.
+The intentionally synthetic account emails are `admin@AegisED.demo`, `doctor@AegisED.demo`, `nurse@AegisED.demo` and `reception@AegisED.demo`. Passwords are generated during setup/seeding; the last command displays your local credentials. No reusable password is distributed. For existing local PostgreSQL and Windows PowerShell, use the complete [LOCAL_SETUP.md](LOCAL_SETUP.md) instructions.
 
 ## Remaining limitations
 
@@ -99,3 +99,4 @@ Start with [README.md](../README.md). [INTERVIEW_GUIDE.md](INTERVIEW_GUIDE.md) e
 - Extended a React, Express and PostgreSQL emergency-operations platform with role-based sessions, transactional resource allocation, patient timelines, audit events and database-derived analytics.
 - Built a reproducible scikit-learn/FastAPI decision-support pipeline on 6,000 synthetic scenarios, comparing four models and measuring 0.789 macro F1 on a 900-scenario held-out test set; added explicit human acceptance and documented overrides.
 - Implemented cited operational-document retrieval with latent-semantic vectors, abstention and optional LLM synthesis, alongside API/Python integration tests, browser workflow checks and Docker/CI deployment configuration.
+

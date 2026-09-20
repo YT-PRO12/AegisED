@@ -1,5 +1,5 @@
 {
-  "name": "careflow-ai",
+  "name": "AegisED-ai",
   "version": "1.0.0",
   "private": true,
   "description": "Educational emergency operations and synthetic decision support",
@@ -19,3 +19,4 @@
     "node": ">=22"
   }
 }
+

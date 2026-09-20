@@ -1,12 +1,12 @@
 <div align="center">
 
-# 🏥 CareFlow AI
+# ðŸ¥ AegisED
 
 ### Intelligent Emergency Operations & Decision-Support Platform
 
 **A production-deployed full-stack platform combining emergency operations, transaction-safe resource allocation, human-reviewed machine learning, analytics, role-based access control, auditability, and grounded knowledge retrieval.**
 
-[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Open_CareFlow-2ea44f?style=for-the-badge)](https://careflow-app.onrender.com)
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Open_AegisED-2ea44f?style=for-the-badge)](https://AegisED-app.onrender.com)
 
 ![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=nodedotjs&logoColor=white)
@@ -15,10 +15,10 @@
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
 ![Render](https://img.shields.io/badge/Deployment-Render-000000?logo=render&logoColor=white)
 
-[Live Demo](https://careflow-app.onrender.com) •
-[Architecture](#-system-architecture) •
-[ML System](#-human-in-the-loop-ml-decision-support) •
-[Security](#-security--access-control) •
+[Live Demo](https://AegisED-app.onrender.com) â€¢
+[Architecture](#-system-architecture) â€¢
+[ML System](#-human-in-the-loop-ml-decision-support) â€¢
+[Security](#-security--access-control) â€¢
 [Deployment](#-production-deployment)
 
 </div>
@@ -26,13 +26,13 @@
 ---
 
 > [!IMPORTANT]
-> **Responsible AI:** CareFlow AI is an engineering and educational demonstration. Its machine-learning subsystem is evaluated on synthetic scenarios and is **not clinically validated** or intended for autonomous diagnosis, triage, or medical decision-making.
+> **Responsible AI:** AegisED is an engineering and educational demonstration. Its machine-learning subsystem is evaluated on synthetic scenarios and is **not clinically validated** or intended for autonomous diagnosis, triage, or medical decision-making.
 
-## 🚀 Live Production Demo
+## ðŸš€ Live Production Demo
 
-### **[Launch CareFlow AI →](https://careflow-app.onrender.com)**
+### **[Launch AegisED â†’](https://AegisED-app.onrender.com)**
 
-CareFlow AI is deployed using **Render + Neon PostgreSQL**, with a separately deployed **FastAPI ML service**.
+AegisED is deployed using **Render + Neon PostgreSQL**, with a separately deployed **FastAPI ML service**.
 
 The production environment demonstrates the complete workflow from patient registration and emergency intake through human-reviewed decision support, doctor/bed allocation, treatment, discharge, analytics, and auditability.
 
@@ -40,68 +40,68 @@ The production environment demonstrates the complete workflow from patient regis
 
 ---
 
-## ✨ Why CareFlow AI?
+## âœ¨ Why AegisED?
 
 Many portfolio healthcare applications stop at CRUD operations and static dashboards.
 
-CareFlow explores the engineering challenges behind a more complete operational system:
+AegisED explores the engineering challenges behind a more complete operational system:
 
-- 🚑 End-to-end emergency workflow management
-- 🔒 Transaction-safe doctor and bed allocation
-- 👥 Backend-enforced role-based access control
-- 🧠 Human-in-the-loop ML decision support
-- 🔍 Explainable recommendation review and override
-- 📚 Grounded knowledge retrieval with source attribution
-- 📊 Database-driven operational analytics
-- 📝 End-to-end audit logging
-- 🐳 Containerized application architecture
-- ☁️ Multi-service cloud deployment
+- ðŸš‘ End-to-end emergency workflow management
+- ðŸ”’ Transaction-safe doctor and bed allocation
+- ðŸ‘¥ Backend-enforced role-based access control
+- ðŸ§  Human-in-the-loop ML decision support
+- ðŸ” Explainable recommendation review and override
+- ðŸ“š Grounded knowledge retrieval with source attribution
+- ðŸ“Š Database-driven operational analytics
+- ðŸ“ End-to-end audit logging
+- ðŸ³ Containerized application architecture
+- â˜ï¸ Multi-service cloud deployment
 
 ---
 
-## 🖥️ Product Preview
+## ðŸ–¥ï¸ Product Preview
 
 > Add `docs/screenshots/dashboard-desktop.png` using the screenshot instructions below.
 
 <p align="center">
   <img src="docs/screenshots/dashboard-desktop.png"
-       alt="CareFlow AI emergency operations dashboard"
+       alt="AegisED emergency operations dashboard"
        width="100%" />
 </p>
 
 ---
 
-## 🏗️ System Architecture
+## ðŸ—ï¸ System Architecture
 
 ```text
                               USER
-                               │
-                               │ HTTPS
-                               ▼
-                   ┌─────────────────────────┐
-                   │     React Frontend      │
-                   │      Tailwind CSS       │
-                   └────────────┬────────────┘
-                                │
-                                ▼
-                   ┌─────────────────────────┐
-                   │    Express API Layer    │
-                   │                         │
-                   │ Auth • RBAC • Audit     │
-                   │ Validation • Workflows  │
-                   └─────────┬───────┬───────┘
-                             │       │
-                ┌────────────┘       └──────────────┐
-                ▼                                   ▼
-     ┌─────────────────────┐              ┌─────────────────────┐
-     │   Neon PostgreSQL   │              │   FastAPI ML        │
-     │                     │              │   Service           │
-     │ • Patients          │              │                     │
-     │ • Emergency Cases   │              │ • scikit-learn      │
-     │ • Doctors / Beds    │              │ • Prediction API    │
-     │ • Users / Sessions  │              │ • Model metadata    │
-     │ • Audit Logs        │              │ • Evaluation        │
-     └─────────────────────┘              └─────────────────────┘
+                               â”‚
+                               â”‚ HTTPS
+                               â–¼
+                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                   â”‚     React Frontend      â”‚
+                   â”‚      Tailwind CSS       â”‚
+                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                â”‚
+                                â–¼
+                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                   â”‚    Express API Layer    â”‚
+                   â”‚                         â”‚
+                   â”‚ Auth â€¢ RBAC â€¢ Audit     â”‚
+                   â”‚ Validation â€¢ Workflows  â”‚
+                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
+                             â”‚       â”‚
+                â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                â–¼                                   â–¼
+     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”              â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+     â”‚   Neon PostgreSQL   â”‚              â”‚   FastAPI ML        â”‚
+     â”‚                     â”‚              â”‚   Service           â”‚
+     â”‚ â€¢ Patients          â”‚              â”‚                     â”‚
+     â”‚ â€¢ Emergency Cases   â”‚              â”‚ â€¢ scikit-learn      â”‚
+     â”‚ â€¢ Doctors / Beds    â”‚              â”‚ â€¢ Prediction API    â”‚
+     â”‚ â€¢ Users / Sessions  â”‚              â”‚ â€¢ Model metadata    â”‚
+     â”‚ â€¢ Audit Logs        â”‚              â”‚ â€¢ Evaluation        â”‚
+     â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜              â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### Why this architecture?
@@ -114,36 +114,36 @@ This keeps security-sensitive and operational logic on the server rather than tr
 
 ---
 
-## 🚑 End-to-End Emergency Workflow
+## ðŸš‘ End-to-End Emergency Workflow
 
 ```text
 Patient Registration
-        │
-        ▼
+        â”‚
+        â–¼
 Emergency Intake
-        │
-        ▼
+        â”‚
+        â–¼
 ML Decision Support
-        │
-        ▼
+        â”‚
+        â–¼
 Human Review
-        │
-        ▼
+        â”‚
+        â–¼
 Doctor Assignment
-        │
-        ▼
+        â”‚
+        â–¼
 Bed Assignment
-        │
-        ▼
+        â”‚
+        â–¼
 Treatment Started
-        │
-        ▼
+        â”‚
+        â–¼
 Treatment Completed
-        │
-        ▼
+        â”‚
+        â–¼
 Patient Discharged
-        │
-        ▼
+        â”‚
+        â–¼
 Doctor + Bed Released
 ```
 
@@ -151,31 +151,31 @@ The workflow is database-backed rather than simulated with frontend state.
 
 ---
 
-## 🔒 Transaction-Safe Resource Allocation
+## ðŸ”’ Transaction-Safe Resource Allocation
 
 Doctor and bed assignment can create race conditions when multiple users operate concurrently.
 
-CareFlow protects these operations with PostgreSQL transactions and row-level locking.
+AegisED protects these operations with PostgreSQL transactions and row-level locking.
 
 ```text
 BEGIN
-   │
-   ▼
+   â”‚
+   â–¼
 SELECT ... FOR UPDATE
-   │
-   ▼
+   â”‚
+   â–¼
 Validate Resource Availability
-   │
-   ▼
+   â”‚
+   â–¼
 Update Emergency Case
-   │
-   ▼
+   â”‚
+   â–¼
 Update Doctor / Bed
-   │
-   ▼
+   â”‚
+   â–¼
 Write Audit Event
-   │
-   ▼
+   â”‚
+   â–¼
 COMMIT
 ```
 
@@ -185,29 +185,29 @@ This prevents concurrent requests from successfully assigning the same resource.
 
 ---
 
-## 🧠 Human-in-the-Loop ML Decision Support
+## ðŸ§  Human-in-the-Loop ML Decision Support
 
-CareFlow's ML subsystem provides **assistive recommendations**, not autonomous decisions.
+AegisED's ML subsystem provides **assistive recommendations**, not autonomous decisions.
 
 ```text
 Patient Features
-       │
-       ▼
+       â”‚
+       â–¼
 ML Pipeline
-       │
-       ▼
+       â”‚
+       â–¼
 Recommendation
-       │
-       ▼
+       â”‚
+       â–¼
 Human Review
-   ┌───────┼────────┐
-   ▼       ▼        ▼
+   â”Œâ”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”
+   â–¼       â–¼        â–¼
  Accept  Review  Override
-                    │
-                    ▼
+                    â”‚
+                    â–¼
               Reason Required
-                    │
-                    ▼
+                    â”‚
+                    â–¼
                  Audit Log
 ```
 
@@ -237,40 +237,40 @@ Four candidate approaches were compared, with the final model selected using val
 
 ---
 
-## 📚 Grounded Knowledge Assistant
+## ðŸ“š Grounded Knowledge Assistant
 
-CareFlow includes an operational knowledge retrieval subsystem designed to ground answers in indexed source material.
+AegisED includes an operational knowledge retrieval subsystem designed to ground answers in indexed source material.
 
 ```text
 Trusted Documents
-       │
-       ▼
+       â”‚
+       â–¼
 Chunking + Metadata
-       │
-       ▼
+       â”‚
+       â–¼
 TF-IDF
-       │
-       ▼
+       â”‚
+       â–¼
 Truncated SVD
-       │
-       ▼
+       â”‚
+       â–¼
 Semantic Representation
-       │
-       ▼
+       â”‚
+       â–¼
 Cosine Similarity
-       │
-       ▼
+       â”‚
+       â–¼
 Relevance Threshold
-       │
-       ▼
+       â”‚
+       â–¼
 Retrieved Evidence
-       │
-       ├──────────────► Source Attribution
-       │
-       ▼
+       â”‚
+       â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Source Attribution
+       â”‚
+       â–¼
 Grounded Response
 
-Insufficient Evidence ─────────► Abstain
+Insufficient Evidence â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Abstain
 ```
 
 ### Reliability Features
@@ -283,7 +283,7 @@ Insufficient Evidence ─────────► Abstain
 
 ---
 
-## 🔐 Security & Access Control
+## ðŸ” Security & Access Control
 
 Authorization is enforced by the backend rather than relying only on hidden frontend controls.
 
@@ -312,9 +312,9 @@ Authorization is enforced by the backend rather than relying only on hidden fron
 
 ---
 
-## 📊 Operational Analytics
+## ðŸ“Š Operational Analytics
 
-CareFlow derives analytics from application/database data rather than hard-coded dashboard values.
+AegisED derives analytics from application/database data rather than hard-coded dashboard values.
 
 The analytics layer can surface operational information such as:
 
@@ -328,7 +328,7 @@ The analytics layer can surface operational information such as:
 
 ---
 
-## 📝 Auditability
+## ðŸ“ Auditability
 
 Important operational actions generate audit events.
 
@@ -348,9 +348,9 @@ This provides traceability across the emergency workflow.
 
 ---
 
-## 🧪 Testing & Validation
+## ðŸ§ª Testing & Validation
 
-CareFlow is validated across multiple layers instead of relying only on manual UI testing.
+AegisED is validated across multiple layers instead of relying only on manual UI testing.
 
 | Layer | Validation |
 |---|---|
@@ -369,21 +369,21 @@ The production workflow has been exercised from registration through discharge, 
 
 ---
 
-## ☁️ Production Deployment
+## â˜ï¸ Production Deployment
 
 ```text
                           INTERNET
-                             │
-                             ▼
+                             â”‚
+                             â–¼
                     Render Web Service
                      React + Express
                       /           \
                      /             \
-                    ▼               ▼
+                    â–¼               â–¼
            Neon PostgreSQL     Render ML Service
                                 FastAPI
-                                   │
-                                   ▼
+                                   â”‚
+                                   â–¼
                               scikit-learn
 ```
 
@@ -402,11 +402,11 @@ The production workflow has been exercised from registration through discharge, 
 
 ### Live Application
 
-**https://careflow-app.onrender.com**
+**https://AegisED-app.onrender.com**
 
 ---
 
-## 🐳 Local Development
+## ðŸ³ Local Development
 
 ### Prerequisites
 
@@ -418,8 +418,8 @@ The production workflow has been exercised from registration through discharge, 
 Clone the repository:
 
 ```bash
-git clone https://github.com/YT-PRO12/CareFlow-AI.git
-cd CareFlow-AI
+git clone https://github.com/YT-PRO12/AegisED-AI.git
+cd AegisED-AI
 ```
 
 Environment templates are provided through `.env.example` files.
@@ -430,38 +430,38 @@ Refer to the repository documentation for environment-specific setup and testing
 
 ---
 
-## 📁 Repository Structure
+## ðŸ“ Repository Structure
 
 ```text
-CareFlow-AI/
-│
-├── frontend/                 # React user interface
-│
-├── backend/
-│   ├── src/                  # Express API and business logic
-│   ├── migrations/           # PostgreSQL migrations
-│   ├── scripts/              # Migration / administration tooling
-│   └── tests/                # API tests
-│
-├── ml-service/               # FastAPI ML + retrieval service
-│
-├── docs/                     # Architecture/testing documentation
-│   └── screenshots/          # Product screenshots
-│
-├── scripts/                  # Project-level tooling
-│
-├── Dockerfile
-├── docker-compose.yml
-└── README.md
+AegisED-AI/
+â”‚
+â”œâ”€â”€ frontend/                 # React user interface
+â”‚
+â”œâ”€â”€ backend/
+â”‚   â”œâ”€â”€ src/                  # Express API and business logic
+â”‚   â”œâ”€â”€ migrations/           # PostgreSQL migrations
+â”‚   â”œâ”€â”€ scripts/              # Migration / administration tooling
+â”‚   â””â”€â”€ tests/                # API tests
+â”‚
+â”œâ”€â”€ ml-service/               # FastAPI ML + retrieval service
+â”‚
+â”œâ”€â”€ docs/                     # Architecture/testing documentation
+â”‚   â””â”€â”€ screenshots/          # Product screenshots
+â”‚
+â”œâ”€â”€ scripts/                  # Project-level tooling
+â”‚
+â”œâ”€â”€ Dockerfile
+â”œâ”€â”€ docker-compose.yml
+â””â”€â”€ README.md
 ```
 
 ---
 
-## ⚙️ Engineering Decisions
+## âš™ï¸ Engineering Decisions
 
 ### Why PostgreSQL?
 
-The application contains strongly related entities—patients, emergency cases, doctors, beds, users and audit records—and requires transactional consistency during resource allocation.
+The application contains strongly related entitiesâ€”patients, emergency cases, doctors, beds, users and audit recordsâ€”and requires transactional consistency during resource allocation.
 
 ### Why keep Express between React and ML?
 
@@ -477,9 +477,9 @@ The current workload does not justify their operational complexity. The architec
 
 ---
 
-## ⚠️ Scope & Limitations
+## âš ï¸ Scope & Limitations
 
-CareFlow AI is a portfolio and engineering demonstration.
+AegisED is a portfolio and engineering demonstration.
 
 - Synthetic data is used for ML evaluation and demo workflows.
 - The ML system is not clinically validated.
@@ -490,7 +490,7 @@ CareFlow AI is a portfolio and engineering demonstration.
 
 ---
 
-## 🛣️ Future Engineering Work
+## ðŸ›£ï¸ Future Engineering Work
 
 Potential extensions include:
 
@@ -505,11 +505,11 @@ Potential extensions include:
 
 ---
 
-## 👨‍💻 Author
+## ðŸ‘¨â€ðŸ’» Author
 
 **Yatharth Goyal**
 
-B.Tech — Information Technology
+B.Tech â€” Information Technology
 
 [GitHub](https://github.com/YT-PRO12)
 
@@ -519,6 +519,7 @@ B.Tech — Information Technology
 
 ### Built to explore full-stack engineering, reliable AI integration, database concurrency and responsible decision support.
 
-**[🚀 Launch CareFlow AI](https://careflow-app.onrender.com)**
+**[ðŸš€ Launch AegisED](https://AegisED-app.onrender.com)**
 
 </div>
+

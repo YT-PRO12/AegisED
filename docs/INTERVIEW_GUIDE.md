@@ -1,8 +1,8 @@
-# Explain CareFlow in an interview
+# Explain AegisED in an interview
 
 ## A 45-second introduction
 
-“CareFlow is an educational emergency-operations prototype. I extended my React, Express and PostgreSQL application with validated workflows, role-based access and auditability. Assigning a doctor or bed is a transactional operation; discharge releases both resources atomically. SQL supplies the analytics. A separate Python service serves a reproducible model trained only on synthetic scenarios, and a human must review its suggestion before it changes priority. A knowledge assistant retrieves project documentation with sources and optionally uses a configured language model.”
+â€œAegisED is an educational emergency-operations prototype. I extended my React, Express and PostgreSQL application with validated workflows, role-based access and auditability. Assigning a doctor or bed is a transactional operation; discharge releases both resources atomically. SQL supplies the analytics. A separate Python service serves a reproducible model trained only on synthetic scenarios, and a human must review its suggestion before it changes priority. A knowledge assistant retrieves project documentation with sources and optionally uses a configured language model.â€
 
 Use this description only after studying and running the code. Be transparent about AI assistance and distinguish work you can explain from work you have not yet studied.
 
@@ -94,3 +94,4 @@ Use this description only after studying and running the code. Be transparent ab
 5. Run `train.py` and explain every metric from the saved report.
 6. Ask the knowledge assistant a supported and unsupported question.
 7. Run the full workflow tests and explain what PGlite cannot validate.
+

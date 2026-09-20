@@ -24,10 +24,10 @@ export default function AuthProvider({ children }) {
       setUser(null);
       setCsrf("");
     };
-    window.addEventListener("careflow:expired", expired);
+    window.addEventListener("AegisED:expired", expired);
     return () => {
       active = false;
-      window.removeEventListener("careflow:expired", expired);
+      window.removeEventListener("AegisED:expired", expired);
     };
   }, []);
   async function login(email, password) {
@@ -59,3 +59,4 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+

@@ -25,7 +25,7 @@
     "modelRetrained": false
   },
   "productionBrowser": {
-    "url": "https://careflow-app.onrender.com/login",
+    "url": "https://AegisED-app.onrender.com/login",
     "loginRendered": true,
     "unauthenticatedDashboardRedirect": "/login",
     "viewport": {
@@ -60,3 +60,4 @@
     "scope": "Results executed during release cleanup; final archive and patch are also validated before delivery."
   }
 }
+

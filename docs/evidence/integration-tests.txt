@@ -4,27 +4,27 @@ Database engine: PGlite through the serialized test adapter.
 RUN ['npm', 'run', 'migrate']
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> careflow-api@2.0.0 migrate
+> AegisED-api@2.0.0 migrate
 > node scripts/migrate.js
 
 Applied 001_core.sql
 RUN ['npm', 'run', 'migrate']
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> careflow-api@2.0.0 migrate
+> AegisED-api@2.0.0 migrate
 > node scripts/migrate.js
 
 RUN ['npm', 'run', 'seed']
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> careflow-api@2.0.0 seed
+> AegisED-api@2.0.0 seed
 > node scripts/seed.js
 
 Created 254 synthetic patients, 12 doctors, 20 beds, 4 accounts. Credentials: backend/.demo-credentials
 RUN ['npm', 'run', 'seed']
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> careflow-api@2.0.0 seed
+> AegisED-api@2.0.0 seed
 > node scripts/seed.js
 
 Synthetic seed already applied; no records changed
@@ -44,30 +44,31 @@ RUN ['python', '-m', 'pytest', '-q']
 RUN ['npm', 'test']
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> careflow-api@2.0.0 test
+> AegisED-api@2.0.0 test
 > node --test --test-concurrency=1 tests/*.test.js
 
-✔ health, database readiness, consistent unauthenticated error (901.725001ms)
-✔ authentication rejects wrong password without revealing account existence (207.092691ms)
-✔ CSRF and origin checks block writes (13.597331ms)
-✔ RBAC protects audit, users, doctor management and treatment (28.865871ms)
-✔ CRUD accepts age zero, validates IDs and payloads, supports PUT and PATCH (80.730801ms)
-✔ search, pagination, filtering and sorting are parameterized (42.157588ms)
-✔ complete emergency workflow synchronizes resources, timestamps and patient state (189.998579ms)
-✔ simultaneous doctor assignments have exactly one winner (52.861023ms)
-✔ one active case per patient is enforced by PostgreSQL (23.991417ms)
-✔ bed patient assignment can explicitly be cleared when no active case owns it (14.25458ms)
-✔ doctor read access and actions are scoped to assigned cases (27.235664ms)
-✔ analytics and dashboard reconcile with stored records (36.350678ms)
-✔ real ML gateway persists suggestions; explicit override records rationale (84.140472ms)
-✔ knowledge gateway cites real sources and abstains on unsupported input (17.395962ms)
-✔ audit visibility, no stack traces and API 404s (19.070359ms)
-✔ logout revokes the session in PostgreSQL (7.271276ms)
-ℹ tests 16
-ℹ suites 0
-ℹ pass 16
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 2027.005194
+âœ” health, database readiness, consistent unauthenticated error (901.725001ms)
+âœ” authentication rejects wrong password without revealing account existence (207.092691ms)
+âœ” CSRF and origin checks block writes (13.597331ms)
+âœ” RBAC protects audit, users, doctor management and treatment (28.865871ms)
+âœ” CRUD accepts age zero, validates IDs and payloads, supports PUT and PATCH (80.730801ms)
+âœ” search, pagination, filtering and sorting are parameterized (42.157588ms)
+âœ” complete emergency workflow synchronizes resources, timestamps and patient state (189.998579ms)
+âœ” simultaneous doctor assignments have exactly one winner (52.861023ms)
+âœ” one active case per patient is enforced by PostgreSQL (23.991417ms)
+âœ” bed patient assignment can explicitly be cleared when no active case owns it (14.25458ms)
+âœ” doctor read access and actions are scoped to assigned cases (27.235664ms)
+âœ” analytics and dashboard reconcile with stored records (36.350678ms)
+âœ” real ML gateway persists suggestions; explicit override records rationale (84.140472ms)
+âœ” knowledge gateway cites real sources and abstains on unsupported input (17.395962ms)
+âœ” audit visibility, no stack traces and API 404s (19.070359ms)
+âœ” logout revokes the session in PostgreSQL (7.271276ms)
+â„¹ tests 16
+â„¹ suites 0
+â„¹ pass 16
+â„¹ fail 0
+â„¹ cancelled 0
+â„¹ skipped 0
+â„¹ todo 0
+â„¹ duration_ms 2027.005194
+

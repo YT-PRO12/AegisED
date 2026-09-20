@@ -1,4 +1,4 @@
-# CareFlow AI — release readiness review
+# AegisED â€” release readiness review
 
 **Review date:** 2026-09-20. **Baseline:** GitHub `main`, commit `ea3eae30b3a6e5cb0480cef559c6396ddbf022a9`. The supplied clean archive matches every tracked baseline file after line-ending normalization; it also includes four intentionally untracked portable data/model/index files.
 
@@ -37,13 +37,13 @@
 
 ## GitHub evidence observed
 
-[Run 35460229313](https://github.com/YT-PRO12/CareFlow-AI/actions/runs/35460229313) on baseline commit `ea3eae30` completed successfully. GitHub's job metadata explicitly marks the native PostgreSQL integration/concurrency step and browser-verification step successful, along with lint/build and Python tests. [Captured job metadata](evidence/release-2026-09-20/github-detail.json) and [repository/run metadata](evidence/release-2026-09-20/public-github.json) are preserved.
+[Run 35460229313](https://github.com/YT-PRO12/AegisED-AI/actions/runs/35460229313) on baseline commit `ea3eae30` completed successfully. GitHub's job metadata explicitly marks the native PostgreSQL integration/concurrency step and browser-verification step successful, along with lint/build and Python tests. [Captured job metadata](evidence/release-2026-09-20/github-detail.json) and [repository/run metadata](evidence/release-2026-09-20/public-github.json) are preserved.
 
 This is evidence for that commit, not a claim that the newly prepared workflow has already run remotely. Native multi-connection locking is not certified by the separate local PGlite run. GitHub's current production deployment record targets the earlier `66c9d543` revision and the Render URL; verify the actual running revision in Render before tagging the release.
 
 ## Production checks actually executed
 
-The [HTTPS production login](https://careflow-app.onrender.com/login) rendered after an observed Render cold start. A direct unauthenticated visit to `/dashboard` returned to `/login`. The email and password fields expose visible labels; the fixed 1363 × 936 browser viewport had no horizontal page overflow. The [actual screenshot](screenshots/production-login-2026-09-20.jpg) contains no credentials or patient information.
+The [HTTPS production login](https://AegisED-app.onrender.com/login) rendered after an observed Render cold start. A direct unauthenticated visit to `/dashboard` returned to `/login`. The email and password fields expose visible labels; the fixed 1363 Ã— 936 browser viewport had no horizontal page overflow. The [actual screenshot](screenshots/production-login-2026-09-20.jpg) contains no credentials or patient information.
 
 Unauthenticated read-only HTTP checks returned:
 
@@ -67,9 +67,10 @@ The review confirmed server-side role/ownership checks, parameterized queries, t
 
 ## Remaining owner actions
 
-1. Apply the supplied patch on a branch, review the diff and commit with `chore: prepare CareFlow AI v1.0.0 release`.
+1. Apply the supplied patch on a branch, review the diff and commit with `chore: prepare AegisED v1.0.0 release`.
 2. Let the updated CI run for the final commit, then review and merge the changes. Confirm the intended deployed revision in Render.
 3. Complete the authorized synthetic production smoke checks in the checklist. Local Compose execution, real Ollama generation, load/penetration testing and backup/restore were not performed here.
 4. Publish v1.0.0 with the supplied notes only after those release checks pass. No authenticated GitHub write connection was available in this session, and the GitHub CLI was not installed.
 
 The inactive historical provider record need not be deleted for source correctness. If an obsolete integration still creates new statuses, disconnect it in the owner-controlled account; this review did not alter integrations. The application remains an educational synthetic-data prototype, not a clinical system.
+

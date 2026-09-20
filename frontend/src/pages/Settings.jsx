@@ -72,7 +72,7 @@ function UserAdmin() {
                   <td>{u.name}</td>
                   <td>{u.email}</td>
                   <td>{u.role}</td>
-                  <td>{u.doctor_id || "—"}</td>
+                  <td>{u.doctor_id || "â€”"}</td>
                 </tr>
               ))}
             </tbody>
@@ -156,7 +156,7 @@ export default function Settings() {
         },
       });
       toast("Password changed. Sign in again.");
-      window.dispatchEvent(new Event("careflow:expired"));
+      window.dispatchEvent(new Event("AegisED:expired"));
     } catch (e) {
       setError(e.message);
     } finally {
@@ -218,7 +218,7 @@ export default function Settings() {
               </p>
             )}
             <button className="btn primary" disabled={busy}>
-              {busy ? "Updating…" : "Update password"}
+              {busy ? "Updatingâ€¦" : "Update password"}
             </button>
           </form>
         </Panel>
@@ -227,3 +227,4 @@ export default function Settings() {
     </>
   );
 }
+

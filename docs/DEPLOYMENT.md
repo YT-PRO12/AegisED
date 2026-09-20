@@ -2,7 +2,7 @@
 
 ## Current production
 
-**[CareFlow AI on Render](https://careflow-app.onrender.com)** is the current portfolio application. The operator identifies the database as **Neon PostgreSQL** and the separate ML deployment as **Render FastAPI**. The main service serves the React bundle and Express API from one origin. Provider configuration and credentials are not stored in this repository.
+**[AegisED on Render](https://AegisED-app.onrender.com)** is the current portfolio application. The operator identifies the database as **Neon PostgreSQL** and the separate ML deployment as **Render FastAPI**. The main service serves the React bundle and Express API from one origin. Provider configuration and credentials are not stored in this repository.
 
 The 2026-09-20 review directly observed the HTTPS login page, `/api/health` and `/api/ready`. GitHub's successful `production` deployment record points to Render. These observations establish public reachability and database readiness, not a complete authenticated production regression. See [release evidence and limits](RELEASE_READINESS.md).
 
@@ -28,7 +28,7 @@ A Render deployment's actual build/start settings must be read in its dashboard;
 | Setting | Main application | Python service |
 |---|---|---|
 | `NODE_ENV` | `production` | `production` |
-| `APP_ORIGIN` | Exact public origin: `https://careflow-app.onrender.com` | Not used |
+| `APP_ORIGIN` | Exact public origin: `https://AegisED-app.onrender.com` | Not used |
 | `DATABASE_URL` | Neon connection string, secret environment value | Not used |
 | `DB_SSL`, `DB_SSL_CA` | Verified TLS/CA as required by the provider; do not disable certificate verification | Not used |
 | `ML_SERVICE_URL` | Actual reachable Render ML address, set privately | Not used |
@@ -70,3 +70,4 @@ Open `http://localhost:5000`. The generated environment and credentials stay loc
 ## Operational limitations
 
 Rate limits are process-local; multiple API replicas need a shared limiter. Sessions are already stored in PostgreSQL. Database administrators can alter audit records; they are not a tamper-proof ledger. Staff deactivation/password recovery, production load testing, alerting, retention policies and backup/restore drills remain outside this prototype. The app uses synthetic data and does not establish clinical validity or regulatory compliance. Real Ollama generation remains optional and unverified in this review.
+

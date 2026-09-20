@@ -35,7 +35,7 @@ export default function Login() {
           <span className="brand-icon">
             <HeartPulse />
           </span>
-          <span>CareFlow AI</span>
+          <span>AegisED</span>
         </div>
         <div className="login-pitch">
           <span className="eyebrow">CLARITY WHEN IT MATTERS</span>
@@ -62,19 +62,19 @@ export default function Login() {
             </span>
           </div>
         </div>
-        <small>PORTFOLIO PROTOTYPE · SYNTHETIC DATA ONLY</small>
+        <small>PORTFOLIO PROTOTYPE Â· SYNTHETIC DATA ONLY</small>
       </div>
       <div className="login-form-wrap">
         <form className="login-form" onSubmit={submit}>
           <span className="eyebrow">YOUR OPERATIONS WORKSPACE</span>
           <h2>Welcome back.</h2>
-          <p>Sign in to your CareFlow account.</p>
+          <p>Sign in to your AegisED account.</p>
           <Field
             label="Email address"
             name="email"
             type="email"
             autoComplete="username"
-            placeholder="you@careflow.demo"
+            placeholder="you@AegisED.demo"
             required
           />
           <Field
@@ -91,7 +91,7 @@ export default function Login() {
             </p>
           )}
           <button className="btn primary full" disabled={busy}>
-            {busy ? "Signing in…" : "Sign in to workspace"}
+            {busy ? "Signing inâ€¦" : "Sign in to workspace"}
             <ArrowRight size={17} />
           </button>
           <div className="login-note">
@@ -106,3 +106,4 @@ export default function Login() {
     </div>
   );
 }
+

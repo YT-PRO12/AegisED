@@ -1,4 +1,4 @@
-name: Verify CareFlow
+name: Verify AegisED
 on: [push, pull_request]
 permissions:
   contents: read
@@ -10,15 +10,15 @@ jobs:
       postgres:
         image: postgres:18-alpine
         env:
-          POSTGRES_DB: careflow_test
+          POSTGRES_DB: AegisED_test
           POSTGRES_HOST_AUTH_METHOD: trust
         ports: ["5432:5432"]
         options: >-
-          --health-cmd "pg_isready -U postgres -d careflow_test"
+          --health-cmd "pg_isready -U postgres -d AegisED_test"
           --health-interval 5s --health-timeout 5s --health-retries 20
     env:
       NODE_ENV: test
-      DATABASE_URL: postgresql://postgres@127.0.0.1:5432/careflow_test
+      DATABASE_URL: postgresql://postgres@127.0.0.1:5432/AegisED_test
       APP_ORIGIN: http://127.0.0.1:5000
       ML_SERVICE_URL: http://127.0.0.1:8000
       DEMO_SEED: "true"
@@ -56,14 +56,14 @@ jobs:
       - name: Start AI service
         working-directory: ml-service
         run: |
-          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/careflow-ml.log 2>&1 &
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 > /tmp/AegisED-ml.log 2>&1 &
           python ../scripts/wait_for.py http://127.0.0.1:8000/health
       - name: Native PostgreSQL integration and concurrency tests
         run: npm run test:api
       - run: npx playwright install --with-deps chromium
       - name: Browser verification
         run: |
-          npm start --prefix backend > /tmp/careflow-api.log 2>&1 &
+          npm start --prefix backend > /tmp/AegisED-api.log 2>&1 &
           python scripts/wait_for.py http://127.0.0.1:5000/api/ready
           npm run test:browser
       - uses: actions/upload-artifact@v4
@@ -74,3 +74,4 @@ jobs:
             docs/screenshots
             docs/browser-results.json
             ml-service/reports
+

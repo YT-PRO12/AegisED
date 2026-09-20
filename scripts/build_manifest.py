@@ -30,10 +30,11 @@ def deliverable_files():
 
 def main():
     files = [{"path": f.relative_to(ROOT).as_posix(), "bytes": f.stat().st_size, "sha256": sha256(f.read_bytes()).hexdigest()} for f in deliverable_files()]
-    manifest = {"project": "CareFlow AI", "version": "1.0.0", "createdAt": datetime.now(timezone.utc).isoformat(), "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.", "files": files}
+    manifest = {"project": "AegisED", "version": "1.0.0", "createdAt": datetime.now(timezone.utc).isoformat(), "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.", "files": files}
     (ROOT / "docs/package-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Recorded {len(files)} files. Run scripts/verify_package.py next.")
 
 
 if __name__ == "__main__":
     main()
+

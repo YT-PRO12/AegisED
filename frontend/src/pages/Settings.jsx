@@ -218,7 +218,7 @@ export default function Settings() {
               </p>
             )}
             <button className="btn primary" disabled={busy}>
-              {busy ? "Updatingâ€¦" : "Update password"}
+              {busy ? "Updating…" : "Update password"}
             </button>
           </form>
         </Panel>

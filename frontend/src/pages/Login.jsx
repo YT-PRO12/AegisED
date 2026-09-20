@@ -62,7 +62,7 @@ export default function Login() {
             </span>
           </div>
         </div>
-        <small>PORTFOLIO PROTOTYPE Â· SYNTHETIC DATA ONLY</small>
+        <small>PORTFOLIO PROTOTYPE · SYNTHETIC DATA ONLY</small>
       </div>
       <div className="login-form-wrap">
         <form className="login-form" onSubmit={submit}>
@@ -91,7 +91,7 @@ export default function Login() {
             </p>
           )}
           <button className="btn primary full" disabled={busy}>
-            {busy ? "Signing inâ€¦" : "Sign in to workspace"}
+            {busy ? "Signing in…" : "Sign in to workspace"}
             <ArrowRight size={17} />
           </button>
           <div className="login-note">

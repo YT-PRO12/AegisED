@@ -19,7 +19,7 @@ const fields = [
   ["heartRate", "Heart rate", "bpm", 25, 250, 1],
   ["systolicBP", "Systolic blood pressure", "mmHg", 50, 250, 1],
   ["respiratoryRate", "Respiratory rate", "breaths/min", 5, 60, 1],
-  ["temperature", "Temperature", "Â°C", 30, 43, 0.1],
+  ["temperature", "Temperature", "°C", 30, 43, 0.1],
   ["oxygenSaturation", "Oxygen saturation", "%", 50, 100, 0.1],
 ];
 export default function DecisionSupport() {
@@ -120,7 +120,7 @@ export default function DecisionSupport() {
                   <option value="">Select an active case</option>
                   {cases.data?.map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.patient_name} Â· Case #{c.id} Â· {c.patient_age} years
+                      {c.patient_name} · Case #{c.id} · {c.patient_age} years
                     </option>
                   ))}
                 </select>
@@ -130,7 +130,7 @@ export default function DecisionSupport() {
               {fields.map(([key, label, unit, min, max, step]) => (
                 <Field
                   key={key}
-                  label={`${label} Â· ${unit}`}
+                  label={`${label} · ${unit}`}
                   name={key}
                   type="number"
                   min={min}
@@ -162,7 +162,7 @@ export default function DecisionSupport() {
               }
             >
               <BrainCircuit size={17} />
-              {busy ? "Evaluatingâ€¦" : "Generate estimate"}
+              {busy ? "Evaluating…" : "Generate estimate"}
               <ArrowRight size={16} />
             </button>
           </form>
@@ -179,7 +179,7 @@ export default function DecisionSupport() {
               </div>
               <h2 className="prediction-title">{result.predictedPriority}</h2>
               <p className="muted">
-                {result.modelType.replaceAll("_", " ")} Â· {result.modelVersion}
+                {result.modelType.replaceAll("_", " ")} · {result.modelVersion}
               </p>
               <div className="score-list">
                 {Object.entries(result.classScores).map(([label, value]) => (

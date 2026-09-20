@@ -1,7 +1,7 @@
 {
   "project": "AegisED",
   "version": "1.0.0",
-  "createdAt": "2026-09-20T11:35:46.375042+00:00",
+  "createdAt": "2026-09-20T11:39:35.002420+00:00",
   "scope": "Delivered file bytes, excluding this manifest; not a signature or runtime certification. Source-only verification explicitly skips four Git-ignored portable artifacts.",
   "files": [
     {
@@ -611,8 +611,8 @@
     },
     {
       "path": "frontend/src/pages/DecisionSupport.jsx",
-      "bytes": 14330,
-      "sha256": "6a3c6d29f8883448da656e2f74b7857b0d84ed26d6fb0fdade6ad0bdc573778a"
+      "bytes": 14316,
+      "sha256": "bc52da36f3e486eafa852d58ad92e4ff903e92dd22d3d4f5a220b4581f366779"
     },
     {
       "path": "frontend/src/pages/Doctors.jsx",
@@ -626,13 +626,13 @@
     },
     {
       "path": "frontend/src/pages/Knowledge.jsx",
-      "bytes": 5755,
-      "sha256": "aacd06c6a3b9817846854d9fccf2242f5af157451ae1cc902594a9617f3174ae"
+      "bytes": 5745,
+      "sha256": "a7d578f655f69430f15fc6d5c83a0300463c41654ee293f7914616b2493fa3a1"
     },
     {
       "path": "frontend/src/pages/Login.jsx",
-      "bytes": 3284,
-      "sha256": "fa4f63a3b8a3d48d13978c0688084cb8efdc09d6d1f83d350774eae201723ba5"
+      "bytes": 3278,
+      "sha256": "e177fb47d3604cfda0704ee6bc5e45803a5388cc4c49ab3caac7ec47ca8419cd"
     },
     {
       "path": "frontend/src/pages/PatientDetail.jsx",
@@ -646,8 +646,8 @@
     },
     {
       "path": "frontend/src/pages/Settings.jsx",
-      "bytes": 6762,
-      "sha256": "0d03733654cad26b97c18824bdc36046e95ed10f45584e090fe9c29b9e1708d8"
+      "bytes": 6758,
+      "sha256": "82aaa1045d49d29e70c08a98dcb82dc0913e821d1bafd1a74080b8013b0d176f"
     },
     {
       "path": "frontend/src/services/api.js",

@@ -68,7 +68,7 @@ export default function Knowledge() {
             >
               <textarea
                 aria-label="Your question"
-                placeholder="Ask an operational questionâ€¦"
+                placeholder="Ask an operational question…"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 required
@@ -81,7 +81,7 @@ export default function Knowledge() {
                 aria-label="Ask question"
                 disabled={busy}
               >
-                {busy ? "Searchingâ€¦" : <ArrowUp size={20} />}
+                {busy ? "Searching…" : <ArrowUp size={20} />}
               </button>
             </form>
             {error && (
@@ -140,7 +140,7 @@ export default function Knowledge() {
                       </summary>
                       <p>{s.text}</p>
                       <small>
-                        {s.path} Â· {s.id}
+                        {s.path} · {s.id}
                       </small>
                     </details>
                   ))

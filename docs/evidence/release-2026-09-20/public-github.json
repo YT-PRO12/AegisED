@@ -1,0 +1,60 @@
+{
+  "repository": {
+    "full_name": "YT-PRO12/CareFlow-AI",
+    "default_branch": "main",
+    "pushed_at": "2026-09-19T18:08:14Z",
+    "html_url": "https://github.com/YT-PRO12/CareFlow-AI",
+    "homepage": "https://careflow-app.onrender.com"
+  },
+  "runs": [
+    {
+      "id": 35460229313,
+      "head_sha": "ea3eae30b3a6e5cb0480cef559c6396ddbf022a9",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YT-PRO12/CareFlow-AI/actions/runs/35460229313",
+      "created_at": "2026-09-19T18:08:16Z"
+    },
+    {
+      "id": 35459010599,
+      "head_sha": "66c9d5439fa9443b75b2c3152fa6f3fae3de8611",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YT-PRO12/CareFlow-AI/actions/runs/35459010599",
+      "created_at": "2026-09-19T17:44:24Z"
+    },
+    {
+      "id": 35458536319,
+      "head_sha": "d2dd78c0af2ba2b3b7fff48007a90907a06db4e3",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YT-PRO12/CareFlow-AI/actions/runs/35458536319",
+      "created_at": "2026-09-19T17:35:01Z"
+    },
+    {
+      "id": 35453229992,
+      "head_sha": "d2dd78c0af2ba2b3b7fff48007a90907a06db4e3",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/YT-PRO12/CareFlow-AI/actions/runs/35453229992",
+      "created_at": "2026-09-19T15:53:49Z"
+    }
+  ],
+  "deployments": [
+    {
+      "id": 6544054641,
+      "sha": "ea3eae30b3a6e5cb0480cef559c6396ddbf022a9",
+      "environment": "clever-celebration / production",
+      "created_at": "2026-09-19T18:08:18Z",
+      "statuses_url": "https://api.github.com/repos/YT-PRO12/CareFlow-AI/deployments/6544054641/statuses"
+    },
+    {
+      "id": 6544035250,
+      "sha": "66c9d5439fa9443b75b2c3152fa6f3fae3de8611",
+      "environment": "production",
+      "created_at": "2026-09-19T18:06:17Z",
+      "statuses_url": "https://api.github.com/repos/YT-PRO12/CareFlow-AI/deployments/6544035250/statuses"
+    }
+  ],
+  "releases": []
+}

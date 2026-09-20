@@ -5,6 +5,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:18-alpine
@@ -29,13 +30,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Verify source package and repository hygiene
+        run: |
+          python scripts/verify_package.py --source-only
+          python scripts/check_repository.py
       - name: Generate ephemeral test secrets
         run: |
           python - <<'PY'
           import os,secrets
           with open(os.environ['GITHUB_ENV'],'a') as file:
               for key in ['DEMO_PASSWORD','ML_SERVICE_TOKEN']:
-                  file.write(f'{key}={secrets.token_urlsafe(32)}\n')
+                  value=secrets.token_urlsafe(32)
+                  print(f'::add-mask::{value}')
+                  file.write(f'{key}={value}\n')
           PY
       - run: npm ci && npm run install:apps
       - run: pip install -r ml-service/requirements.txt

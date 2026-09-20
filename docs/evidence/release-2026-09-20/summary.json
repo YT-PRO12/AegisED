@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-20",
+  "baselineCommit": "ea3eae30b3a6e5cb0480cef559c6396ddbf022a9",
+  "freshLocal": {
+    "dependencyInstall": "npm ci passed in root/backend/frontend",
+    "lint": "passed",
+    "productionBuild": {
+      "status": "passed",
+      "modules": 2489
+    },
+    "api": {
+      "passed": 16,
+      "failed": 0,
+      "engine": "PGlite serialized test adapter"
+    },
+    "python": {
+      "passed": 9,
+      "failed": 0,
+      "deprecationWarnings": 2
+    },
+    "runtimeNpmAudit": {
+      "backend": 0,
+      "frontend": 0
+    },
+    "modelRetrained": false
+  },
+  "productionBrowser": {
+    "url": "https://careflow-app.onrender.com/login",
+    "loginRendered": true,
+    "unauthenticatedDashboardRedirect": "/login",
+    "viewport": {
+      "width": 1363,
+      "height": 936,
+      "documentWidth": 1363
+    },
+    "observedApplicationConsoleErrors": 0,
+    "extensionMetadataErrorsExcluded": 3,
+    "coldStartObserved": true,
+    "authenticatedFlows": "not executed; no production credentials supplied",
+    "mobileViewport": "not independently resized/tested in cloud browser"
+  },
+  "githubCI": {
+    "runId": 35460229313,
+    "commit": "ea3eae30b3a6e5cb0480cef559c6396ddbf022a9",
+    "conclusion": "success",
+    "nativePostgresAndBrowserSteps": "success"
+  },
+  "applicationAndArtifactsPreserved": 91,
+  "finalValidation": {
+    "fullManifestFiles": 169,
+    "sourceManifestFiles": 165,
+    "relativeDocumentationLinks": 75,
+    "gitTrackingAndIgnoreChecks": "passed",
+    "stagedSensitiveFiles": 0,
+    "gitDiffCheck": "passed",
+    "pythonSyntaxFiles": 13,
+    "workflowYaml": "passed",
+    "nodeVersion": "v24.19.0",
+    "DockerCLIAvailable": false,
+    "scope": "Results executed during release cleanup; final archive and patch are also validated before delivery."
+  }
+}

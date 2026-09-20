@@ -1,239 +1,524 @@
-# CareFlow AI
+<div align="center">
 
-**A clear view of emergency operations, with human-reviewed decision support.**
+# 🏥 CareFlow AI
 
-React + Express + PostgreSQL + FastAPI. An educational portfolio prototype using synthetic records and a reproducible machine-learning experiment. **Not for clinical use, diagnosis, or real patient information.**
+### Intelligent Emergency Operations & Decision-Support Platform
 
-![CareFlow overview](docs/screenshots/dashboard-desktop.png)
+**A production-deployed full-stack platform combining emergency operations, transaction-safe resource allocation, human-reviewed machine learning, analytics, role-based access control, auditability, and grounded knowledge retrieval.**
 
-## Problem
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-Open_CareFlow-2ea44f?style=for-the-badge)](https://careflow-app.onrender.com)
 
-Patient queues, resource availability and treatment status often sit in separate views. A dashboard alone cannot prevent conflicting assignments, explain how a case progressed, or establish who changed a priority.
+![React](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=nodedotjs&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-ML_Service-009688?logo=fastapi&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+![Render](https://img.shields.io/badge/Deployment-Render-000000?logo=render&logoColor=white)
 
-## Solution
+[Live Demo](https://careflow-app.onrender.com) •
+[Architecture](#-system-architecture) •
+[ML System](#-human-in-the-loop-ml-decision-support) •
+[Security](#-security--access-control) •
+[Deployment](#-production-deployment)
 
-CareFlow connects registration, resource assignment, treatment and discharge in one transaction-backed workflow. It adds database-derived analytics, a synthetic priority model, explicit human review, and cited operational knowledge retrieval. The existing React/Express/PostgreSQL project was extended; its endpoint paths, entity names and `{success,data}` response convention remain.
+</div>
 
-## Features
+---
 
-| Module | Implemented behavior |
-|---|---|
-| Overview | Database counts, actual waiting queue, current beds, arrival chart, periodic refresh |
-| Patient directory | Validated registration, edits, delete protections, search, filters, pagination |
-| Patient detail | Case history, recorded vitals, timeline, predictions and accessible case activity |
-| Emergency operations | Intake, manual resource choices, operational suggestions, guarded transitions |
-| Doctors and beds | Administration, availability views, protected assigned resources, explicit bed clearing |
-| Analytics | UTC date filters, arrivals, priorities, wait/treatment samples, workload, occupancy and utilization |
-| Decision support | Real model inference, model version, local input sensitivity, accept/override/review |
-| Knowledge | Document chunks, persistent latent-semantic vectors, cosine retrieval, references, abstention |
-| Staff access | Database sessions, four roles, scoped doctor access, staff creation, password change |
-| Audit | Transactional event records, administrator viewer, filtered event search |
+> [!IMPORTANT]
+> **Responsible AI:** CareFlow AI is an engineering and educational demonstration. Its machine-learning subsystem is evaluated on synthetic scenarios and is **not clinically validated** or intended for autonomous diagnosis, triage, or medical decision-making.
 
-See [completion status](docs/COMPLETION_STATUS.md), [initial audit](docs/AUDIT.md), and [test evidence](docs/VERIFICATION.md).
+## 🚀 Live Production Demo
 
-## Demo
+### **[Launch CareFlow AI →](https://careflow-app.onrender.com)**
 
-No live deployment is claimed. The source is prepared for a Docker host. Local verification uses the actual Express and FastAPI processes; the workspace's OS restrictions required the PostgreSQL WASM test adapter. Native PostgreSQL verification is configured in CI and remains a release gate.
+CareFlow AI is deployed using **Render + Neon PostgreSQL**, with a separately deployed **FastAPI ML service**.
 
-The reproducible seed creates **254 synthetic patients/cases, 12 doctors, 20 beds and four accounts**. It creates 240 historical cases and 14 active cases. It refuses to mix demonstration data into an existing patient database. No fixed passwords are published. Account emails are `admin@careflow.demo`, `doctor@careflow.demo`, `nurse@careflow.demo`, and `reception@careflow.demo`; read the generated local credentials after seeding.
+The production environment demonstrates the complete workflow from patient registration and emergency intake through human-reviewed decision support, doctor/bed allocation, treatment, discharge, analytics, and auditability.
 
-## Screenshots
+> Free hosting may require a short cold start after a period of inactivity.
 
-[Emergency operations](docs/screenshots/emergency-desktop.png) · [Analytics](docs/screenshots/analytics-desktop.png) · [Decision support](docs/screenshots/decision-support-desktop.png) · [Knowledge](docs/screenshots/knowledge-desktop.png) · [Mobile overview](docs/screenshots/dashboard-390.png)
+---
 
-## Architecture
+## ✨ Why CareFlow AI?
 
-```mermaid
-flowchart TD
-    UI["React application"] --> API["Express API gateway"]
-    API --> AUTH["Sessions, RBAC and validation"]
-    AUTH --> WF["Transactional workflows"]
-    WF --> DB["PostgreSQL"]
-    AUTH --> AI["Private FastAPI service"]
-    AI --> MODEL["scikit-learn pipeline"]
-    AI --> SEARCH["Latent-semantic vector index"]
-    SEARCH --> DOCS["Operational source documents"]
-    SEARCH --> LLM["Optional Ollama generation"]
+Many portfolio healthcare applications stop at CRUD operations and static dashboards.
+
+CareFlow explores the engineering challenges behind a more complete operational system:
+
+- 🚑 End-to-end emergency workflow management
+- 🔒 Transaction-safe doctor and bed allocation
+- 👥 Backend-enforced role-based access control
+- 🧠 Human-in-the-loop ML decision support
+- 🔍 Explainable recommendation review and override
+- 📚 Grounded knowledge retrieval with source attribution
+- 📊 Database-driven operational analytics
+- 📝 End-to-end audit logging
+- 🐳 Containerized application architecture
+- ☁️ Multi-service cloud deployment
+
+---
+
+## 🖥️ Product Preview
+
+> Add `docs/screenshots/dashboard-desktop.png` using the screenshot instructions below.
+
+<p align="center">
+  <img src="docs/screenshots/dashboard-desktop.png"
+       alt="CareFlow AI emergency operations dashboard"
+       width="100%" />
+</p>
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                              USER
+                               │
+                               │ HTTPS
+                               ▼
+                   ┌─────────────────────────┐
+                   │     React Frontend      │
+                   │      Tailwind CSS       │
+                   └────────────┬────────────┘
+                                │
+                                ▼
+                   ┌─────────────────────────┐
+                   │    Express API Layer    │
+                   │                         │
+                   │ Auth • RBAC • Audit     │
+                   │ Validation • Workflows  │
+                   └─────────┬───────┬───────┘
+                             │       │
+                ┌────────────┘       └──────────────┐
+                ▼                                   ▼
+     ┌─────────────────────┐              ┌─────────────────────┐
+     │   Neon PostgreSQL   │              │   FastAPI ML        │
+     │                     │              │   Service           │
+     │ • Patients          │              │                     │
+     │ • Emergency Cases   │              │ • scikit-learn      │
+     │ • Doctors / Beds    │              │ • Prediction API    │
+     │ • Users / Sessions  │              │ • Model metadata    │
+     │ • Audit Logs        │              │ • Evaluation        │
+     └─────────────────────┘              └─────────────────────┘
 ```
 
-The browser talks only to Express. Express serves the production frontend and calls the private Python service. Core operations work if the AI service is unavailable. No Redis, event broker or separate vector database is added for this small workload.
+### Why this architecture?
 
-## Technology stack
+The browser does not communicate directly with PostgreSQL or the ML service.
 
-- **Frontend:** React, JavaScript, Vite, Tailwind CSS, React Router, Lucide icons, Recharts.
-- **API:** Node.js, Express 5, `pg`, Zod, Helmet, CORS, express-rate-limit; built-in scrypt password hashing.
-- **Database:** PostgreSQL, numbered SQL migrations, transactional audit, partial unique indexes.
-- **Data science:** pandas, NumPy, scikit-learn, matplotlib; stratified splits and persisted pipeline.
-- **AI service:** FastAPI, Pydantic; TF-IDF + truncated SVD vectors; optional Ollama generation.
-- **Verification:** Node test runner, pytest, Playwright; GitHub Actions with PostgreSQL 18.
+**Express acts as the application gateway**, centralizing authentication, authorization, validation, auditing, workflow rules, and access to internal services.
 
-## Database design
+This keeps security-sensitive and operational logic on the server rather than trusting the browser.
 
-Core tables retain the original names and identifiers. Added fields include created/updated timestamps, workflow stage timestamps and JSONB vitals. `users`, `sessions`, `audit_logs`, `predictions`, `schema_migrations` and `seed_runs` support access, traceability and reproducibility.
+---
 
-### ER diagram
+## 🚑 End-to-End Emergency Workflow
 
-```mermaid
-erDiagram
-    PATIENTS ||--o{ EMERGENCY_CASES : has
-    DOCTORS ||--o{ EMERGENCY_CASES : assigned
-    BEDS ||--o{ EMERGENCY_CASES : allocated
-    DOCTORS o|--o| USERS : linked
-    USERS ||--o{ SESSIONS : owns
-    USERS ||--o{ AUDIT_LOGS : performs
-    EMERGENCY_CASES ||--o{ PREDICTIONS : receives
-    USERS ||--o{ PREDICTIONS : requests
+```text
+Patient Registration
+        │
+        ▼
+Emergency Intake
+        │
+        ▼
+ML Decision Support
+        │
+        ▼
+Human Review
+        │
+        ▼
+Doctor Assignment
+        │
+        ▼
+Bed Assignment
+        │
+        ▼
+Treatment Started
+        │
+        ▼
+Treatment Completed
+        │
+        ▼
+Patient Discharged
+        │
+        ▼
+Doctor + Bed Released
 ```
 
-Partial unique indexes prevent multiple active cases using the same patient, doctor or bed. `CHECK` constraints enforce state vocabulary and required resources. Foreign keys protect related history. All SQL values use parameters; dynamic column names come only from fixed allowlists. Existing data is never dropped by the migration; conflicting legacy records stop it with a rollback. Back up and review an existing database before migration.
+The workflow is database-backed rather than simulated with frontend state.
 
-## Emergency workflow
+---
 
-| Action | Required state | Atomic changes |
-|---|---|---|
-| Create case | Registered patient, no active case | Waiting case and patient priority/status |
-| Assign doctor | Waiting + available doctor | Assigned case, Busy doctor, timestamp |
-| Assign bed | Assigned doctor, no existing bed | Occupied bed, patient link, timestamp |
-| Start treatment | Assigned doctor and bed | In Treatment, start timestamp |
-| Complete treatment | In Treatment | Completed, completion timestamp |
-| Discharge | Completed | Discharged, doctor available, bed available and cleared |
+## 🔒 Transaction-Safe Resource Allocation
 
-Each action locks the case and relevant resource rows, checks current state, updates records, writes an audit event and commits as one transaction. Repeated or out-of-order actions return a conflict. General edit routes cannot free active resources or directly set workflow status. Completed/discharged history cannot be deleted through the case endpoint; deletion is limited to unused waiting cases.
+Doctor and bed assignment can create race conditions when multiple users operate concurrently.
 
-## Analytics
+CareFlow protects these operations with PostgreSQL transactions and row-level locking.
 
-PostgreSQL performs aggregations. Time boundaries are explicit UTC. Wait time means arrival to doctor assignment and excludes still-waiting cases; the sample count is returned. Treatment duration requires both start and completion. Discharges are measured within the selected **arrival cohort**, not by discharge date. Occupancy is a current snapshot; utilization uses overlapping occupied hours and assumes the current bed inventory existed throughout the period. These definitions are visible in the UI and corpus.
+```text
+BEGIN
+   │
+   ▼
+SELECT ... FOR UPDATE
+   │
+   ▼
+Validate Resource Availability
+   │
+   ▼
+Update Emergency Case
+   │
+   ▼
+Update Doctor / Bed
+   │
+   ▼
+Write Audit Event
+   │
+   ▼
+COMMIT
+```
 
-## ML pipeline
+If an operation fails, the transaction is rolled back so the emergency case and resource state remain consistent.
 
-The generator produces **6,000 artificial adult scenarios** with overlapping class-conditional distributions and missing vital values. Labels are invented categories used to teach ML evaluation. No clinical triage thresholds are asserted. Age is 18–89; no pediatric extrapolation is allowed.
+This prevents concurrent requests from successfully assigning the same resource.
 
-A stratified 70/15/15 split gives 4,200 training, 900 validation and 900 test rows. Median imputation and scaling fit on training data only. Four candidates are compared using validation macro F1. The chosen model is evaluated once on the held-out test partition. The dataset hash, split indices, library versions, EDA, full reports and confusion matrix are saved.
+---
 
-### Actual model evaluation
+## 🧠 Human-in-the-Loop ML Decision Support
 
-| Held-out synthetic test metric | Measured result |
+CareFlow's ML subsystem provides **assistive recommendations**, not autonomous decisions.
+
+```text
+Patient Features
+       │
+       ▼
+ML Pipeline
+       │
+       ▼
+Recommendation
+       │
+       ▼
+Human Review
+   ┌───────┼────────┐
+   ▼       ▼        ▼
+ Accept  Review  Override
+                    │
+                    ▼
+              Reason Required
+                    │
+                    ▼
+                 Audit Log
+```
+
+### Model Evaluation
+
+| Metric | Held-Out Synthetic Test Result |
 |---|---:|
-| Selected model | Logistic regression |
-| Accuracy | 0.8167 |
-| Macro F1 | 0.7893 |
-| Weighted F1 | 0.8183 |
-| Critical-class recall | 0.7820 |
-| Multiclass OVR ROC AUC | 0.9389 |
+| Accuracy | **0.8167** |
+| Macro F1 | **0.7893** |
+| Weighted F1 | **0.8183** |
+| Critical Recall | **0.7820** |
+| ROC-AUC | **0.9389** |
+| Log Loss | **0.4209** |
 
-These measure recovery of the synthetic generator, **not performance on real patients**. See [model card](docs/MODEL_CARD.md), [machine-readable metrics](ml-service/reports/metrics.json), [EDA](ml-service/reports/eda.json), and [evaluation figure](ml-service/reports/evaluation.png).
+### Dataset
 
-## AI decision support
+| Split | Synthetic Scenarios |
+|---|---:|
+| Training | 4,200 |
+| Validation | 900 |
+| Test | 900 |
+| **Total** | **6,000** |
 
-Predictions record the input snapshot, pipeline version, timestamp and uncalibrated class scores. No confidence or clinical risk percentage is invented. A local sensitivity probe replaces each feature with its training median and measures the chosen class score change; this is not SHAP or causal attribution.
+Four candidate approaches were compared, with the final model selected using validation performance before held-out test evaluation.
 
-Only an administrator or the assigned doctor can review a pending prediction. Accept applies the suggestion; override requires a new priority and reason; review records acknowledgement without applying a suggestion. Review affects case and patient priority together. Older predictions cannot supersede newer ones and discharged cases are read-only.
+> These metrics demonstrate the ML engineering and evaluation pipeline on **synthetic engineering-demo data**. They do not establish clinical validity.
 
-## RAG architecture
+---
 
-Five project-authored CC0 operational documents are split by headings. Each chunk has a stable ID, document path, title, section, license and text. TF-IDF followed by truncated SVD produces dense latent-semantic vectors; the index and metadata are persisted with a content hash. Queries use the same transform and cosine similarity with a minimum threshold.
+## 📚 Grounded Knowledge Assistant
 
-**Default mode is explicitly retrieval-only:** actual excerpts plus sources. Set `OLLAMA_URL` and `OLLAMA_MODEL` to enable the implemented retrieval-augmented generation path with a real model. That path uses retrieved context, requires source IDs and verbatim supporting quotes, and falls back to excerpts if generation fails or evidence cannot be verified. Quote validation does not prove semantic entailment.
+CareFlow includes an operational knowledge retrieval subsystem designed to ground answers in indexed source material.
 
-The included 10-query author-written retrieval check measured hit@3 **1.0** and MRR@3 **0.8833**. It is a small development check, not an independent benchmark. The real LLM path is implemented but was not run against a downloaded model in this workspace. Read [knowledge documentation](docs/KNOWLEDGE.md).
+```text
+Trusted Documents
+       │
+       ▼
+Chunking + Metadata
+       │
+       ▼
+TF-IDF
+       │
+       ▼
+Truncated SVD
+       │
+       ▼
+Semantic Representation
+       │
+       ▼
+Cosine Similarity
+       │
+       ▼
+Relevance Threshold
+       │
+       ▼
+Retrieved Evidence
+       │
+       ├──────────────► Source Attribution
+       │
+       ▼
+Grounded Response
 
-## Authentication & RBAC
-
-| Capability | Admin | Doctor | Nurse | Reception |
-|---|:---:|:---:|:---:|:---:|
-| Patient/case lists | All | Assigned only | All | All |
-| Registration/intake | Yes | No | Yes | Yes |
-| Allocate doctor/bed | Yes | No | Yes | No |
-| Treatment/discharge | Yes | Assigned only | No | No |
-| Request prediction | Yes | Assigned only | Yes | No |
-| Accept/override/review | Yes | Assigned only | No | No |
-| Analytics | Yes | No | Yes | No |
-| Staff/audit administration | Yes | No | No | No |
-
-Opaque random session tokens are hashed in PostgreSQL. Cookies are HTTP-only and SameSite Strict, with Secure and `__Host-` naming in production. The anti-CSRF token is held in memory. Password changes revoke sessions. There is no public registration or token storage in localStorage.
-
-## Security
-
-Zod validation, bounded bodies, ID validation, strict write-origin checks, server-side authorization, rate limiting, parameterized SQL, CSP/security headers, generated request IDs, safe errors and secrets ignored by Git. Database SSL verifies certificates when enabled. The Python token stays between servers. Rate limiting is in-process, so multi-replica deployment needs a shared limiter. This is not a medical compliance certification or a security penetration-test claim.
-
-## Testing
-
-```bash
-npm ci
-npm run install:apps
-npm run lint
-npm run build
-# With a dedicated careflow_test PostgreSQL database and test environment:
-npm run migrate --prefix backend
-npm run seed --prefix backend
-npm run test:api
-cd ml-service
-python train.py
-python evaluate_retrieval.py
-python -m pytest -q
+Insufficient Evidence ─────────► Abstain
 ```
 
-The API tests reject a database URL that does not contain `careflow_test`. They create synthetic records and must not target a production database. Use [testing instructions](docs/TESTING.md) for full environment and browser commands. [Verification](docs/VERIFICATION.md) distinguishes executed checks from unexecuted release gates.
+### Reliability Features
 
-## Local setup — Docker (recommended)
+- Evidence-grounded retrieval
+- Source attribution
+- Relevance thresholding
+- Abstention when supporting evidence is insufficient
+- Optional generation layer
 
-Requires Docker with Compose, and Python only to generate the environment file.
+---
 
-```bash
-python scripts/setup_env.py
-docker compose up --build -d
-docker compose exec -e DEMO_SEED=true api npm run seed
-docker compose exec api cat .demo-credentials
-```
+## 🔐 Security & Access Control
 
-Open **http://localhost:5000** and sign in using a generated demo account. The database volume persists across restarts. `docker compose down` keeps data; do not use `down -v` unless you intend to discard it.
+Authorization is enforced by the backend rather than relying only on hidden frontend controls.
 
-For an existing local PostgreSQL installation and Windows PowerShell, see [local setup](docs/LOCAL_SETUP.md). Docker images and hosted production deployment could not be executed inside this workspace; their build/run validation remains a release gate.
+### Security Controls
 
-## Environment variables
+- Backend-enforced RBAC
+- Server-side session management
+- HttpOnly authentication cookies
+- Password hashing
+- Request validation
+- Parameterized SQL
+- Security headers
+- Rate limiting
+- Environment-based secret management
+- Audit logging
+- Transactional database operations
 
-| Variable | Purpose |
+### Application Roles
+
+| Role | Primary Scope |
 |---|---|
-| `DATABASE_URL` / legacy `DB_*` | PostgreSQL connection; existing split variables remain supported |
-| `APP_ORIGIN` | Exact frontend origin; HTTPS required in production |
-| `NODE_ENV` | `development`, `test`, or `production` |
-| `ML_SERVICE_URL`, `ML_SERVICE_TOKEN` | Private AI gateway address and authentication |
-| `DB_SSL`, `DB_SSL_CA` | Verified TLS and optional provider CA |
-| `TRUST_PROXY_HOPS` | Actual reverse-proxy count; no blanket trust |
-| `DEMO_SEED`, `DEMO_PASSWORD` | Explicit synthetic seeding and optional generated password |
-| `OLLAMA_URL`, `OLLAMA_MODEL` | Optional configured language-model service |
+| **Administrator** | System oversight and administration |
+| **Doctor** | Clinical workflow interactions |
+| **Nurse** | Emergency operational workflow |
+| **Reception** | Patient registration and intake |
 
-`.env.example` files contain no usable credentials. `python scripts/setup_env.py` creates the root Compose environment without overwriting an existing file.
+---
 
-## Deployment
+## 📊 Operational Analytics
 
-The root Dockerfile builds React and serves it through Express. The Python image trains its artifact during build. Compose provides a private database, private Python service, health checks and a loopback-bound API port for a host reverse proxy. CI includes native PostgreSQL and browser checks. See [deployment guide](docs/DEPLOYMENT.md).
+CareFlow derives analytics from application/database data rather than hard-coded dashboard values.
 
-No cloud hosting account, server or production credentials were supplied, so **there is no production URL** and no hosted validation is claimed.
+The analytics layer can surface operational information such as:
 
-## API overview
+- Active emergency cases
+- Priority distribution
+- Bed utilization
+- Doctor availability
+- Workflow status
+- Historical case activity
+- Operational trends
 
-Existing paths are preserved: `/api/patients`, `/api/doctors`, `/api/beds`, `/api/emergency-cases`, `/api/dashboard/stats`. All resource collections support pagination; patient/case search and filtering stay server-side. Patient PATCH is retained and PUT added. New groups are `/auth`, `/users`, `/analytics`, `/audit`, `/ai`, `/knowledge`, `/services`, `/health`, `/ready`.
+---
 
-See [API reference](docs/API.md) for request bodies, role restrictions and workflow paths.
+## 📝 Auditability
 
-## Project structure
+Important operational actions generate audit events.
 
-- `frontend/src/`: existing layouts/pages extended with reusable forms, auth, queries and charts.
-- `backend/src/`: Express routes, controllers, middleware and transactional services.
-- `backend/migrations/`, `backend/scripts/`: schema, seed and administrator bootstrap.
-- `backend/tests/`: integration tests and a strictly test-only WASM PostgreSQL adapter.
-- `ml-service/app/`: validated inference and knowledge retrieval/generation.
-- `ml-service/train.py`, `reports/`, `notebooks/`: reproducible experiment and evidence.
-- `scripts/`: environment setup, browser verification and service readiness helper.
-- `docs/`: audit, deployment, status, interview guide, resume material and screenshots.
+Examples include:
 
-## Limitations and future work
+```text
+CASE_CREATED
+DOCTOR_ASSIGNED
+BED_ASSIGNED
+TREATMENT_STARTED
+TREATMENT_COMPLETED
+PATIENT_DISCHARGED
+AI_REVIEWED
+```
 
-Native PostgreSQL CI, Docker build/run, HTTPS hosting, and real LLM generation remain external validation gates. The model is synthetic and not clinically validated; the corpus is operational only. Doctor scheduling assumes one active assignment per doctor. A larger hospital would need a capacity-aware assignment model, inventory history, secure data governance, measured scaling, centralized rate limiting, audit retention controls, and specialist clinical review. User deactivation and password recovery are not implemented; staff creation and password change are.
+This provides traceability across the emergency workflow.
 
-## Interview and resume material
+---
 
-[Interview guide](docs/INTERVIEW_GUIDE.md) · [Truthful resume bullets](docs/RESUME.md) · [Demo walkthrough](docs/DEMO.md)
+## 🧪 Testing & Validation
 
-The project can strengthen an application, but no project can guarantee recruiter selection. Use only claims and metrics you can explain and reproduce.
+CareFlow is validated across multiple layers instead of relying only on manual UI testing.
+
+| Layer | Validation |
+|---|---|
+| Frontend | Lint + production build |
+| Backend | API integration testing |
+| ML / Retrieval | Python tests |
+| Browser | End-to-end workflow validation |
+| Responsive UI | Desktop, tablet and mobile |
+| Database | Migration + transaction workflow |
+| Authentication | Login + RBAC validation |
+| AI | Decision-support integration |
+| Knowledge | Citation + abstention checks |
+| Production | Render + Neon integration |
+
+The production workflow has been exercised from registration through discharge, including doctor and bed release.
+
+---
+
+## ☁️ Production Deployment
+
+```text
+                          INTERNET
+                             │
+                             ▼
+                    Render Web Service
+                     React + Express
+                      /           \
+                     /             \
+                    ▼               ▼
+           Neon PostgreSQL     Render ML Service
+                                FastAPI
+                                   │
+                                   ▼
+                              scikit-learn
+```
+
+### Production Stack
+
+| Component | Technology / Platform |
+|---|---|
+| Frontend | React + Tailwind CSS |
+| Backend | Node.js + Express |
+| Database | PostgreSQL on Neon |
+| ML API | FastAPI |
+| ML | scikit-learn |
+| Web Hosting | Render |
+| ML Hosting | Render |
+| Containers | Docker |
+
+### Live Application
+
+**https://careflow-app.onrender.com**
+
+---
+
+## 🐳 Local Development
+
+### Prerequisites
+
+- Node.js 22+
+- Python 3.12+
+- PostgreSQL
+- Docker / Docker Compose (recommended)
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YT-PRO12/CareFlow-AI.git
+cd CareFlow-AI
+```
+
+Environment templates are provided through `.env.example` files.
+
+**Never commit real passwords, tokens, production database URLs, or generated demo credentials.**
+
+Refer to the repository documentation for environment-specific setup and testing instructions.
+
+---
+
+## 📁 Repository Structure
+
+```text
+CareFlow-AI/
+│
+├── frontend/                 # React user interface
+│
+├── backend/
+│   ├── src/                  # Express API and business logic
+│   ├── migrations/           # PostgreSQL migrations
+│   ├── scripts/              # Migration / administration tooling
+│   └── tests/                # API tests
+│
+├── ml-service/               # FastAPI ML + retrieval service
+│
+├── docs/                     # Architecture/testing documentation
+│   └── screenshots/          # Product screenshots
+│
+├── scripts/                  # Project-level tooling
+│
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## ⚙️ Engineering Decisions
+
+### Why PostgreSQL?
+
+The application contains strongly related entities—patients, emergency cases, doctors, beds, users and audit records—and requires transactional consistency during resource allocation.
+
+### Why keep Express between React and ML?
+
+It prevents the browser from becoming responsible for internal-service authentication and keeps authorization, validation and auditing centralized.
+
+### Why human-reviewed ML?
+
+Decision support is more defensible when recommendations remain reviewable and overridable rather than being treated as authoritative decisions.
+
+### Why not add Kafka, Redis or Kubernetes?
+
+The current workload does not justify their operational complexity. The architecture favors technologies that solve demonstrated requirements rather than adding infrastructure solely for appearance.
+
+---
+
+## ⚠️ Scope & Limitations
+
+CareFlow AI is a portfolio and engineering demonstration.
+
+- Synthetic data is used for ML evaluation and demo workflows.
+- The ML system is not clinically validated.
+- The platform must not be used for real medical decision-making.
+- No real patient PII should be entered into the public demo.
+- Free-tier cloud services may experience cold starts.
+- Production healthcare deployment would require substantially stronger regulatory, privacy, security, reliability and clinical validation work.
+
+---
+
+## 🛣️ Future Engineering Work
+
+Potential extensions include:
+
+- More comprehensive integration and load testing
+- Production-grade observability
+- Expanded model monitoring
+- Model/data drift detection
+- Stronger deployment automation
+- Broader trusted knowledge corpora
+- Additional operational analytics
+- Formal privacy and compliance architecture
+
+---
+
+## 👨‍💻 Author
+
+**Yatharth Goyal**
+
+B.Tech — Information Technology
+
+[GitHub](https://github.com/YT-PRO12)
+
+---
+
+<div align="center">
+
+### Built to explore full-stack engineering, reliable AI integration, database concurrency and responsible decision support.
+
+**[🚀 Launch CareFlow AI](https://careflow-app.onrender.com)**
+
+</div>

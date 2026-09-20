@@ -1,0 +1,70 @@
+RUN ['npm', 'run', 'migrate']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@1.0.0 migrate
+> node scripts/migrate.js
+
+Applied 001_core.sql
+RUN ['npm', 'run', 'migrate']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@1.0.0 migrate
+> node scripts/migrate.js
+
+RUN ['npm', 'run', 'seed']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@1.0.0 seed
+> node scripts/seed.js
+
+Created 254 synthetic patients, 12 doctors, 20 beds, 4 accounts. Credentials: backend/.demo-credentials
+RUN ['npm', 'run', 'seed']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@1.0.0 seed
+> node scripts/seed.js
+
+Synthetic seed already applied; no records changed
+RUN ['python', '-m', 'pytest', '-q']
+.........                                                                [100%]
+=============================== warnings summary ===============================
+<installed-packages>/fastapi/testclient.py:1
+  <installed-packages>/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+<installed-packages>/starlette/testclient.py:53
+  <installed-packages>/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 2 warnings in 2.63s
+RUN ['npm', 'test']
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> careflow-api@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+✔ health, database readiness, consistent unauthenticated error (798.920525ms)
+✔ authentication rejects wrong password without revealing account existence (162.853624ms)
+✔ CSRF and origin checks block writes (11.315088ms)
+✔ RBAC protects audit, users, doctor management and treatment (19.487818ms)
+✔ CRUD accepts age zero, validates IDs and payloads, supports PUT and PATCH (48.118287ms)
+✔ search, pagination, filtering and sorting are parameterized (29.181544ms)
+✔ complete emergency workflow synchronizes resources, timestamps and patient state (154.846957ms)
+✔ simultaneous doctor assignments have exactly one winner (42.019402ms)
+✔ one active case per patient is enforced by PostgreSQL (17.627748ms)
+✔ bed patient assignment can explicitly be cleared when no active case owns it (12.545945ms)
+✔ doctor read access and actions are scoped to assigned cases (21.789268ms)
+✔ analytics and dashboard reconcile with stored records (33.115909ms)
+✔ real ML gateway persists suggestions; explicit override records rationale (80.668717ms)
+✔ knowledge gateway cites real sources and abstains on unsupported input (17.786573ms)
+✔ audit visibility, no stack traces and API 404s (17.016982ms)
+✔ logout revokes the session in PostgreSQL (6.918273ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1722.697207

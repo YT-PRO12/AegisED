@@ -15,7 +15,7 @@ docker compose exec api cat .demo-credentials
 
 Visit **http://localhost:5000**. Sign in with `admin@careflow.demo` and the generated password printed by the last command. The other generated accounts share this synthetic-demo password. Do not publish the credentials or `.env`. Change passwords before sharing a deployment.
 
-Check status with `docker compose ps` and `docker compose logs --tail=80 api ml`. Stop with `docker compose down`; the database volume remains. Starting again does not duplicate seed data. The model is trained during the Python image build, so the first build needs more time than later startups. Container execution was not available in the build workspace; run the release checks in DEPLOYMENT.md before hosting.
+Check status with `docker compose ps` and `docker compose logs --tail=80 api ml`. Stop with `docker compose down`; the database volume remains. Starting again does not duplicate seed data. The model is trained during the Python image build, so the first build needs more time than later startups. Compose execution was not available in the release-review workspace. The existing Render production deployment is documented separately in DEPLOYMENT.md.
 
 ## Without Docker: your existing Windows tools
 
@@ -54,14 +54,15 @@ cd ..
 
 Seeding generates its own password if `DEMO_PASSWORD` is unset. Record the credentials privately. Re-running the seed leaves data unchanged.
 
-### 3. Train once and start the Python service
+### 3. Reuse the included model and start Python
 
 In terminal 1, from the project root:
 
 ```powershell
 cd ml-service
-..\.venv\Scripts\python.exe train.py
-..\.venv\Scripts\python.exe evaluate_retrieval.py
+# Fresh Git checkout only, when generated artifacts are absent:
+# ..\.venv\Scripts\python.exe train.py
+# ..\.venv\Scripts\python.exe evaluate_retrieval.py
 ..\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 

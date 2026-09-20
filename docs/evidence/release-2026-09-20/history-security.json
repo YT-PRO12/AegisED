@@ -1,0 +1,8 @@
+{
+  "commitsScanned": 3,
+  "uniqueBlobsScanned": 151,
+  "sensitiveHistoricalPaths": [],
+  "potentialSecretFindings": [],
+  "scope": "All reachable commit trees and unique blobs; pattern-based, values redacted. Does not scan inaccessible deleted refs or remote provider secrets.",
+  "commitMetadataScanned": 3
+}

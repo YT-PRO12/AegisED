@@ -1,6 +1,6 @@
 # CareFlow AI — final completion status
 
-Prepared 2026-09-19 from the existing project and preserved work. Implementation, local integration/browser checks, documentation and packaging are complete. Deployment configuration is prepared. Native PostgreSQL CI, container execution, real LLM generation and hosted validation remain explicit external gates.
+Updated 2026-09-20. The existing application is deployed at [CareFlow AI on Render](https://careflow-app.onrender.com), with Neon PostgreSQL and a separate Render FastAPI service reported by the operator. Implementation and prior evidence are preserved. Current checks, remaining release actions and the proposed first public v1.0.0 release are recorded in [RELEASE_READINESS.md](RELEASE_READINESS.md).
 
 ## Implemented feature map
 
@@ -68,9 +68,9 @@ The default, tested mode returns excerpts and labels itself retrieval-only. Opti
 - 33 browser checkpoints passed at desktop/tablet/mobile widths, including the full workflow, real ML request and human override, cited retrieval, navigation and role restrictions.
 - The authenticated browser checks collected no console errors or failed API requests.
 - Runtime dependency audits reported zero known vulnerabilities for each JavaScript application at the recorded audit date.
-- Local database checks used PGlite, not native PostgreSQL; native locking and CI remain a release gate.
+- Initial local database checks used PGlite. GitHub CI on commit `ea3eae30` subsequently passed native PostgreSQL integration/concurrency and browser steps.
 
-The [verification report](VERIFICATION.md) gives exact scope and evidence. Docker/Compose and native PostgreSQL GitHub Actions are supplied. No deployment account or domain was supplied, so no production deployment or URL is claimed. [DEPLOYMENT.md](DEPLOYMENT.md) gives the remaining container, HTTPS, persistence and hosted workflow checks.
+The [historical verification report](VERIFICATION.md) retains the original scope and evidence. The [current release review](RELEASE_READINESS.md) records the successful GitHub run and public Render checks. [DEPLOYMENT.md](DEPLOYMENT.md) describes the current Render/Neon architecture and separately lists checks requiring authorized production access.
 
 ## Exact local execution commands
 
@@ -90,7 +90,7 @@ The intentionally synthetic account emails are `admin@careflow.demo`, `doctor@ca
 
 ## Remaining limitations
 
-This is an educational synthetic-data prototype, not a clinical system. The model covers invented adult data only. Knowledge content covers application operations, not medical advice. The resource model permits one active case per doctor. Period utilization assumes a constant bed inventory. Multi-replica rate limiting, staff deactivation/recovery, load testing, monitoring, audit-retention controls and backup/restore drills remain future work. Native PostgreSQL, Docker, HTTPS hosting and real LLM validation must precede claims about those environments.
+This is an educational synthetic-data prototype, not a clinical system. The model covers invented adult data only. Knowledge content covers application operations, not medical advice. The resource model permits one active case per doctor. Period utilization assumes a constant bed inventory. Multi-replica rate limiting, staff deactivation/recovery, load testing, monitoring, audit-retention controls and backup/restore drills remain future work. Use the dated release review when describing native CI and public HTTPS observations. Do not extrapolate them to authenticated production behavior, untested local containers or real LLM quality.
 
 ## Documentation and portfolio material
 

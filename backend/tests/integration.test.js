@@ -31,7 +31,7 @@ async function login(role) {
     who: null,
     method: "POST",
     body: {
-      email: role + "@AegisED.demo",
+      email: role + "@careflow.demo",
       password: process.env.DEMO_PASSWORD,
     },
   });
@@ -98,7 +98,7 @@ test("authentication rejects wrong password without revealing account existence"
   const b = await api("/auth/login", {
     method: "POST",
     who: null,
-    body: { email: "admin@AegisED.demo", password: "wrong" },
+    body: { email: "admin@careflow.demo", password: "wrong" },
   });
   assert.equal(a.status, 401);
   assert.equal(a.body.message, b.body.message);
@@ -476,4 +476,5 @@ test("logout revokes the session in PostgreSQL", async () => {
   );
   assert.equal((await api("/auth/me", { who: reception })).status, 401);
 });
+
 

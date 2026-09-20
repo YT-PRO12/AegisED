@@ -69,7 +69,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await page.getByRole("button", { name: "Save record" }).click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-  .getByRole("textbox", { name: /^Search patients/i })
+  .getByRole("textbox", { name: /^Search patients(?:…|\.\.\.)?$/i })
       .fill(patientName);
     await page.getByRole("link", { name: patientName, exact: true }).waitFor();
     await page.getByRole("link", { name: patientName, exact: true }).click();

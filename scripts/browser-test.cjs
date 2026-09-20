@@ -80,12 +80,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
     await route("/emergency", "Emergency operations");
     await page.getByRole("button", { name: "New case", exact: true }).click();
     await page
-      .getByRole("textbox", { name: "Find registered patientâ€¦", exact: true })
+      .getByRole("textbox", { name: "Find registered patient…", exact: true })
       .fill(patientName);
     await settle();
     const selector = page.getByLabel("Patient", { exact: true });
     await selector.selectOption({
-      label: patientName + " Â· 35 years",
+      label: patientName + " · 35 years",
     });
     await page
       .getByLabel("Reported symptoms")
@@ -96,7 +96,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
       .click();
     await page.getByRole("dialog").waitFor({ state: "hidden" });
     await page
-      .getByRole("textbox", { name: "Search cases or patientsâ€¦", exact: true })
+      .getByRole("textbox", { name: "Search cases or patients…", exact: true })
       .fill(patientName);
     await settle();
     let card = page.locator(".case-card").filter({ hasText: patientName });
@@ -160,11 +160,11 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
       .getAttribute("value");
     await select.selectOption(caseOption);
     for (const [label, value] of [
-      ["Heart rate Â· bpm", "110"],
-      ["Systolic blood pressure Â· mmHg", "105"],
-      ["Respiratory rate Â· breaths/min", "24"],
-      ["Temperature Â· Â°C", "37.5"],
-      ["Oxygen saturation Â· %", "94"],
+      ["Heart rate · bpm", "110"],
+      ["Systolic blood pressure · mmHg", "105"],
+      ["Respiratory rate · breaths/min", "24"],
+      ["Temperature · °C", "37.5"],
+      ["Oxygen saturation · %", "94"],
     ])
       await page.getByLabel(label, { exact: true }).fill(value);
     await page.getByRole("button", { name: "Generate estimate" }).click();

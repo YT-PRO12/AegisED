@@ -1,6 +1,8 @@
-# CareFlow AI — verification report
+# CareFlow AI — historical implementation verification
 
-Finalized 2026-09-19. This report retains the successful checks from the completed implementation and browser run. No model was retrained during final packaging. The initial repository audit was not repeated.
+**Historical scope:** finalized during the initial packaging on 2026-09-19. The application was subsequently deployed. See [the 2026-09-20 release review](RELEASE_READINESS.md) for current Render/GitHub evidence and checks.
+
+Original report: This report retains the successful checks from the completed implementation and browser run. No model was retrained during final packaging. The initial repository audit was not repeated.
 
 ## Executed checks
 
@@ -42,17 +44,17 @@ The existing model artifact, dataset, split indices, EDA, evaluation figure and 
 
 The existing ten-query, author-written retrieval check gave hit@3 **1.0** and MRR@3 **0.8833**. The live browser ran in truthful retrieval-only mode and displayed actual excerpts. See [model card](MODEL_CARD.md), [metrics](../ml-service/reports/metrics.json) and [retrieval evaluation](../ml-service/reports/retrieval.json).
 
-## Boundaries and remaining release gates
+## Environment boundaries recorded during initial packaging
 
 | Not executed here | Why / required next validation |
 |---|---|
-| Native PostgreSQL integration and locking | This workspace could not launch PostgreSQL under a non-root OS user. PGlite serializes clients; it cannot certify native multi-connection row-lock behavior. Run the supplied PostgreSQL 18 CI job. |
+| Native PostgreSQL integration and locking | This workspace could not launch PostgreSQL under a non-root OS user. PGlite serializes clients; it cannot certify native multi-connection row-lock behavior. Native PostgreSQL was not run in that workspace. A later successful GitHub PostgreSQL 18 run is recorded in the current release review. |
 | Docker image build and container startup | No Docker daemon was available. Compose/Dockerfiles are prepared; run the commands in [deployment](DEPLOYMENT.md). |
-| Hosted HTTPS application | No authorized hosting account, server or domain was supplied. There is no production URL. Verify secure cookies, proxy configuration and the full workflow on the chosen host. |
+| Hosted HTTPS application | No hosting access was supplied during initial packaging, so hosted checks were not performed then. The current Render URL and later public HTTPS checks are recorded in the release review; authenticated production validation remains separately scoped. |
 | Real Ollama generation | No language model was downloaded/configured. The real provider path and fallback are implemented; only the contract/fallback tests and retrieval-only behavior were executed. |
 | Operational readiness | Load testing, backup/restore drills, multi-replica rate limiting, monitoring and security penetration testing are outside the completed local checks. |
 
-This is a tested educational prototype with deployment preparation. It is not a certified clinical system or an assertion that all production release gates have passed.
+That initial report described a tested educational prototype with deployment preparation. The current project is hosted on Render. It is not a certified clinical system or an assertion that all production release gates have passed.
 
 ## Reproduction and package integrity
 

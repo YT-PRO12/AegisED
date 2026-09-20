@@ -1,0 +1,370 @@
+{
+  "status": "unchanged",
+  "filesComparedWithUploadedArchive": 91,
+  "files": [
+    {
+      "path": "Dockerfile",
+      "sha256": "ea4b7360dddc57dd6fc99bb708bc5be89e5925a4979204a1299230e3736c6a85"
+    },
+    {
+      "path": "backend/migrations/001_core.sql",
+      "sha256": "7566021345b98699766d5af315df7376d57f6d83b04a173bd4303895b3c54418"
+    },
+    {
+      "path": "backend/src/app.js",
+      "sha256": "950bfda389242c7d35c371686d765c79bc56dda8e6f7bdf08519b81e7f974e68"
+    },
+    {
+      "path": "backend/src/config/db.js",
+      "sha256": "a66653ef2f0faecb6c5abf12a3ba73eb4b4f73b1b6e18afa2db35cc8c3f8456f"
+    },
+    {
+      "path": "backend/src/config/env.js",
+      "sha256": "1b62b037b6c59c06a45c95b6bcb729763db2a2fee3d582e0dd0c8f76b6bce500"
+    },
+    {
+      "path": "backend/src/controllers/aiController.js",
+      "sha256": "f10b5f764d66469541e6352803317b19cc03858f676ef7bd78e452e5f869b8a2"
+    },
+    {
+      "path": "backend/src/controllers/analyticsController.js",
+      "sha256": "68c9297e33c137a51ac1e7555e846666f46ad4ed0f69add2e64dc305a3182389"
+    },
+    {
+      "path": "backend/src/controllers/authController.js",
+      "sha256": "1da3f42d5bea2e9c5a81f2ebdabadf274813a94fb318790167be4ea7341390c3"
+    },
+    {
+      "path": "backend/src/controllers/bedController.js",
+      "sha256": "da4833010ac48b4a10fdf073bd4496a0fbc407e682557f961facce342b81dc2d"
+    },
+    {
+      "path": "backend/src/controllers/dashboardController.js",
+      "sha256": "7e3ee803d13c58d8cbe6c44b7e0fbfd00b5f06af94005463f61e47ef68f5baa9"
+    },
+    {
+      "path": "backend/src/controllers/doctorController.js",
+      "sha256": "1970c232182c92609b65789e54e97de24cdcd5248358531de18eff7466f20032"
+    },
+    {
+      "path": "backend/src/controllers/emergencyCaseController.js",
+      "sha256": "32d83ccf6f0e0a46db7af7bc7f2e73554c721198f69ca06373d4c6c21a200f98"
+    },
+    {
+      "path": "backend/src/controllers/emergencyWorkflowController.js",
+      "sha256": "4b947e01425448879bb7e7575ab9f72d6506e9388f48637d273c1cb4bbe4a056"
+    },
+    {
+      "path": "backend/src/controllers/patientController.js",
+      "sha256": "31cbe19191ed2e11e978f6cffcf85673afd69817b34d01f270d75354af9fbc39"
+    },
+    {
+      "path": "backend/src/middleware/auth.js",
+      "sha256": "557b8f3288f80418a28d7bb7b82484df33a42e1dfdd596aede0f78ddbaaf697f"
+    },
+    {
+      "path": "backend/src/middleware/validation.js",
+      "sha256": "ee93f5bcaf502d1d345b252d9562c7c026afc1bbdea174e7d8a000d74bf5f309"
+    },
+    {
+      "path": "backend/src/routes/bedRoutes.js",
+      "sha256": "6262819ebf3174280ec8ee17f5c82beab5e8c903075aac99f023fa27e360fa84"
+    },
+    {
+      "path": "backend/src/routes/dashboardRoutes.js",
+      "sha256": "bbfb2bfbae7790d3b57d5c50ad6dc5dba2920119a1cd2d0bf32c6052ec59ae0c"
+    },
+    {
+      "path": "backend/src/routes/doctorRoutes.js",
+      "sha256": "af7cd8b4fe7d0a9d54821cc7fc558ae4758bd4bec46f75c2837a583564608390"
+    },
+    {
+      "path": "backend/src/routes/emergencyCaseRoutes.js",
+      "sha256": "e2529076a2014edae4c33706dd1ec4d79c6126ee7dd097515acef4638e431aa8"
+    },
+    {
+      "path": "backend/src/routes/emergencyWorkflowRoutes.js",
+      "sha256": "4ffb6cf09248614469dfae43ec76edf43610adc972d1f6298c7469a54e4c9824"
+    },
+    {
+      "path": "backend/src/routes/patientRoutes.js",
+      "sha256": "585abc3c65826fda98cde61999a8927e37d84dac03de99b225d84a446794df65"
+    },
+    {
+      "path": "backend/src/server.js",
+      "sha256": "99062605c1a3a161a96104d94a46d687b6d85f7d8f35ccf965bce73d59f7a84f"
+    },
+    {
+      "path": "backend/src/services/audit.js",
+      "sha256": "bfb0e9c80a984d48ec5ff62dfc196d446b277185ac747258e29a823d51ec3884"
+    },
+    {
+      "path": "backend/src/services/crud.js",
+      "sha256": "40dc682821695304ab9c0903d953bdfcf6c35a33b9fdf3503e4952c1f4920d4c"
+    },
+    {
+      "path": "backend/src/services/password.js",
+      "sha256": "bb3de6cab63034f38320309f31159ae09db7ff182269f6c94f5546029c5c07a2"
+    },
+    {
+      "path": "backend/src/services/transaction.js",
+      "sha256": "72c8224fce65634a02257be0eaf4c2459ca12a938037b9b36f8f74ce7c156c8c"
+    },
+    {
+      "path": "backend/src/utils/errors.js",
+      "sha256": "a1aed0e69a1e5a85381eb75df7ca610c0c3ff378408b86671e459e8d2294b8c8"
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "57f681f5908ebd8dab3a30545293bb3701c54dc9f41571133e3fb78c1702914f"
+    },
+    {
+      "path": "frontend/src/App.css",
+      "sha256": "4198156041dd4cada6d4d9c2e8786e4bf6b7d70de485101a4c56bf667b67a1ad"
+    },
+    {
+      "path": "frontend/src/App.jsx",
+      "sha256": "a81c4757563fc098cc111e1598480ce8f799e19e59fe4aa324b4ce880c001b6c"
+    },
+    {
+      "path": "frontend/src/assets/hero.png",
+      "sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c"
+    },
+    {
+      "path": "frontend/src/assets/react.svg",
+      "sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5"
+    },
+    {
+      "path": "frontend/src/assets/vite.svg",
+      "sha256": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f"
+    },
+    {
+      "path": "frontend/src/components/BedOverview.jsx",
+      "sha256": "4e86dd9fd9b8aa1cc9862015058a28af9fcaf1fad208cdb05f518f901b44e20a"
+    },
+    {
+      "path": "frontend/src/components/Charts.jsx",
+      "sha256": "adfa75a0b49b8d69d0b87bb5f271b02d79b2b39b48003d42c337031ef3634a9d"
+    },
+    {
+      "path": "frontend/src/components/Navbar.jsx",
+      "sha256": "86a3a2114840982923984b006dac5e3fc856b8911ccfc9e7307cf4be9c63cc32"
+    },
+    {
+      "path": "frontend/src/components/PatientQueue.jsx",
+      "sha256": "94563c7fcb85cd0ff48080c0b931665e1b9d7aff4e9ee8a8cb12e6a6975289a5"
+    },
+    {
+      "path": "frontend/src/components/ResourceManager.jsx",
+      "sha256": "464167c55d828a607e512cc1943e5eb3ec922044d7813427a1cdb6416bce2b45"
+    },
+    {
+      "path": "frontend/src/components/Sidebar.jsx",
+      "sha256": "aed222842e7e129feba9bb39b17ba5d45eb3358cfa9ad9e04d166636c7b37ea9"
+    },
+    {
+      "path": "frontend/src/components/StatCard.jsx",
+      "sha256": "b19e5d418c91ce2176a0f68e4cdd9cc28df5fe7a9dd65eb90c028324dbe4cae9"
+    },
+    {
+      "path": "frontend/src/components/StatusBadge.jsx",
+      "sha256": "cec3fc520e755d69e46bd6e8effea443140666a8143ce31b8c1948310413953b"
+    },
+    {
+      "path": "frontend/src/components/UI.jsx",
+      "sha256": "7029268cd9a843437c043c7dfca14b28e3b97752c7eb98498bb6f77552648da2"
+    },
+    {
+      "path": "frontend/src/context/AuthProvider.jsx",
+      "sha256": "d6c8497096a3c7603c935085ed6acb775e309bfc5694be6e892cd97cee27ca30"
+    },
+    {
+      "path": "frontend/src/context/ToastProvider.jsx",
+      "sha256": "e5e7730cdde6269d4919f3b5ec2e425337d086c6a8398bd93f7846f8efdf1650"
+    },
+    {
+      "path": "frontend/src/context/auth.js",
+      "sha256": "1147afb2bf617f10275a587a161bbd47e061916f8048a81525728aa3b59a326a"
+    },
+    {
+      "path": "frontend/src/context/toast.js",
+      "sha256": "a298f0f3d7d3fdb726c1c55fb8f03ea786428b1d5286089e24515c0ce840a460"
+    },
+    {
+      "path": "frontend/src/data/beds.js",
+      "sha256": "abbd42d9300741d98b1a41e6e4544fabe595964dd307190f09f53c3346670462"
+    },
+    {
+      "path": "frontend/src/data/doctor.js",
+      "sha256": "2e100177b0dd585ffbcbe8b1eef40dd8aea8adfb130294c136717d8b6eec6d7c"
+    },
+    {
+      "path": "frontend/src/data/emergencyCases.js",
+      "sha256": "ac6c7334f0f1734c97e15b408b8e7bbae5bd2cb8ff80980755c5c9ac3ad63c65"
+    },
+    {
+      "path": "frontend/src/data/patientData.js",
+      "sha256": "20d69e7d559e24ef776ea43b19e56ee0ab6cf9cc046167a0be2b0738115b26f9"
+    },
+    {
+      "path": "frontend/src/hooks/useClock.js",
+      "sha256": "b824b3531184b147fb769245a3517e037b45c2db6a653e3f96144d8ff7d0f6a1"
+    },
+    {
+      "path": "frontend/src/hooks/useResource.js",
+      "sha256": "8a655043ba3e478922a3c01f736411bbd809a640410bfca8165eb42341bde3ce"
+    },
+    {
+      "path": "frontend/src/index.css",
+      "sha256": "1d144a722958e866f4a5fefd64c6aa1bdd3c8ce62c23ce80e2d8b0433380c97c"
+    },
+    {
+      "path": "frontend/src/layouts/AppLayout.jsx",
+      "sha256": "196e23a784054056253760c5ad1a1d886dd395b6f2eafb6f99b797b32426e312"
+    },
+    {
+      "path": "frontend/src/main.jsx",
+      "sha256": "26ef0ac188568363bdc4a343b410f75cc631330a454c67ca2b5cd63e4cc92d09"
+    },
+    {
+      "path": "frontend/src/pages/Analytics.jsx",
+      "sha256": "48f086c207be4163492f9bddd9d149f6c1e42a1b7dd2b4ad3452aa7eb41cf4ca"
+    },
+    {
+      "path": "frontend/src/pages/Audit.jsx",
+      "sha256": "7baefc7afa6044825503330b8ae1adab0306d311b42dedd7c6de172edc3bbf56"
+    },
+    {
+      "path": "frontend/src/pages/Beds.jsx",
+      "sha256": "a7fc7e46662bc7066bd9978cb7db3f7e1bdae6ad0074d9e253467f3a50b4eee4"
+    },
+    {
+      "path": "frontend/src/pages/Dashboard.jsx",
+      "sha256": "e973c5abcf3b7ec53c953855d4e5d01602327cdb726a4accf220199e69adaa48"
+    },
+    {
+      "path": "frontend/src/pages/DecisionSupport.jsx",
+      "sha256": "886a94cb9fdab6db08dbe3f0b7e0f7ad9716de9f5f9344d3853957253958d4ad"
+    },
+    {
+      "path": "frontend/src/pages/Doctors.jsx",
+      "sha256": "15ca4191eb372c8b1d7f73a72882fd93871b8570b71edb573b0bb525378053d6"
+    },
+    {
+      "path": "frontend/src/pages/Emergency.jsx",
+      "sha256": "a637597cd53510ac227dffbc8613a2e00736c95da71e55e247b59b94c9f4ac00"
+    },
+    {
+      "path": "frontend/src/pages/Knowledge.jsx",
+      "sha256": "98c53a7ad7f5ec503ac02cea182e59ccf224e4005884dd3a567eb430ae2e1508"
+    },
+    {
+      "path": "frontend/src/pages/Login.jsx",
+      "sha256": "3614bfee844d1af705d41682e1e97a7889391fdc6d267ed271ce0026a8ed143f"
+    },
+    {
+      "path": "frontend/src/pages/PatientDetail.jsx",
+      "sha256": "29b3392ac82d9be1859274d7fda8949f21781e0ee2fe86b5d722b39c97172449"
+    },
+    {
+      "path": "frontend/src/pages/Patients.jsx",
+      "sha256": "13bd839cabd7a6521f6698f96d2b1c81ad14870a729f5dfa25f6a8f9db471731"
+    },
+    {
+      "path": "frontend/src/pages/Settings.jsx",
+      "sha256": "8e0eb5fa59a319e80dfa004ce6e2d405897c7c65499e81fbe46d8c4928472991"
+    },
+    {
+      "path": "frontend/src/services/api.js",
+      "sha256": "a66270dc65de3429bb74999c8216f40157ffc64e52a41ca678d43cc081bb8514"
+    },
+    {
+      "path": "frontend/src/utils/format.js",
+      "sha256": "7df9e57b1d14a5935fe56c7e94951524e5f71004d763ad87c7c5a13909af3653"
+    },
+    {
+      "path": "ml-service/Dockerfile",
+      "sha256": "f00bb0c383210bbce2c034ae8b51adea866e8d5c3478cd38a6954685e6174c30"
+    },
+    {
+      "path": "ml-service/app/dataset.py",
+      "sha256": "482964a7d3a86a2627289e1dee8547af034927691886ac6f023ceb1eb58ee2e6"
+    },
+    {
+      "path": "ml-service/app/knowledge.py",
+      "sha256": "24ce8de81796f5f765b4dbfc6d83bebe9ff4c32d5597187cb2dabf66876eb671"
+    },
+    {
+      "path": "ml-service/app/main.py",
+      "sha256": "8d1b2b0d1ff16382890677766c4e4099fdcd48b8ed2bcb1cf6f6c3388d0576c5"
+    },
+    {
+      "path": "ml-service/app/predictor.py",
+      "sha256": "0ee847469a079a1372532d791aa71a3f2ab5f906a0280cdc880f9fa96c346e65"
+    },
+    {
+      "path": "ml-service/app/schemas.py",
+      "sha256": "00d25068cece3c7e6306f2721c5492154d1579862871d3145374e4b30df9247b"
+    },
+    {
+      "path": "ml-service/data/synthetic-triage.csv",
+      "sha256": "d62714c71113c73d7cefe6cb3e8ce82b55eb553f9f68aa0f327cbe56453a9e69"
+    },
+    {
+      "path": "ml-service/knowledge/documents/access.md",
+      "sha256": "cb93fa3aafb51e839649eb88536ffcda9b8bccdcbfcc72701dde39c3c981f695"
+    },
+    {
+      "path": "ml-service/knowledge/documents/analytics.md",
+      "sha256": "7adc25ffed0fd2699877a600f6fa1db47c439a35a70dd9a1928a85f4350aad8e"
+    },
+    {
+      "path": "ml-service/knowledge/documents/decision-support.md",
+      "sha256": "a8eb25852c9d28a25c4e28590ad43b881058f62b8a14cde4abd3097336b4a53b"
+    },
+    {
+      "path": "ml-service/knowledge/documents/deployment.md",
+      "sha256": "555b828e0f4397ea91aa828744d6fdc4ea22ae5c06f6df735ed688f143a1ca5f"
+    },
+    {
+      "path": "ml-service/knowledge/documents/workflow.md",
+      "sha256": "52461033e84bec5f641827ac802c99ea5a52ad02760b14bc081f2002c30a8032"
+    },
+    {
+      "path": "ml-service/knowledge/index/chunks.json",
+      "sha256": "7b82208513694d3c602524aee4f8f63e391695d265914c47f6b0e14947778feb"
+    },
+    {
+      "path": "ml-service/knowledge/index/lsa.joblib",
+      "sha256": "059c81a1d12a588e62120d8822be86a42d98d1b266c12a2ed35c8954dd557b14"
+    },
+    {
+      "path": "ml-service/model/triage.joblib",
+      "sha256": "5e0cb3cfa773dc911f5351ee51753255fd841cfd18821dbb0e39f5231872cb61"
+    },
+    {
+      "path": "ml-service/reports/eda.json",
+      "sha256": "3d06d9d6a5f90a572a3a48f8403d5b3ac928598c9f6b2360ec978bf54524ec61"
+    },
+    {
+      "path": "ml-service/reports/evaluation.png",
+      "sha256": "3aaa84b503b9558a78ca853e2d563ce8e2ddd8a7fcdec4780bb7f0a94d2eab37"
+    },
+    {
+      "path": "ml-service/reports/metrics.json",
+      "sha256": "a0c19b8cbc48d1940ceac6e041ae32afc7cbbdeefcf0e6c0f9f436aea855552a"
+    },
+    {
+      "path": "ml-service/reports/retrieval.json",
+      "sha256": "a26945fc2469996cf26bfa5397dec9f7c9e022256636204810b11bae2051d94c"
+    },
+    {
+      "path": "ml-service/reports/splits.npz",
+      "sha256": "cfa083bff6459002c241a40844bdf64f894ff0fac1135d664cb5ae94aebfa20d"
+    },
+    {
+      "path": "ml-service/train.py",
+      "sha256": "a141afdf03db59efd3cf3b9eee5e3b4d42f555dbb331c97fae9b8056fc4cc289"
+    }
+  ]
+}

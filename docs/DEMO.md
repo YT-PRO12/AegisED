@@ -5,6 +5,8 @@
 3. **Data and analytics (45 seconds):** Select a date range. Explain arrival cohorts, waiting-time sample counts and the difference between current occupancy and historical utilization.
 4. **Decision support (60 seconds):** Generate an adult synthetic estimate. Explain the model version and why class scores are not clinical confidence. Override with a reason and show the audit event.
 5. **Knowledge (30 seconds):** Ask how a bed is allocated. Open the cited source section. State whether the current mode is retrieval-only or actual configured LLM synthesis.
-6. **Engineering evidence (45 seconds):** Show the tests, model card, native PostgreSQL CI and deployment guide. Clearly distinguish local verification from unexecuted hosting checks.
+6. **Engineering evidence (45 seconds):** Show the tests, model card, native PostgreSQL CI and deployment guide. Show the live Render URL, and distinguish historical local tests, GitHub CI and the limited public production checks in the release review.
 
 Do not input real patient information. Be ready to explain one controller, one transaction, one model metric and one limitation without reading a script.
+
+Use a disposable local or staging database for the mutating walkthrough. On the public production instance, use only an authorized synthetic account and agreed disposable records. The automated browser script is not a production smoke test.

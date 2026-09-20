@@ -1,5 +1,19 @@
 # Verification commands
 
+For current observed results, see [RELEASE_READINESS.md](RELEASE_READINESS.md). The earlier [VERIFICATION.md](VERIFICATION.md) is a dated implementation record. Tests must use disposable local/CI data, never the live Render/Neon deployment.
+
+## Package and repository checks
+
+```bash
+# Full portable archive (includes trained artifacts):
+python scripts/verify_package.py
+# Fresh Git checkout (four generated artifacts are intentionally untracked):
+python scripts/verify_package.py --source-only
+python scripts/check_repository.py
+```
+
+CI runs source verification before training or browser screenshots can change generated evidence. After intentional source edits, review the diff and tests, then refresh hashes with `python scripts/build_manifest.py` and verify again. Hash regeneration is not test evidence. The new repository check verifies relative documentation links, package/lock consistency, common secret patterns, tracked credential exclusions and obsolete deployment configuration. It does not certify the absence of all vulnerabilities.
+
 ## Native PostgreSQL integration tests
 
 Use a disposable database named `careflow_test`, not the original project database. Tests create records. Start the Python service before running API tests. From a POSIX terminal at the project root:
@@ -24,8 +38,9 @@ The Python server must receive the same `ML_SERVICE_TOKEN`. A full executable se
 
 ```bash
 cd ml-service
-python train.py
-python evaluate_retrieval.py
+# Only when artifacts are absent in a fresh Git checkout:
+# python train.py
+# python evaluate_retrieval.py
 python -m pytest -q
 ```
 
@@ -47,7 +62,7 @@ It performs login, patient registration/search/detail, intake, doctor/bed assign
 
 ## Local sandbox engine boundary
 
-The development workspace cannot create a non-root OS account to launch native PostgreSQL. A strictly test-only `TEST_PGLITE_PATH` option uses PGlite (PostgreSQL compiled to WebAssembly) with the same SQL migrations and queries. Production configuration refuses that adapter. It preserves data across processes, but serializes clients and **does not certify native multi-connection row-lock behavior**. The contested-request test is still useful for application conflict handling; native CI is the concurrency gate.
+The original implementation workspace could not launch native PostgreSQL under a non-root OS account. The current local API run also uses the same test adapter; GitHub CI supplies separate native PostgreSQL evidence. A strictly test-only `TEST_PGLITE_PATH` option uses PGlite (PostgreSQL compiled to WebAssembly) with the same SQL migrations and queries. Production configuration refuses that adapter. It preserves data across processes, but serializes clients and **does not certify native multi-connection row-lock behavior**. The contested-request test is still useful for application conflict handling; native CI is the concurrency gate.
 
 ## Dependency review
 

@@ -1,25 +1,37 @@
-node_modules/
+# Local credentials and environment overrides (at any depth)
 .env
-__pycache__/
-*.pyc
-.venv/
-dist/
-build/
-.vscode/.demo-credentials
 .env.*
 !.env.example
+.demo-credentials
+
+# Installed dependencies and Python environments
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Generated application/test output
+dist/
+build/
 .pytest_cache/
 .coverage
 coverage/
 playwright-report/
 test-results/
 *.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Reproducible artifacts shipped in portable archives, not Git
 ml-service/model/*.joblib
 ml-service/data/*.csv
 ml-service/knowledge/index/
-
-# Local generated credentials - NEVER COMMIT
-backend/.demo-credentials
-
-# Local generated credentials - NEVER COMMIT
-backend/.demo-credentials

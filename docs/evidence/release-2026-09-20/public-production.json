@@ -1,0 +1,82 @@
+[
+  {
+    "path": "/api/health",
+    "method": "GET",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-security-policy": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'none';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';upgrade-insecure-requests;connect-src 'self'",
+      "x-content-type-options": "nosniff",
+      "cache-control": "no-store"
+    },
+    "body": {
+      "success": true,
+      "data": {
+        "service": "careflow-api",
+        "status": "ok"
+      }
+    }
+  },
+  {
+    "path": "/api/ready",
+    "method": "GET",
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-security-policy": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'none';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';upgrade-insecure-requests;connect-src 'self'",
+      "x-content-type-options": "nosniff",
+      "cache-control": "no-store"
+    },
+    "body": {
+      "success": true,
+      "data": {
+        "database": "ok"
+      }
+    }
+  },
+  {
+    "path": "/api/auth/me",
+    "method": "GET",
+    "status": 401,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-security-policy": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'none';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';upgrade-insecure-requests;connect-src 'self'",
+      "x-content-type-options": "nosniff",
+      "cache-control": "no-store"
+    },
+    "body": {
+      "success": false,
+      "message": "Please sign in"
+    }
+  },
+  {
+    "path": "/api/patients",
+    "method": "GET",
+    "error": "URLError"
+  },
+  {
+    "path": "/api/audit",
+    "method": "GET",
+    "status": 401,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "content-security-policy": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'none';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' 'unsafe-inline';upgrade-insecure-requests;connect-src 'self'",
+      "x-content-type-options": "nosniff",
+      "cache-control": "no-store"
+    },
+    "body": {
+      "success": false,
+      "message": "Please sign in"
+    }
+  },
+  {
+    "path": "/api/patients",
+    "method": "GET",
+    "attempt": 2,
+    "error": "URLError"
+  }
+]

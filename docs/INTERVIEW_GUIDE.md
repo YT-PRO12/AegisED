@@ -83,7 +83,7 @@ Use this description only after studying and running the code. Be transparent ab
 
 **How would you scale?** Measure first. Tune slow SQL with EXPLAIN ANALYZE, add cursor pagination for large histories, move rate limits into a shared store, add observability, and scale the API/AI independently. Keep sessions shared and preserve atomic workflows.
 
-**What remains unverified?** Native PostgreSQL CI, actual Docker build/run, real LLM generation and hosted HTTPS behavior were not all executable in the sandbox. The verification document separates evidence from release gates. Never describe prepared configuration as a live deployment.
+**Where is it deployed and what was checked?** The portfolio application is on Render, backed by Neon PostgreSQL and a separate Render FastAPI service according to the operator. GitHub CI for the inspected commit passed native PostgreSQL and browser checks. The release review observed the HTTPS login page, health/readiness and unauthenticated access protection. Authenticated production flows, provider settings, local Docker execution and real LLM generation were not independently revalidated. Read `docs/RELEASE_READINESS.md` for the dated boundaries.
 
 ## Suggested study order
 

@@ -61,10 +61,10 @@ CareFlow explores the engineering challenges behind a more complete operational 
 
 ## 🖥️ Product Preview
 
-> Add `docs/screenshots/dashboard.png` using the screenshot instructions below.
+> Add `docs/screenshots/dashboard-desktop.png` using the screenshot instructions below.
 
 <p align="center">
-  <img src="docs/screenshots/dashboard.png"
+  <img src="docs/screenshots/dashboard-desktop.png"
        alt="CareFlow AI emergency operations dashboard"
        width="100%" />
 </p>

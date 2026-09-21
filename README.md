@@ -61,13 +61,13 @@ AegisED explores the engineering challenges behind a more complete operational s
 
 ## 🖥️ Product Preview
 
-> Add `docs/screenshots/dashboard-desktop.png` using the screenshot instructions below.
+Experience the complete deployed workflow directly in the production demo:
 
-<p align="center">
-  <img src="docs/screenshots/dashboard-desktop.png"
-       alt="AegisED emergency operations dashboard"
-       width="100%" />
-</p>
+### **[Open the AegisED Live Demo →](https://careflow-app.onrender.com)**
+
+The interface provides role-aware access to patient registration, emergency intake, AI-assisted decision support, doctor and bed allocation, treatment progression, discharge, operational analytics, and audit history.
+
+> The public deployment is an engineering demonstration using synthetic/demo data. Do not enter real patient information.
 
 ---
 
@@ -418,8 +418,8 @@ The production workflow has been exercised from registration through discharge, 
 Clone the repository:
 
 ```bash
-git clone https://github.com/YT-PRO12/AegisED-AI.git
-cd AegisED-AI
+git clone https://github.com/YT-PRO12/AegisED.git
+cd AegisED
 ```
 
 Environment templates are provided through `.env.example` files.
@@ -433,7 +433,7 @@ Refer to the repository documentation for environment-specific setup and testing
 ## 📁 Repository Structure
 
 ```text
-AegisED-AI/
+AegisED/
 │
 ├── frontend/                 # React user interface
 │

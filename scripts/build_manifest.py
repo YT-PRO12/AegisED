@@ -26,7 +26,7 @@ def deliverable_files():
         if file.is_symlink():
             raise SystemExit(f"Review symlink before packaging: {relative}")
         yield file
-
+print("hello")
 
 def main():
     files = [{"path": f.relative_to(ROOT).as_posix(), "bytes": f.stat().st_size, "sha256": sha256(f.read_bytes()).hexdigest()} for f in deliverable_files()]

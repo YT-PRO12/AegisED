@@ -72,7 +72,7 @@ function UserAdmin() {
                   <td>{u.name}</td>
                   <td>{u.email}</td>
                   <td>{u.role}</td>
-                  <td>{u.doctor_id || "â€”"}</td>
+                  <td>{u.doctor_id ?? "-"}</td>
                 </tr>
               ))}
             </tbody>

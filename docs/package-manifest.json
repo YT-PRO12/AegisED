@@ -848,11 +848,6 @@
       "path": "scripts/wait_for.py",
       "bytes": 292,
       "sha256": "94913697aa32d2b0e36d7c1a8cfbca76aacf728c44086507f067728839b6e6c9"
-    },
-    {
-      "path": "tatus --short",
-      "bytes": 4974,
-      "sha256": "e92f903e7d3179b5297e815b196bbe2ae5c83a232c465e1db67e4dacb9c1e58f"
     }
   ]
 }

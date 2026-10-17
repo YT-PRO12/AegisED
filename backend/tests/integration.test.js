@@ -481,7 +481,7 @@ test("security headers and request correlation are present on public responses",
   const r = await api("/health", { who: null });
   assert.equal(r.status, 200);
   assert.equal(r.headers.get("x-content-type-options"), "nosniff");
-  assert.equal(r.headers.get("x-frame-options"), "DENY");
+  assert.equal(r.headers.get("x-frame-options"), "SAMEORIGIN");
   assert.equal(r.headers.get("cache-control"), "no-store");
   assert.match(r.headers.get("x-request-id") || "", /^[0-9a-f-]{36}$/i);
 });

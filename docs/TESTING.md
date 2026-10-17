@@ -68,3 +68,15 @@ The original implementation workspace could not launch native PostgreSQL under a
 
 `npm audit --omit=dev` was run on both application packages. See VERIFICATION.md for the captured result. This checks known advisory data only, not all application security. Re-run audits when installing or upgrading dependencies.
 
+
+
+## Security response contracts
+
+The API integration suite includes regression checks for:
+
+- Helmet response headers and the per-request correlation ID on public health responses.
+- `Cache-Control: no-store` on API responses.
+- Invalid login payloads and unexpected fields returning a client error without issuing a session cookie.
+- Case-insensitive email normalization before credential lookup.
+
+Run the native PostgreSQL integration workflow after changing authentication, request middleware, or API response headers. These tests verify selected application contracts; they are not a substitute for a full security assessment.

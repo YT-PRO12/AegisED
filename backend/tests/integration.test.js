@@ -477,4 +477,41 @@ test("logout revokes the session in PostgreSQL", async () => {
   assert.equal((await api("/auth/me", { who: reception })).status, 401);
 });
 
+test("security headers and request correlation are present on public responses", async () => {
+  const r = await api("/health", { who: null });
+  assert.equal(r.status, 200);
+  assert.equal(r.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(r.headers.get("x-frame-options"), "SAMEORIGIN");
+  assert.equal(r.headers.get("cache-control"), "no-store");
+  assert.match(r.headers.get("x-request-id") || "", /^[0-9a-f-]{36}$/i);
+});
+
+test("login validation rejects malformed and unexpected fields without creating a session", async () => {
+  const malformed = await api("/auth/login", {
+    who: null,
+    method: "POST",
+    body: { email: "not-an-email", password: "wrong" },
+  });
+  assert.equal(malformed.status, 400);
+  assert.equal(malformed.headers.get("set-cookie"), null);
+
+  const unexpected = await api("/auth/login", {
+    who: null,
+    method: "POST",
+    body: { email: "admin@aegised.demo", password: process.env.DEMO_PASSWORD, role: "ADMIN" },
+  });
+  assert.equal(unexpected.status, 400);
+  assert.equal(unexpected.headers.get("set-cookie"), null);
+});
+
+test("login normalizes email case before authentication", async () => {
+  const r = await api("/auth/login", {
+    who: null,
+    method: "POST",
+    body: { email: "ADMIN@AEGised.DEMO", password: process.env.DEMO_PASSWORD },
+  });
+  assert.equal(r.status, 200);
+  assert.equal(r.body.data.user.email, "admin@aegised.demo");
+  assert.match(r.headers.get("set-cookie") || "", /HttpOnly/);
+});
 

@@ -515,3 +515,17 @@ test("login normalizes email case before authentication", async () => {
   assert.match(r.headers.get("set-cookie") || "", /HttpOnly/);
 });
 
+
+test("premature treatment transition leaves the waiting case unchanged", async () => {
+  const p = await patient("Transition Guard Patient");
+  const ec = await newCase(p);
+
+  const rejected = await postCase(ec.id, "start-treatment");
+  assert.equal(rejected.status, 409);
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.status, 200);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+  assert.equal(persisted.body.data.bed_id, null);
+});

@@ -529,3 +529,19 @@ test("premature treatment transition leaves the waiting case unchanged", async (
   assert.equal(persisted.body.data.doctor_id, null);
   assert.equal(persisted.body.data.bed_id, null);
 });
+
+
+test("doctor assignment rejects malformed identifiers and unexpected request fields", async () => {
+  const p = await patient("Strict Assignment Patient");
+  const ec = await newCase(p);
+
+  const malformed = await postCase(ec.id, "assign-doctor", { doctorId: "not-an-id" });
+  assert.equal(malformed.status, 400);
+
+  const unexpected = await postCase(ec.id, "assign-doctor", { doctorId: 1, overrideRole: "ADMIN" });
+  assert.equal(unexpected.status, 400);
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+});

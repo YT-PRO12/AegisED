@@ -80,3 +80,15 @@ The API integration suite includes regression checks for:
 - Case-insensitive email normalization before credential lookup.
 
 Run the native PostgreSQL integration workflow after changing authentication, request middleware, or API response headers. These tests verify selected application contracts; they are not a substitute for a full security assessment.
+
+## Emergency workflow transition invariants
+
+The native PostgreSQL integration suite includes regression checks for:
+
+- Rejecting treatment start while an emergency case is still waiting for assignments.
+- Keeping the waiting case unchanged after an invalid transition.
+- Rejecting malformed doctor IDs and unexpected assignment fields at the API boundary.
+- Preventing an already-busy doctor from being assigned to another case.
+- Confirming that a rejected assignment leaves the second case waiting and does not clear or overwrite the first doctor's assignment state.
+
+Run these checks only against the disposable `AegisED_test` database through the documented integration workflow. Do not run seeded integration tests against the live Render/Neon data. The checks focus on application invariants and do not replace load testing or a full concurrency review.

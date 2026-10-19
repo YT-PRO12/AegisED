@@ -515,3 +515,54 @@ test("login normalizes email case before authentication", async () => {
   assert.match(r.headers.get("set-cookie") || "", /HttpOnly/);
 });
 
+
+test("premature treatment transition leaves the waiting case unchanged", async () => {
+  const p = await patient("Transition Guard Patient");
+  const ec = await newCase(p);
+
+  const rejected = await postCase(ec.id, "start-treatment");
+  assert.equal(rejected.status, 409);
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.status, 200);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+  assert.equal(persisted.body.data.bed_id, null);
+});
+
+
+test("doctor assignment rejects malformed identifiers and unexpected request fields", async () => {
+  const p = await patient("Strict Assignment Patient");
+  const ec = await newCase(p);
+
+  const malformed = await postCase(ec.id, "assign-doctor", { doctorId: "not-an-id" });
+  assert.equal(malformed.status, 400);
+
+  const unexpected = await postCase(ec.id, "assign-doctor", { doctorId: 1, overrideRole: "ADMIN" });
+  assert.equal(unexpected.status, 400);
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+});
+
+
+test("a busy doctor cannot be assigned to a second case", async () => {
+  const availableDoctors = (await api("/doctors?status=Available&limit=100")).body.data;
+  assert.ok(availableDoctors.length > 0, "test seed should include an available doctor");
+  const doctor = availableDoctors[0];
+
+  const firstPatient = await patient("First Doctor Assignment");
+  const firstCase = await newCase(firstPatient);
+  assert.equal((await postCase(firstCase.id, "assign-doctor", { doctorId: doctor.id })).status, 200);
+
+  const secondPatient = await patient("Second Doctor Assignment");
+  const secondCase = await newCase(secondPatient);
+  assert.equal((await postCase(secondCase.id, "assign-doctor", { doctorId: doctor.id })).status, 409);
+
+  const persisted = await api("/emergency-cases/" + secondCase.id);
+  assert.equal(persisted.status, 200);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+  assert.equal((await api("/doctors/" + doctor.id)).body.data.status, "Busy");
+});

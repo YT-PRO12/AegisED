@@ -627,3 +627,26 @@ test("discharge cannot bypass treatment completion and does not release resource
   assert.equal((await postCase(ec.id, "complete-treatment")).status, 200);
   assert.equal((await postCase(ec.id, "discharge")).status, 200);
 });
+
+
+test("invalid bed assignment payloads leave an assigned case unchanged", async () => {
+  const p = await patient("Invalid Bed Payload Guard");
+  const ec = await newCase(p);
+  const doctorRow = (await api("/doctors?status=Available&limit=100")).body.data[0];
+  const beds = (await api("/beds?status=Available&limit=100")).body.data;
+  assert.ok(doctorRow && beds.length > 0, "test seed needs an available doctor and bed");
+
+  assert.equal((await postCase(ec.id, "assign-doctor", { doctorId: doctorRow.id })).status, 200);
+  assert.equal((await postCase(ec.id, "assign-bed", { bedId: "not-a-number" })).status, 400);
+  assert.equal((await postCase(ec.id, "assign-bed", { bedId: beds[0].id, overrideStatus: "Occupied" })).status, 400);
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.body.data.status, "Assigned");
+  assert.equal(persisted.body.data.bed_id, null);
+  assert.equal((await api("/beds/" + beds[0].id)).body.data.status, "Available");
+
+  assert.equal((await postCase(ec.id, "assign-bed", { bedId: beds[0].id })).status, 200);
+  assert.equal((await postCase(ec.id, "start-treatment")).status, 200);
+  assert.equal((await postCase(ec.id, "complete-treatment")).status, 200);
+  assert.equal((await postCase(ec.id, "discharge")).status, 200);
+});

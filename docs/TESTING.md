@@ -92,3 +92,14 @@ The native PostgreSQL integration suite includes regression checks for:
 - Confirming that a rejected assignment leaves the second case waiting and does not clear or overwrite the first doctor's assignment state.
 
 Run these checks only against the disposable `AegisED_test` database through the documented integration workflow. Do not run seeded integration tests against the live Render/Neon data. The checks focus on application invariants and do not replace load testing or a full concurrency review.
+
+## Emergency resource transition guards
+
+The PostgreSQL integration suite checks that the emergency workflow preserves its resource invariants:
+
+- A bed cannot be assigned while a case is still waiting for a doctor.
+- Treatment cannot start until both doctor and bed assignments exist.
+- Discharge cannot bypass treatment completion or release a doctor/bed early.
+- Invalid bed assignment payloads are rejected without mutating case or bed state.
+
+Tests use the disposable `AegisED_test` database. They also complete valid workflows where resources are assigned, so shared seed resources are released for subsequent tests. These cases are regression checks, not a substitute for stress-testing concurrent reservations.

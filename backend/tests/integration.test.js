@@ -566,3 +566,20 @@ test("a busy doctor cannot be assigned to a second case", async () => {
   assert.equal(persisted.body.data.doctor_id, null);
   assert.equal((await api("/doctors/" + doctor.id)).body.data.status, "Busy");
 });
+
+
+test("bed cannot be assigned before the case has a doctor", async () => {
+  const p = await patient("Bed Assignment Guard");
+  const ec = await newCase(p);
+  const beds = (await api("/beds?status=Available&limit=100")).body.data;
+  assert.ok(beds.length > 0, "test seed should include an available bed");
+
+  const rejected = await postCase(ec.id, "assign-bed", { bedId: beds[0].id });
+  assert.equal(rejected.status, 409);
+  assert.equal((await api("/beds/" + beds[0].id)).body.data.status, "Available");
+
+  const persisted = await api("/emergency-cases/" + ec.id);
+  assert.equal(persisted.body.data.status, "Waiting");
+  assert.equal(persisted.body.data.doctor_id, null);
+  assert.equal(persisted.body.data.bed_id, null);
+});

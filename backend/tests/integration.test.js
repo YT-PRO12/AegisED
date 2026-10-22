@@ -681,3 +681,11 @@ test("resource listing rejects invalid pagination instead of widening the query"
   assert.equal(oversizedPage.status, 400);
   assert.equal(negativeOffset.status, 400);
 });
+
+
+test("knowledge endpoint rejects short questions and unrecognized request fields", async () => {
+  const tooShort = await api("/knowledge", { method: "POST", body: { question: "ok" } });
+  const unexpected = await api("/knowledge", { method: "POST", body: { question: "How are beds allocated?", patientRecord: "must not be accepted" } });
+  assert.equal(tooShort.status, 400);
+  assert.equal(unexpected.status, 400);
+});

@@ -689,3 +689,17 @@ test("knowledge endpoint rejects short questions and unrecognized request fields
   assert.equal(tooShort.status, 400);
   assert.equal(unexpected.status, 400);
 });
+
+
+test("prediction review accepts only documented actions and fields", async () => {
+  const invalidAction = await api("/ai/predictions/1/review", {
+    method: "POST",
+    body: { action: "DELETE" },
+  });
+  const unexpectedField = await api("/ai/predictions/1/review", {
+    method: "POST",
+    body: { action: "REVIEW", debugOverride: true },
+  });
+  assert.equal(invalidAction.status, 400);
+  assert.equal(unexpectedField.status, 400);
+});

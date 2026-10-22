@@ -31,3 +31,15 @@ This checklist is for engineering changes, not a certification or claim of a com
 - Review least-privilege permissions and secrets handling before release.
 
 Record review evidence in the PR; do not check a box without actually performing the check.
+
+## Request-boundary regression evidence
+
+For changes touching validation or model-facing endpoints, record the following evidence in the PR:
+
+- Invalid vital ranges and unknown prediction fields return 400 before any model request is made.
+- Pagination limits are enforced before collection queries run.
+- Knowledge prompts are length-bounded and reject extra request properties.
+- Prediction review permits only the documented actions and rejects unknown fields.
+- Workflow-state conflicts return 409 without mutating case, doctor, or bed state.
+
+Use synthetic fixtures and the disposable integration database. Keep response/request IDs for traceability, but do not attach real patient data or full payloads. A passing validation suite is one security layer, not proof that every route or role boundary has been audited.

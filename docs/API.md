@@ -53,3 +53,9 @@ GET `/dashboard/stats`; GET `/analytics?days=30` or `?from=2026-09-01&to=2026-09
 ## Status codes
 
 400 invalid payload/ID; 401 absent/expired session; 403 role/ownership/request-token restriction; 404 missing/inaccessible record; 409 workflow/foreign-key/uniqueness conflict; 429 rate limit; 503 unavailable AI dependency. Production errors omit stack traces and database internals.
+
+## Validation and error behavior
+
+Request bodies use explicit schemas. Unknown fields are rejected on strict contracts rather than silently treated as privileged overrides. Patient age is bounded to 0–120; vital-sign inputs are range-checked before the prediction controller calls the model service; resource collection pagination accepts `page >= 1` and `limit` from 1 through 100. Prediction review accepts only `ACCEPT`, `OVERRIDE`, or `REVIEW`, with the documented optional priority and reason fields.
+
+Malformed requests return HTTP 400 with a structured `{success:false,message,requestId}` response. Workflow conflicts, such as assigning an unavailable doctor or skipping a required state, return HTTP 409. A 400 response means the request was rejected at the API boundary; it does not imply the model or database was called. Do not include patient details, credentials, or full request bodies in bug reports.

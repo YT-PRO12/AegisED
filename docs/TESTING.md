@@ -103,3 +103,14 @@ The PostgreSQL integration suite checks that the emergency workflow preserves it
 - Invalid bed assignment payloads are rejected without mutating case or bed state.
 
 Tests use the disposable `AegisED_test` database. They also complete valid workflows where resources are assigned, so shared seed resources are released for subsequent tests. These cases are regression checks, not a substitute for stress-testing concurrent reservations.
+
+## API boundary regressions added in the current quality PR
+
+The integration suite now checks four request-boundary groups using synthetic test data:
+
+- AI prediction rejects out-of-range vital signs and unrecognized fields before the model call.
+- Patient collection listing rejects page numbers below one and limits above 100.
+- Knowledge requests reject too-short questions and unexpected request properties.
+- Prediction review rejects unsupported actions and extra fields.
+
+Run the same CI command, `npm run test:api`, with `NODE_ENV=test` and the disposable `AegisED_test` database configured as above. These cases test API validation and status contracts; they do not establish clinical validity, model accuracy, or production availability.

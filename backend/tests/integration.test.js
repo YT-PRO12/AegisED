@@ -650,3 +650,56 @@ test("invalid bed assignment payloads leave an assigned case unchanged", async (
   assert.equal((await postCase(ec.id, "complete-treatment")).status, 200);
   assert.equal((await postCase(ec.id, "discharge")).status, 200);
 });
+
+
+test("AI prediction rejects out-of-range vitals and unknown input fields", async () => {
+  const invalidVitals = await api("/ai/predict", {
+    method: "POST",
+    body: {
+      caseId: 1,
+      vitals: { heartRate: 10, systolicBP: 120, respiratoryRate: 16, temperature: 37, oxygenSaturation: 98 },
+    },
+  });
+  assert.equal(invalidVitals.status, 400);
+
+  const unexpectedField = await api("/ai/predict", {
+    method: "POST",
+    body: {
+      caseId: 1,
+      vitals: { heartRate: 80, systolicBP: 120, respiratoryRate: 16, temperature: 37, oxygenSaturation: 98, bypassValidation: true },
+    },
+  });
+  assert.equal(unexpectedField.status, 400);
+});
+
+
+test("resource listing rejects invalid pagination instead of widening the query", async () => {
+  const zeroPage = await api("/patients?page=0");
+  const oversizedPage = await api("/patients?limit=101");
+  const negativeOffset = await api("/patients?page=-1&limit=20");
+  assert.equal(zeroPage.status, 400);
+  assert.equal(oversizedPage.status, 400);
+  assert.equal(negativeOffset.status, 400);
+});
+
+
+test("knowledge endpoint rejects short questions and unrecognized request fields", async () => {
+  const tooShort = await api("/knowledge", { method: "POST", body: { question: "ok" } });
+  const unexpected = await api("/knowledge", { method: "POST", body: { question: "How are beds allocated?", patientRecord: "must not be accepted" } });
+  assert.equal(tooShort.status, 400);
+  assert.equal(unexpected.status, 400);
+});
+
+
+test("prediction review accepts only documented actions and fields", async () => {
+  const invalidAction = await api("/ai/predictions/1/review", {
+    method: "POST",
+    body: { action: "DELETE" },
+  });
+  const unexpectedField = await api("/ai/predictions/1/review", {
+    method: "POST",
+    body: { action: "REVIEW", debugOverride: true },
+  });
+  assert.equal(invalidAction.status, 400);
+  assert.equal(unexpectedField.status, 400);
+});

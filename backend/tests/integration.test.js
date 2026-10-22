@@ -671,3 +671,13 @@ test("AI prediction rejects out-of-range vitals and unknown input fields", async
   });
   assert.equal(unexpectedField.status, 400);
 });
+
+
+test("resource listing rejects invalid pagination instead of widening the query", async () => {
+  const zeroPage = await api("/patients?page=0");
+  const oversizedPage = await api("/patients?limit=101");
+  const negativeOffset = await api("/patients?page=-1&limit=20");
+  assert.equal(zeroPage.status, 400);
+  assert.equal(oversizedPage.status, 400);
+  assert.equal(negativeOffset.status, 400);
+});

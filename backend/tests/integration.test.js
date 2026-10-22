@@ -650,3 +650,24 @@ test("invalid bed assignment payloads leave an assigned case unchanged", async (
   assert.equal((await postCase(ec.id, "complete-treatment")).status, 200);
   assert.equal((await postCase(ec.id, "discharge")).status, 200);
 });
+
+
+test("AI prediction rejects out-of-range vitals and unknown input fields", async () => {
+  const invalidVitals = await api("/ai/predict", {
+    method: "POST",
+    body: {
+      caseId: 1,
+      vitals: { heartRate: 10, systolicBP: 120, respiratoryRate: 16, temperature: 37, oxygenSaturation: 98 },
+    },
+  });
+  assert.equal(invalidVitals.status, 400);
+
+  const unexpectedField = await api("/ai/predict", {
+    method: "POST",
+    body: {
+      caseId: 1,
+      vitals: { heartRate: 80, systolicBP: 120, respiratoryRate: 16, temperature: 37, oxygenSaturation: 98, bypassValidation: true },
+    },
+  });
+  assert.equal(unexpectedField.status, 400);
+});

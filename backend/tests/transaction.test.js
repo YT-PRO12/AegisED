@@ -62,3 +62,21 @@ test("transaction preserves the original operation error if rollback also fails"
     restore.mock.restore();
   }
 });
+
+
+test("transaction releases a connection when BEGIN fails", async (t) => {
+  const original = require("../src/config/db");
+  const calls = [];
+  const beginError = new Error("synthetic begin failure");
+  const client = {
+    query: async (sql) => { calls.push(sql); if (sql === "BEGIN") throw beginError; return { rows: [] }; },
+    release: () => calls.push("RELEASE"),
+  };
+  const restore = t.mock.method(original, "connect", async () => client);
+  try {
+    await assert.rejects(transaction(async () => assert.fail("work must not run")), (err) => err === beginError);
+    assert.deepEqual(calls, ["BEGIN", "ROLLBACK", "RELEASE"]);
+  } finally {
+    restore.mock.restore();
+  }
+});

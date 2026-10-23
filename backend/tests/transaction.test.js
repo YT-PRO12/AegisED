@@ -99,3 +99,21 @@ test("transaction does not mask work errors when connection release throws", asy
     restore.mock.restore();
   }
 });
+
+
+test("transaction releases a client after COMMIT failure and attempts rollback", async (t) => {
+  const original = require("../src/config/db");
+  const calls = [];
+  const commitError = new Error("synthetic commit failure");
+  const client = {
+    query: async (sql) => { calls.push(sql); if (sql === "COMMIT") throw commitError; return { rows: [] }; },
+    release: () => calls.push("RELEASE"),
+  };
+  const restore = t.mock.method(original, "connect", async () => client);
+  try {
+    await assert.rejects(transaction(async () => "result"), (err) => err === commitError);
+    assert.deepEqual(calls, ["BEGIN", "COMMIT", "ROLLBACK", "RELEASE"]);
+  } finally {
+    restore.mock.restore();
+  }
+});

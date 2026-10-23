@@ -80,3 +80,22 @@ test("transaction releases a connection when BEGIN fails", async (t) => {
     restore.mock.restore();
   }
 });
+
+
+test("transaction does not mask work errors when connection release throws", async (t) => {
+  const original = require("../src/config/db");
+  const calls = [];
+  const operationError = new Error("synthetic work error");
+  const releaseError = new Error("synthetic release error");
+  const client = {
+    query: async (sql) => { calls.push(sql); return { rows: [] }; },
+    release: () => { calls.push("RELEASE"); throw releaseError; },
+  };
+  const restore = t.mock.method(original, "connect", async () => client);
+  try {
+    await assert.rejects(transaction(async () => { throw operationError; }), (err) => err === operationError);
+    assert.deepEqual(calls, ["BEGIN", "ROLLBACK", "RELEASE"]);
+  } finally {
+    restore.mock.restore();
+  }
+});

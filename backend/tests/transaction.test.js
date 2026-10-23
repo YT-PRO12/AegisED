@@ -39,3 +39,26 @@ test("transaction rolls back failed work and always releases the connection", as
     restore.mock.restore();
   }
 });
+
+
+test("transaction preserves the original operation error if rollback also fails", async (t) => {
+  const original = require("../src/config/db");
+  const calls = [];
+  const operationError = new Error("synthetic operation failure");
+  const rollbackError = new Error("synthetic rollback failure");
+  const client = {
+    query: async (sql) => {
+      calls.push(sql);
+      if (sql === "ROLLBACK") throw rollbackError;
+      return { rows: [] };
+    },
+    release: () => calls.push("RELEASE"),
+  };
+  const restore = t.mock.method(original, "connect", async () => client);
+  try {
+    await assert.rejects(transaction(async () => { throw operationError; }), (err) => err === operationError);
+    assert.deepEqual(calls, ["BEGIN", "ROLLBACK", "RELEASE"]);
+  } finally {
+    restore.mock.restore();
+  }
+});

@@ -31,3 +31,9 @@ This checklist is for engineering changes, not a certification or claim of a com
 - Review least-privilege permissions and secrets handling before release.
 
 Record review evidence in the PR; do not check a box without actually performing the check.
+
+## Transaction and audit integrity checks
+
+For changes that modify patient, emergency-case, doctor, or bed state, verify that business mutations and their audit events share the intended transaction boundary. Failed operations must not leave a partial resource transition. Connection cleanup failures must not silently replace the original business error, and tests must not run against a production database.
+
+Mocked transaction tests cover control-flow branches; PostgreSQL integration tests remain necessary to validate constraints, row locks, concurrent assignments, and durable audit records. Record the tested commit SHA and CI run in the review rather than describing unexecuted cases as verified.

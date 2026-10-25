@@ -52,7 +52,7 @@ test("transaction preserves the original operation error if rollback also fails"
       if (sql === "ROLLBACK") throw rollbackError;
       return { rows: [] };
     },
-    release: () => calls.push("RELEASE"),
+    release: (error) => { assert.equal(error, rollbackError); calls.push("RELEASE"); },
   };
   const restore = t.mock.method(original, "connect", async () => client);
   try {
@@ -61,6 +61,32 @@ test("transaction preserves the original operation error if rollback also fails"
   } finally {
     restore.mock.restore();
   }
+});
+
+test("transaction propagates connection acquisition failures without running work", async (t) => {
+  const failure = new Error("synthetic connection failure");
+  t.mock.method(require("../src/config/db"), "connect", async () => { throw failure; });
+  await assert.rejects(transaction(async () => assert.fail("work must not run")), error => error === failure);
+});
+
+test("transaction surfaces release failure after a successful commit", async (t) => {
+  const failure = new Error("synthetic release failure");
+  const calls = [];
+  t.mock.method(require("../src/config/db"), "connect", async () => ({
+    query: async sql => { calls.push(sql); },
+    release: error => { assert.equal(error, undefined); calls.push("RELEASE"); throw failure; },
+  }));
+  await assert.rejects(transaction(async () => "done"), error => error === failure);
+  assert.deepEqual(calls, ["BEGIN", "COMMIT", "RELEASE"]);
+});
+
+test("transaction preserves a falsy rejection when cleanup fails", async (t) => {
+  const rollbackError = new Error("synthetic rollback failure");
+  t.mock.method(require("../src/config/db"), "connect", async () => ({
+    query: async sql => { if (sql === "ROLLBACK") throw rollbackError; },
+    release: error => { assert.equal(error, rollbackError); throw new Error("synthetic release failure"); },
+  }));
+  await assert.rejects(transaction(async () => { throw null; }), error => error === null);
 });
 
 

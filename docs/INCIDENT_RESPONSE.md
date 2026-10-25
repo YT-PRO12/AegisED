@@ -27,3 +27,16 @@ This playbook covers operational service incidents in the AegisED demonstration 
 ## Closure
 
 Document root cause, impact, timeline, remediation, verification, and preventive action. Include links to the actual deployment and issue/PR when available.
+
+## Post-remediation workflow verification
+
+Before closing an incident involving intake, assignment, prediction, or discharge, record the environment and tested commit, then verify:
+
+1. `/api/health` responds and `/api/ready` confirms database readiness.
+2. A synthetic case can follow the valid registration-to-discharge path in the approved test environment.
+3. Invalid vital signs, unsupported prediction-review actions, and malformed resource-list parameters are rejected at the API boundary.
+4. An invalid transition leaves case status, doctor availability, and bed occupancy unchanged.
+5. A valid discharge releases the assigned doctor and bed, and the corresponding audit event is present.
+6. Logs contain request IDs and operational status but no credentials or patient payloads.
+
+Do not use production patient records to reproduce an incident. If a workflow invariant cannot be confirmed, keep the incident open and escalate rather than manually editing resource status rows.

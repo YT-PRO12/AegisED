@@ -103,3 +103,9 @@ The PostgreSQL integration suite checks that the emergency workflow preserves it
 - Invalid bed assignment payloads are rejected without mutating case or bed state.
 
 Tests use the disposable `AegisED_test` database. They also complete valid workflows where resources are assigned, so shared seed resources are released for subsequent tests. These cases are regression checks, not a substitute for stress-testing concurrent reservations.
+
+## Transaction lifecycle unit tests
+
+`backend/tests/transaction.test.js` exercises the transaction wrapper using a mocked PostgreSQL pool client and synthetic failures. The suite covers successful commit, application-work rollback, rollback failure while preserving the original error, `BEGIN` failure cleanup, connection-release failure, and `COMMIT` failure cleanup. It does not require a live database and does not replace the integration suite that verifies case/doctor/bed invariants in the dedicated `AegisED_test` database.
+
+Run it with the repository's Node test command from `backend/`. Before merging, check that the test runner discovers this file as well as `integration.test.js`; do not infer test execution from the file existing alone.

@@ -35,3 +35,14 @@ Use this checklist for each AegisED release candidate. Record evidence in the pu
 - [ ] Record the release commit and any rollback decision.
 
 **Safety note:** This checklist is a process aid, not proof of compliance or a substitute for a security review. Never record secrets or personal patient information in release evidence.
+
+## Database transaction acceptance
+
+- [ ] Successful workflow writes commit as a single transaction.
+- [ ] Failed workflow writes roll back and preserve the original failure for the API error handler.
+- [ ] Connection cleanup occurs after BEGIN, work, and COMMIT failures.
+- [ ] Audit writes share the intended transaction boundary with the business operation.
+- [ ] Integration tests prove invalid emergency transitions leave doctor and bed assignments unchanged.
+- [ ] Tests run only against the dedicated test database; no production patient records are used.
+
+A unit test that mocks the pool verifies transaction wrapper control flow only. Confirm the actual SQL constraints, lock behavior, and workflow state transitions in the PostgreSQL integration suite before release.

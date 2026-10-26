@@ -1,7 +1,7 @@
 const { z } = require("zod");
 const { assert } = require("../utils/errors");
 const priority = z.enum(["Critical", "Urgent", "Stable"]);
-const id = z.number().int().positive();
+const id = z.number().int().positive().max(2147483647);
 const text = (max = 120) => z.string().trim().min(1).max(max);
 const vitals = z
   .object({
@@ -66,21 +66,34 @@ const validate = (schema) => (req, res, next) => {
   req.body = schema.parse(req.body);
   next();
 };
-function validId(req, res, next) {
+function parseId(value) {
   assert(
-    /^\d+$/.test(req.params.id) &&
-      Number.isSafeInteger(+req.params.id) &&
-      +req.params.id > 0,
+    typeof value === "string" &&
+      /^\d+(?![\s\S])/.test(value) &&
+      Number.isSafeInteger(+value) &&
+      +value > 0 &&
+      +value <= 2147483647,
     400,
     "Invalid ID",
   );
+  return +value;
+}
+function validId(req, res, next) {
+  parseId(req.params.id);
   next();
 }
+const queryInteger = (max, fallback) =>
+  z
+    .string()
+    .regex(/^[1-9]\d*(?![\s\S])/)
+    .transform(Number)
+    .pipe(z.number().int().max(max))
+    .default(fallback);
 function listParams(req) {
   const s = z
     .object({
-      page: z.coerce.number().int().min(1).default(1),
-      limit: z.coerce.number().int().min(1).max(100).default(20),
+      page: queryInteger(2147483647, 1),
+      limit: queryInteger(100, 20),
       search: z.string().max(120).default(""),
       status: z.string().max(24).optional(),
       priority: priority.optional(),
@@ -90,6 +103,17 @@ function listParams(req) {
       order: z.enum(["asc", "desc"]).default("desc"),
     })
     .parse(req.query);
-  return { ...s, offset: (s.page - 1) * s.limit };
+  const offset = (s.page - 1) * s.limit;
+  assert(offset <= 2147483647, 400, "Page offset is too large");
+  return { ...s, offset };
 }
-module.exports = { z, schemas, validate, validId, listParams, id, priority };
+module.exports = {
+  z,
+  schemas,
+  validate,
+  validId,
+  parseId,
+  listParams,
+  id,
+  priority,
+};

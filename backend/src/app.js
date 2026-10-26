@@ -18,6 +18,7 @@ const {
   priority,
 } = require("./middleware/validation");
 const { assert, AppError } = require("./utils/errors");
+const { literalSearch } = require("./utils/search");
 const auth = require("./controllers/authController");
 const ai = require("./controllers/aiController");
 const app = express();
@@ -135,7 +136,7 @@ app.get("/api/audit", allow("ADMIN"), async (req, res) => {
       action: z.string().max(80).default(""),
     })
     .parse(req.query);
-  const args = ["%" + q.action + "%"];
+  const args = [literalSearch(q.action)];
   const total = +(
     await pool.query(
       "SELECT COUNT(*) FROM audit_logs WHERE action ILIKE $1",
@@ -252,4 +253,3 @@ app.use((err, req, res, next) => {
   res.status(status).json({ success: false, message, requestId: req.id });
 });
 module.exports = app;
-

@@ -69,7 +69,7 @@ const validate = (schema) => (req, res, next) => {
 function parseId(value) {
   assert(
     typeof value === "string" &&
-      /^\d+$/.test(value) &&
+      /^\d+(?![\s\S])/.test(value) &&
       Number.isSafeInteger(+value) &&
       +value > 0 &&
       +value <= 2147483647,
@@ -85,7 +85,7 @@ function validId(req, res, next) {
 const queryInteger = (max, fallback) =>
   z
     .string()
-    .regex(/^[1-9]\d*$/)
+    .regex(/^[1-9]\d*(?![\s\S])/)
     .transform(Number)
     .pipe(z.number().int().max(max))
     .default(fallback);

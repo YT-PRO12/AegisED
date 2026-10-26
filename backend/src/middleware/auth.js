@@ -6,7 +6,7 @@ const tokenHash = (token) => createHash("sha256").update(token).digest("hex");
 async function authenticate(req, res, next) {
   const token = req.cookies[env.cookieName];
   assert(
-    typeof token === "string" && /^[a-f0-9]{96}$/.test(token),
+    typeof token === "string" && /^[a-f0-9]{96}(?![\s\S])/.test(token),
     401,
     "Please sign in",
   );

@@ -3,6 +3,7 @@ const transaction = require("./transaction");
 const audit = require("./audit");
 const { assert } = require("../utils/errors");
 const { listParams, parseId } = require("../middleware/validation");
+const { literalSearch } = require("../utils/search");
 const { ownsCase } = require("../middleware/auth");
 const definitions = {
   patient: {
@@ -84,7 +85,7 @@ function crud(kind) {
         values.push(v);
         where.push(sql.replace("?", `$${values.length}`));
       }
-      if (q.search) filter(`(${def.search}) ILIKE ?`, "%" + q.search + "%");
+      if (q.search) filter(`(${def.search}) ILIKE ?`, literalSearch(q.search));
       if (q.status === "Active" && kind === "case")
         filter(`${def.alias}.status <> ?`, "Discharged");
       else if (q.status) filter(`${def.alias}.status = ?`, q.status);

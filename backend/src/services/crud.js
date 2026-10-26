@@ -2,7 +2,7 @@ const pool = require("../config/db");
 const transaction = require("./transaction");
 const audit = require("./audit");
 const { assert } = require("../utils/errors");
-const { listParams } = require("../middleware/validation");
+const { listParams, parseId } = require("../middleware/validation");
 const { ownsCase } = require("../middleware/auth");
 const definitions = {
   patient: {
@@ -90,9 +90,8 @@ function crud(kind) {
       else if (q.status) filter(`${def.alias}.status = ?`, q.status);
       if (q.priority && ["case", "patient"].includes(kind))
         filter(`${def.alias}.priority = ?`, q.priority);
-      if (kind === "case" && req.query.patientId) {
-        assert(/^\d+$/.test(req.query.patientId), 400, "Invalid patient ID");
-        filter("ec.patient_id = ?", +req.query.patientId);
+      if (kind === "case" && req.query.patientId !== undefined) {
+        filter("ec.patient_id = ?", parseId(req.query.patientId));
       }
       const clause = where.length ? " WHERE " + where.join(" AND ") : "";
       const total = +(

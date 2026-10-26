@@ -5,7 +5,11 @@ const { assert } = require("../utils/errors");
 const tokenHash = (token) => createHash("sha256").update(token).digest("hex");
 async function authenticate(req, res, next) {
   const token = req.cookies[env.cookieName];
-  assert(token && token.length < 200, 401, "Please sign in");
+  assert(
+    typeof token === "string" && /^[a-f0-9]{96}$/.test(token),
+    401,
+    "Please sign in",
+  );
   const r = await pool.query(
     `SELECT u.id,u.name,u.email,u.role,u.doctor_id,s.csrf_token,s.token_hash
  FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=$1 AND s.expires_at>NOW() AND u.active`,

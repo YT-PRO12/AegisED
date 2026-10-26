@@ -76,11 +76,18 @@ function validId(req, res, next) {
   );
   next();
 }
+const queryInteger = (max, fallback) =>
+  z
+    .string()
+    .regex(/^[1-9]\d*$/)
+    .transform(Number)
+    .pipe(z.number().int().max(max))
+    .default(fallback);
 function listParams(req) {
   const s = z
     .object({
-      page: z.coerce.number().int().min(1).default(1),
-      limit: z.coerce.number().int().min(1).max(100).default(20),
+      page: queryInteger(2147483647, 1),
+      limit: queryInteger(100, 20),
       search: z.string().max(120).default(""),
       status: z.string().max(24).optional(),
       priority: priority.optional(),
@@ -90,6 +97,8 @@ function listParams(req) {
       order: z.enum(["asc", "desc"]).default("desc"),
     })
     .parse(req.query);
-  return { ...s, offset: (s.page - 1) * s.limit };
+  const offset = (s.page - 1) * s.limit;
+  assert(offset <= 2147483647, 400, "Page offset is too large");
+  return { ...s, offset };
 }
 module.exports = { z, schemas, validate, validId, listParams, id, priority };

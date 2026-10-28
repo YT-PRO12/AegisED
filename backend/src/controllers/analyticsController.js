@@ -13,7 +13,7 @@ exports.analytics = async (req, res) => {
   if (q.to) end.setUTCDate(end.getUTCDate() + 1);
   const start = q.from
     ? new Date(q.from + "T00:00:00Z")
-    : new Date(end.getTime() - (q.days - 1) * 86400000);
+    : new Date(end.getTime() - (q.to ? q.days : q.days - 1) * 86400000);
   if (!q.from) start.setUTCHours(0, 0, 0, 0);
   assert(
     end > start && end - start <= 366 * 86400000,

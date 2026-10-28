@@ -11,13 +11,13 @@ async function hash(password) {
   return `${salt}:${key.toString("hex")}`;
 }
 async function verify(password, stored) {
-  if (
-    typeof password !== "string" ||
-    typeof stored !== "string" ||
-    !/^[a-f0-9]{32}:[a-f0-9]{128}(?![\s\S])/.test(stored)
-  )
-    return false;
-  const [salt, key] = stored.split(":");
+  if (typeof password !== "string") return false;
+  const valid =
+    typeof stored === "string" &&
+    /^[a-f0-9]{32}:[a-f0-9]{128}(?![\s\S])/.test(stored);
+  const [salt, key] = valid
+    ? stored.split(":")
+    : ["0".repeat(32), "0".repeat(128)];
   const candidate = await derive(password, salt, 64, {
     N: 32768,
     r: 8,
@@ -25,7 +25,7 @@ async function verify(password, stored) {
     maxmem: 64 * 1024 * 1024,
   });
   return (
-    key.length === 128 && timingSafeEqual(Buffer.from(key, "hex"), candidate)
+    valid && timingSafeEqual(Buffer.from(key, "hex"), candidate)
   );
 }
 module.exports = { hash, verify };

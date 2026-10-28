@@ -89,6 +89,10 @@ const queryInteger = (max, fallback) =>
     .transform(Number)
     .pipe(z.number().int().max(max))
     .default(fallback);
+const auditQuery = z.object({
+  page: queryInteger(Math.floor(2147483647 / 30) + 1, 1),
+  action: z.string().max(80).default(""),
+});
 function listParams(req) {
   const s = z
     .object({
@@ -114,6 +118,7 @@ module.exports = {
   validId,
   parseId,
   listParams,
+  auditQuery,
   id,
   priority,
 };

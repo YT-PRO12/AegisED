@@ -16,6 +16,7 @@ const {
   validId,
   id,
   priority,
+  auditQuery,
 } = require("./middleware/validation");
 const { assert, AppError } = require("./utils/errors");
 const { literalSearch } = require("./utils/search");
@@ -130,12 +131,7 @@ app.get(
   require("./controllers/analyticsController").analytics,
 );
 app.get("/api/audit", allow("ADMIN"), async (req, res) => {
-  const q = z
-    .object({
-      page: z.coerce.number().int().min(1).default(1),
-      action: z.string().max(80).default(""),
-    })
-    .parse(req.query);
+  const q = auditQuery.parse(req.query);
   const args = [literalSearch(q.action)];
   const total = +(
     await pool.query(

@@ -1,0 +1,28 @@
+name: Validate AWS staging configuration
+on:
+  push:
+    paths: ['infra/aws-staging/**', '.github/workflows/aws-staging-check.yml']
+  pull_request:
+    paths: ['infra/aws-staging/**', '.github/workflows/aws-staging-check.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install cfn-lint
+      - run: cfn-lint infra/aws-staging/template.yaml
+      - run: shellcheck infra/aws-staging/*.sh
+      - run: python -m py_compile infra/aws-staging/configure.py infra/aws-staging/smoke.py
+      - run: docker compose -f infra/aws-staging/compose.yaml config --quiet
+        env:
+          STAGING_DOMAIN: staging.example.com
+          ACME_EMAIL: owner@example.com
+          LOG_GROUP: /aegised-staging/validation
+          POSTGRES_PASSWORD: placeholder
+          ML_SERVICE_TOKEN: placeholder
+          DEMO_PASSWORD: placeholder

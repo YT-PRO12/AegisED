@@ -11,6 +11,12 @@ async function hash(password) {
   return `${salt}:${key.toString("hex")}`;
 }
 async function verify(password, stored) {
+  if (
+    typeof password !== "string" ||
+    typeof stored !== "string" ||
+    !/^[a-f0-9]{32}:[a-f0-9]{128}(?![\s\S])/.test(stored)
+  )
+    return false;
   const [salt, key] = stored.split(":");
   const candidate = await derive(password, salt, 64, {
     N: 32768,

@@ -1,0 +1,29 @@
+{
+  "source": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonEC2/current/ap-southeast-2/index.csv",
+  "prices": {
+    "t3a.small": {
+      "SKU": "JEPUKXN8RHX39MCF",
+      "PricePerUnit": "0.0238000000",
+      "Unit": "Hrs",
+      "PriceDescription": "$0.0238 per On Demand Linux t3a.small Instance Hour",
+      "EffectiveDate": "2026-10-01"
+    },
+    "t3a.medium": {
+      "SKU": "KQPGF5ZKTX8DCS5J",
+      "PricePerUnit": "0.0475000000",
+      "Unit": "Hrs",
+      "PriceDescription": "$0.0475 per On Demand Linux t3a.medium Instance Hour",
+      "EffectiveDate": "2026-10-01"
+    },
+    "gp3": {
+      "SKU": "QR74UAP3E9WUYT9B",
+      "PricePerUnit": "0.0960000000",
+      "Unit": "GB-Mo",
+      "PriceDescription": "$0.096 per GB-month of General Purpose (gp3) provisioned storage - Asia Pacific (Sydney)",
+      "EffectiveDate": "2026-10-01"
+    }
+  },
+  "retrieved": "2026-10-13",
+  "currency": "USD",
+  "creditsAssumed": false
+}

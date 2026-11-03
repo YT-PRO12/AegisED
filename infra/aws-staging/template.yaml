@@ -1,0 +1,279 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Escape Velocity - isolated synthetic AegisED staging (owner approval required)
+Parameters:
+  Ami:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+  HttpsClientCidr:
+    Type: String
+    Description: Owner public IPv4/32; use 0.0.0.0/0 only for an explicitly approved public demo
+    AllowedPattern: '(\d{1,3}\.){3}\d{1,3}/\d{1,2}'
+  AlertEmail:
+    Type: String
+    Description: Owner email for SNS confirmation and budget notifications
+    AllowedPattern: '[^\s@]+@[^\s@]+\.[^\s@]+'
+Rules:
+  SydneyOnly:
+    Assertions:
+      - Assert: !Equals [!Ref 'AWS::Region', ap-southeast-2]
+        AssertDescription: This reviewed deployment is limited to ap-southeast-2
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.79.0.0/24
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: [{Key: Name, Value: aegised-staging}]
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref Vpc
+      InternetGatewayId: !Ref InternetGateway
+  Subnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref Vpc
+      CidrBlock: 10.79.0.0/26
+      MapPublicIpOnLaunch: true
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+  Route:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  RouteAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref Subnet
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: HTTPS for approved viewers; HTTP for ACME; no SSH/DB/ML ingress
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0}
+        - {IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: !Ref HttpsClientCidr}
+      SecurityGroupEgress:
+        - {IpProtocol: '-1', CidrIp: 0.0.0.0/0}
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aegised-staging/${AWS::StackName}'
+      RetentionInDays: 7
+  HostRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: {Service: ec2.amazonaws.com}
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore'
+      Policies:
+        - PolicyName: StagingTelemetryOnly
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !GetAtt Logs.Arn
+              - Effect: Allow
+                Action: cloudwatch:PutMetricData
+                Resource: '*'
+                Condition:
+                  StringEquals: {cloudwatch:namespace: AegisED/Staging}
+  HostProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles: [!Ref HostRole]
+  Host:
+    Type: AWS::EC2::Instance
+    DependsOn: [Route, RouteAssociation]
+    Properties:
+      ImageId: !Ref Ami
+      InstanceType: t3a.small
+      CreditSpecification: {CPUCredits: standard}
+      IamInstanceProfile: !Ref HostProfile
+      SubnetId: !Ref Subnet
+      SecurityGroupIds: [!Ref SecurityGroup]
+      MetadataOptions:
+        HttpTokens: required
+        HttpPutResponseHopLimit: 1
+        InstanceMetadataTags: disabled
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            Encrypted: true
+            VolumeType: gp3
+            VolumeSize: 40
+            DeleteOnTermination: true
+      Tags:
+        - {Key: Name, Value: aegised-staging}
+        - {Key: Project, Value: Escape Velocity}
+        - {Key: Environment, Value: staging}
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          set -euo pipefail
+          dnf upgrade -y
+          dnf install -y docker git python3 awscli-2
+          systemctl enable --now docker amazon-ssm-agent
+          install -d -m 0755 /usr/local/lib/docker/cli-plugins
+          cd /usr/local/lib/docker/cli-plugins
+          curl -fsSLo docker-compose https://github.com/docker/compose/releases/download/v2.39.4/docker-compose-linux-x86_64
+          curl -fsSLo /tmp/compose.sha256 https://github.com/docker/compose/releases/download/v2.39.4/docker-compose-linux-x86_64.sha256
+          expected=$(awk '{print $1}' /tmp/compose.sha256)
+          echo "$expected  docker-compose" | sha256sum --check -
+          chmod 0755 docker-compose
+          # Bound build pressure without changing the application. Encrypted EBS backs swap.
+          fallocate -l 2G /swapfile
+          chmod 0600 /swapfile
+          mkswap /swapfile
+          swapon /swapfile
+          echo '/swapfile none swap sw 0 0' >> /etc/fstab
+          sysctl -w vm.swappiness=10
+          echo 'vm.swappiness=10' >/etc/sysctl.d/90-aegised.conf
+          cat >/etc/systemd/system/aegised-metadata-guard.service <<'EOF'
+          [Unit]
+          Description=Block container access to instance metadata
+          After=docker.service
+          Requires=docker.service
+          PartOf=docker.service
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/bin/sh -c 'iptables -C DOCKER-USER -d 169.254.169.254/32 -j REJECT 2>/dev/null || iptables -I DOCKER-USER -d 169.254.169.254/32 -j REJECT'
+          [Install]
+          WantedBy=docker.service
+          EOF
+          systemctl daemon-reload
+          systemctl enable --now aegised-metadata-guard.service
+          install -d -m 0700 /opt/aegised
+          echo 'Host bootstrap complete; application install and independent verification still required.'
+  PublicIp:
+    Type: AWS::EC2::EIP
+    DependsOn: GatewayAttachment
+    Properties: {Domain: vpc}
+  IpAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      InstanceId: !Ref Host
+      AllocationId: !GetAtt PublicIp.AllocationId
+  Alerts:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - {Protocol: email, Endpoint: !Ref AlertEmail}
+  HostFailure:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: EC2 system or instance status failure
+      Namespace: AWS/EC2
+      MetricName: StatusCheckFailed
+      Dimensions: [{Name: InstanceId, Value: !Ref Host}]
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Alerts]
+  CpuCredits:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Standard CPU credits low - throttling possible, no surplus charge
+      Namespace: AWS/EC2
+      MetricName: CPUCreditBalance
+      Dimensions: [{Name: InstanceId, Value: !Ref Host}]
+      Statistic: Minimum
+      Period: 300
+      EvaluationPeriods: 3
+      Threshold: 12
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Alerts]
+  ApiUnavailable:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Internal API/DB unavailable or monitor missing; expected while stopped
+      Namespace: AegisED/Staging
+      MetricName: APIReady
+      Statistic: Minimum
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 1
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: breaching
+      AlarmActions: [!Ref Alerts]
+  MlUnavailable:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: AegisED/Staging
+      MetricName: MLReady
+      Statistic: Minimum
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 1
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: breaching
+      AlarmActions: [!Ref Alerts]
+  MemoryPressure:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: AegisED/Staging
+      MetricName: MemoryUsed
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 3
+      Threshold: 85
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Alerts]
+  DiskPressure:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: AegisED/Staging
+      MetricName: DiskUsed
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref Alerts]
+  Budget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: !Sub '${AWS::StackName}-account-spend'
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit: {Amount: 40, Unit: USD}
+        CostTypes:
+          IncludeCredit: false
+          IncludeRefund: false
+      NotificationsWithSubscribers:
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 20, ThresholdType: ABSOLUTE_VALUE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref AlertEmail}]
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 30, ThresholdType: ABSOLUTE_VALUE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref AlertEmail}]
+        - Notification: {NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 40, ThresholdType: ABSOLUTE_VALUE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref AlertEmail}]
+        - Notification: {NotificationType: FORECASTED, ComparisonOperator: GREATER_THAN, Threshold: 40, ThresholdType: ABSOLUTE_VALUE}
+          Subscribers: [{SubscriptionType: EMAIL, Address: !Ref AlertEmail}]
+Outputs:
+  InstanceId: {Value: !Ref Host}
+  PublicIp: {Value: !Ref PublicIp}
+  LogGroup: {Value: !Ref Logs}
+  AlertsTopic: {Value: !Ref Alerts}

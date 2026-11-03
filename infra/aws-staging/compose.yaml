@@ -1,0 +1,101 @@
+name: aegised-staging
+x-logging: &logging
+  driver: awslogs
+  options:
+    awslogs-region: ap-southeast-2
+    awslogs-group: ${LOG_GROUP:?Set LOG_GROUP from stack outputs}
+    awslogs-create-group: 'false'
+    tag: '{{.Name}}'
+    mode: non-blocking
+    max-buffer-size: 1m
+
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: AegisED_staging
+      POSTGRES_USER: AegisED_staging
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run configure.py}
+      TZ: UTC
+    command: [postgres, -c, max_connections=30, -c, shared_buffers=64MB]
+    volumes: [postgres:/var/lib/postgresql]
+    networks: [data]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U AegisED_staging -d AegisED_staging']
+      interval: 10s
+      timeout: 5s
+      retries: 15
+    mem_limit: 384m
+    pids_limit: 128
+    restart: unless-stopped
+    logging: *logging
+
+  ml:
+    build: ../../ml-service
+    environment:
+      NODE_ENV: production
+      ML_SERVICE_TOKEN: ${ML_SERVICE_TOKEN:?Run configure.py}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      OLLAMA_URL: ''
+      OLLAMA_MODEL: ''
+    networks: [data]
+    mem_limit: 512m
+    pids_limit: 128
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    logging: *logging
+
+  api:
+    build: ../..
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: --max-old-space-size=256
+      PORT: '5000'
+      APP_ORIGIN: https://${STAGING_DOMAIN:?Run configure.py}
+      DATABASE_URL: postgresql://AegisED_staging:${POSTGRES_PASSWORD}@db:5432/AegisED_staging
+      ML_SERVICE_URL: http://ml:8000
+      ML_SERVICE_TOKEN: ${ML_SERVICE_TOKEN}
+      TRUST_PROXY_HOPS: '1'
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Run configure.py}
+    depends_on:
+      db: {condition: service_healthy}
+      ml: {condition: service_healthy}
+    networks: [edge, data]
+    mem_limit: 384m
+    pids_limit: 128
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    logging: *logging
+
+  proxy:
+    image: caddy:2-alpine
+    environment:
+      STAGING_DOMAIN: ${STAGING_DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?Run configure.py}
+    ports: ['80:80', '443:443']
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api: {condition: service_healthy}
+    networks: [edge]
+    mem_limit: 128m
+    pids_limit: 128
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    logging: *logging
+
+networks:
+  edge: {}
+  data:
+    internal: true
+volumes:
+  postgres: {}
+  caddy_data: {}
+  caddy_config: {}

@@ -69,7 +69,7 @@ const validate = (schema) => (req, res, next) => {
 function parseId(value) {
   assert(
     typeof value === "string" &&
-      /^\d+(?![\s\S])/.test(value) &&
+      /^[1-9]\d*$/.test(value) &&
       Number.isSafeInteger(+value) &&
       +value > 0 &&
       +value <= 2147483647,

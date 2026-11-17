@@ -85,7 +85,7 @@ function validId(req, res, next) {
 const queryInteger = (max, fallback) =>
   z
     .string()
-    .regex(/^[1-9]\d*(?![\s\S])/)
+    .regex(/^[1-9]\d*$/)
     .transform(Number)
     .pipe(z.number().int().max(max))
     .default(fallback);

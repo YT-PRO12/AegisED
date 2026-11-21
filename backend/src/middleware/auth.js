@@ -29,7 +29,7 @@ const allow =
   (...roles) =>
   (req, res, next) => {
     assert(
-      roles.includes(req.user.role),
+      req.user && roles.includes(req.user.role),
       403,
       "Your role cannot perform this action",
     );
@@ -37,7 +37,10 @@ const allow =
   };
 function ownsCase(user, ec) {
   assert(
-    user.role !== "DOCTOR" || ec.doctor_id === user.doctor_id,
+    user.role !== "DOCTOR" ||
+      (Number.isSafeInteger(user.doctor_id) &&
+        user.doctor_id > 0 &&
+        ec.doctor_id === user.doctor_id),
     403,
     "Only the assigned doctor can access this case",
   );

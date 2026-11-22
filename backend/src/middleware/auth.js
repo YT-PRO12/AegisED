@@ -4,7 +4,9 @@ const env = require("../config/env");
 const { assert } = require("../utils/errors");
 const tokenHash = (token) => createHash("sha256").update(token).digest("hex");
 async function authenticate(req, res, next) {
-  const token = req.cookies[env.cookieName];
+  // Missing or malformed cookie middleware state must deny access as 401,
+  // rather than escape as an uncaught TypeError (HTTP 500).
+  const token = req.cookies?.[env.cookieName];
   assert(
     typeof token === "string" && /^[a-f0-9]{96}(?![\s\S])/.test(token),
     401,

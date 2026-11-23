@@ -25,6 +25,7 @@ test("malformed session cookies fail before hashing or querying", async (t) => {
   assert.equal(query.mock.callCount(), 0);
 });
 test("canonical tokens still enforce expiry and CSRF checks", async (t) => {
+  const csrf = "b".repeat(64);
   const query = t.mock.method(pool, "query", async () => ({
     rowCount: 0,
     rows: [],
@@ -40,14 +41,14 @@ test("canonical tokens still enforce expiry and CSRF checks", async (t) => {
   );
   query.mock.mockImplementation(async () => ({
     rowCount: 1,
-    rows: [{ id: 1, csrf_token: "right" }],
+    rows: [{ id: 1, csrf_token: csrf }],
   }));
   await assert.rejects(
     authenticate(req, {}, () => {}),
     (e) => e.status === 403,
   );
   let called = false;
-  req.get = () => "right";
+  req.get = () => csrf;
   await authenticate(req, {}, () => {
     called = true;
   });

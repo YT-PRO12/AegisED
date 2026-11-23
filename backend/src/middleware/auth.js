@@ -19,12 +19,18 @@ async function authenticate(req, res, next) {
   );
   assert(r.rowCount, 401, "Session expired. Please sign in");
   req.user = r.rows[0];
-  if (!["GET", "HEAD", "OPTIONS"].includes(req.method))
+  if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+    const provided = req.get("x-csrf-token");
+    const stored = req.user.csrf_token;
     assert(
-      req.get("x-csrf-token") === req.user.csrf_token,
+      typeof stored === "string" &&
+        /^[a-f0-9]{64}$/.test(stored) &&
+        typeof provided === "string" &&
+        provided === stored,
       403,
       "Invalid request token",
     );
+  }
   next();
 }
 const allow =

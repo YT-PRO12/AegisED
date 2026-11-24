@@ -45,10 +45,12 @@ const allow =
   };
 function ownsCase(user, ec) {
   assert(
-    user.role !== "DOCTOR" ||
-      (Number.isSafeInteger(user.doctor_id) &&
-        user.doctor_id > 0 &&
-        ec.doctor_id === user.doctor_id),
+    user &&
+      typeof user.role === "string" &&
+      (user.role !== "DOCTOR" ||
+        (Number.isSafeInteger(user.doctor_id) &&
+          user.doctor_id > 0 &&
+          ec?.doctor_id === user.doctor_id)),
     403,
     "Only the assigned doctor can access this case",
   );

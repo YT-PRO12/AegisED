@@ -1,8 +1,17 @@
-const { createHash } = require("node:crypto");
+const { createHash, timingSafeEqual } = require("node:crypto");
 const pool = require("../config/db");
 const env = require("../config/env");
 const { assert } = require("../utils/errors");
 const tokenHash = (token) => createHash("sha256").update(token).digest("hex");
+function csrfMatches(provided, stored) {
+  if (
+    typeof provided !== "string" ||
+    typeof stored !== "string" ||
+    !/^[a-f0-9]{64}$/.test(provided) ||
+    !/^[a-f0-9]{64}$/.test(stored)
+  ) return false;
+  return timingSafeEqual(Buffer.from(provided, "hex"), Buffer.from(stored, "hex"));
+}
 async function authenticate(req, res, next) {
   // Missing or malformed cookie middleware state must deny access as 401,
   // rather than escape as an uncaught TypeError (HTTP 500).
@@ -21,12 +30,8 @@ async function authenticate(req, res, next) {
   req.user = r.rows[0];
   if (!["GET", "HEAD", "OPTIONS"].includes(req.method)) {
     const provided = req.get("x-csrf-token");
-    const stored = req.user.csrf_token;
     assert(
-      typeof stored === "string" &&
-        /^[a-f0-9]{64}$/.test(stored) &&
-        typeof provided === "string" &&
-        provided === stored,
+      csrfMatches(provided, req.user.csrf_token),
       403,
       "Invalid request token",
     );
@@ -55,4 +60,4 @@ function ownsCase(user, ec) {
     "Only the assigned doctor can access this case",
   );
 }
-module.exports = { authenticate, allow, ownsCase, tokenHash };
+module.exports = { authenticate, allow, ownsCase, tokenHash, csrfMatches };
